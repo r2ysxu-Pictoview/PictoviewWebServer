@@ -86,11 +86,6 @@ function getAdditionAlbumInfo() {
 	alert("Additional Info");
 }
 
-
-function getPhotoResponse() {
-	
-}
-
 function getPhotoResponse() {
 	var albumid = $.urlParam('albumId');
 	if (albumid != null) {
