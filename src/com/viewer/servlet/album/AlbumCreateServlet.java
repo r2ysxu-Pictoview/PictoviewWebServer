@@ -1,4 +1,4 @@
-package com.viewer.servlet.gallery;
+package com.viewer.servlet.album;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,7 +17,7 @@ import com.viewer.servlet.BeanManager;
  * Servlet implementation class GalleryCreateServlet
  */
 @WebServlet("/pictureViewerWeb/galleryCreateServlet")
-public class GalleryCreateServlet extends HttpServlet {
+public class AlbumCreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private AlbumBeanLocal albumBean;
@@ -25,7 +25,7 @@ public class GalleryCreateServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public GalleryCreateServlet() {
+	public AlbumCreateServlet() {
 		albumBean = BeanManager.getAlbumBeanLocal();
 	}
 

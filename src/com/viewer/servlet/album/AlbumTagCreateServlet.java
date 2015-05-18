@@ -15,7 +15,7 @@ import com.viewer.servlet.BeanManager;
  * Servlet implementation class AlbumViewTagCreateServlet
  */
 @WebServlet("/pictureViewerWeb/albumServlet/tags/create")
-public class AlbumViewTagCreateServlet extends HttpServlet {
+public class AlbumTagCreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private AlbumBeanLocal albumBean;
@@ -23,7 +23,7 @@ public class AlbumViewTagCreateServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AlbumViewTagCreateServlet() {
+    public AlbumTagCreateServlet() {
     	albumBean = BeanManager.getAlbumBeanLocal();
     }
 

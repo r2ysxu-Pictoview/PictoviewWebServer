@@ -16,15 +16,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.viewer.beans.AlbumBeanLocal;
-import com.viewer.dao.AlbumDAO;
-import com.viewer.dao.AlbumDAOImpl;
+import com.viewer.dto.AlbumDTO;
 import com.viewer.dto.PhotoDTO;
 import com.viewer.servlet.BeanManager;
 
 /**
- * Servlet implementation class PictureCollectionViewServlet
+ * Servlet implementation class AlbumServlet
  */
-@WebServlet("/pictureViewerWeb/albumServlet")
+@WebServlet("/pictureViewerWeb/galleryServlet")
 public class AlbumViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -44,24 +43,58 @@ public class AlbumViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
+		
+		long albumId = Long.parseLong(request.getParameter("albumId"));
 
+		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, albumId);
+		JSONArray albumJson = generateAlbumJSON(albums);
+		
+		List<PhotoDTO> photos = albumBean.fetchUserAlbumPhotos(1, albumId);
+		JSONArray photoJson = generatePhotoJSON(photos);
+		
+		JSONObject responseJson = generateResponseJson(albumJson, photoJson);
+
+		// Write JSON
+		PrintWriter out = response.getWriter();
+		out.println(responseJson);
+		out.close();
+	}
+	
+	private JSONObject generateResponseJson(JSONArray albumJson, JSONArray photoJson) {
 		try {
-			long albumId = Long.parseLong(request.getParameter("albumId"));
-
-			List<PhotoDTO> albums = albumBean.fetchUserAlbumPhotos(1, albumId);
-			String json = generatePhotoJSON(albums);
-			System.out.println(json);
-
-			// Write JSON
-			PrintWriter out = response.getWriter();
-			out.println(json);
-			out.close();
-		} catch (NumberFormatException e) {
+			JSONObject responseJson = new JSONObject();
+			responseJson.put("subAlbums", albumJson);
+			responseJson.put("photos", photoJson);
+			return responseJson;
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
-
-	private String generatePhotoJSON(List<PhotoDTO> photos) {
+	
+	/**
+	 * Turns a collection of AlbumDTOs to JSON string
+	 * 
+	 * @param albums
+	 * @return JSON string
+	 */
+	private JSONArray generateAlbumJSON(List<AlbumDTO> albums) {
+		JSONArray albumsJSON = new JSONArray();
+		try {
+			for (AlbumDTO album : albums) {
+				JSONObject albumJSON = new JSONObject();
+				albumJSON.put("id", album.getId());
+				albumJSON.put("name", album.getName());
+				albumJSON.put("coverId", album.getCoverId());
+				albumsJSON.put(albumJSON);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return albumsJSON;
+	}
+	
+	private JSONArray generatePhotoJSON(List<PhotoDTO> photos) {
 		JSONArray photosJSON = new JSONArray();
 		try {
 			for (PhotoDTO photo : photos) {
@@ -73,7 +106,7 @@ public class AlbumViewServlet extends HttpServlet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return photosJSON.toString();
+		return photosJSON;
 	}
 
 	/**
