@@ -28,13 +28,13 @@ function onInitialResponse(response) {
 	console.log(response);
 	populateAlbums(response.subAlbums);
 	populatePhotos(response.photos);
+	allUserTags = response.categories;
 }
 
 function populateAlbums(json) {
 	albumJson = json;
 	$.each(json, function(i, value) {
 		var albumA = generateAlbumRow(value.id, value.coverId, value.name)
-
 		$("#albumsTable").append(albumA);
 	});
 }

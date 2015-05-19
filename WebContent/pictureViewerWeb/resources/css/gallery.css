@@ -1,8 +1,8 @@
-#albumsTable {
-    width: 100%;
+.albumsTable {
+	width: 100%;
 }
 
-#albumsTable td {
+.albumsTable td {
 	background: rgb(226, 226, 226); /* Old browsers */
 	background: -moz-linear-gradient(top, rgba(226, 226, 226, 1) 0%,
 		rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%,
@@ -28,7 +28,6 @@
 	border-style: solid;
 	border-width: 1px;
 	position: relative;
-	width: 100%;
 }
 
 .albumInfo {
@@ -62,6 +61,33 @@
 	height: 100%;
 	width: 25px;
 	right: 0;
+}
+
+.albumInfoDiv {
+	background-color: white;
+	width: 98%;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+}
+
+.albumTagTable {
+	width: 100%;
+}
+
+.albumTagTable td {
+	display: inline-block;
+	width: 50%;
+}
+
+.tagNameDiv {
+	float: left;
+	margin: 5px;
+	padding-left: 2px;
+	padding-right: 2px;
+	border: dashed 1px;
+	border-radius: 5px;
+	border: dashed 1px;
 }
 
 a {

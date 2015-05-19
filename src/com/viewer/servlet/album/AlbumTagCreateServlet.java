@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.viewer.beans.AlbumBeanLocal;
 import com.viewer.servlet.BeanManager;
+import com.viewer.servlet.util.StringUtil;
 
 /**
  * Servlet implementation class AlbumViewTagCreateServlet
@@ -33,9 +34,11 @@ public class AlbumTagCreateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			long albumId = Long.parseLong(request.getParameter("albumId"));
-			long cateId = Long.parseLong(request.getParameter("cateId"));
+			String category = request.getParameter("categoryName");
 			String tag = request.getParameter("tagName");
-			albumBean.tagUserAlbum(1, albumId, tag, cateId);
+			if (StringUtil.notNullEmpty(category) && StringUtil.notNullEmpty(tag)) {
+				albumBean.tagUserAlbum(1, albumId, tag, category);
+			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}

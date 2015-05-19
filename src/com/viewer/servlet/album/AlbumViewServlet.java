@@ -43,35 +43,55 @@ public class AlbumViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
-		
+
 		long albumId = Long.parseLong(request.getParameter("albumId"));
 
 		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, albumId);
 		JSONArray albumJson = generateAlbumJSON(albums);
-		
+
 		List<PhotoDTO> photos = albumBean.fetchUserAlbumPhotos(1, albumId);
 		JSONArray photoJson = generatePhotoJSON(photos);
-		
-		JSONObject responseJson = generateResponseJson(albumJson, photoJson);
+
+		List<String> categories = albumBean.fetchAllUserCategories(1);
+		JSONArray categoriesJSON = generateCategoryJSON(categories);
+
+		JSONObject responseJson = generateResponseJson(albumJson, photoJson,
+				categoriesJSON);
 
 		// Write JSON
 		PrintWriter out = response.getWriter();
 		out.println(responseJson);
 		out.close();
 	}
-	
-	private JSONObject generateResponseJson(JSONArray albumJson, JSONArray photoJson) {
+
+	private JSONObject generateResponseJson(JSONArray albumJson,
+			JSONArray photoJson, JSONArray categoryJSON) {
 		try {
 			JSONObject responseJson = new JSONObject();
 			responseJson.put("subAlbums", albumJson);
 			responseJson.put("photos", photoJson);
+			responseJson.put("categories", categoryJSON);
 			return responseJson;
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
+	private JSONArray generateCategoryJSON(List<String> categories) {
+		JSONArray categoriesJSON = new JSONArray();
+		try {
+			for (String category : categories) {
+				JSONObject categoryJSON = new JSONObject();
+				categoryJSON.put("category", category);
+				categoriesJSON.put(categoryJSON);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return categoriesJSON;
+	}
+
 	/**
 	 * Turns a collection of AlbumDTOs to JSON string
 	 * 
@@ -93,7 +113,7 @@ public class AlbumViewServlet extends HttpServlet {
 		}
 		return albumsJSON;
 	}
-	
+
 	private JSONArray generatePhotoJSON(List<PhotoDTO> photos) {
 		JSONArray photosJSON = new JSONArray();
 		try {

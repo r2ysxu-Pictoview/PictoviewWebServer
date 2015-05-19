@@ -21,7 +21,7 @@
 			<!-- <button id="createAlbum" onclick="createAlbum()">New Album</button> -->
 		</div>
 	</div>
-	<table id="albumsTable"></table>
+	<table id="albumsTable" class="albumsTable"></table>
 	<div id="photos" class="photoAlbum"></div>
 	<div id="imageModal" class="modalDialog">
 		<div class="navbutton navbuttonPrev" onclick="getPrevOriginalImage()">
@@ -44,16 +44,6 @@
 			</div>
 		</div>
 		<div class="closeModal" onclick="closeModal()"></div>
-	</div>
-	<div id="tagModal" class="modalDialog">
-	<div class="modalFrame">
-			<div class="modalImage">
-				<input type="text" id="tagCategory" value="tags" />
-				<input type="text" id="tagInput" />
-				<button onclick="tagAlbum()">Add</button>
-			</div>
-		</div>
-		<div class="closeModal" onclick="closeTagModal()"></div>
 	</div>
 </body>
 </html>

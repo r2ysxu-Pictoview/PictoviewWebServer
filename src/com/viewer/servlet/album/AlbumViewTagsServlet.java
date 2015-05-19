@@ -48,7 +48,6 @@ public class AlbumViewTagsServlet extends HttpServlet {
 
 			AlbumTagsDTO albumTags = albumBean.fetchUserAlbumTags(1, albumId);
 			String json = generateAlbumInfoJSON(albumTags);
-			System.out.println(json);
 
 			// Write JSON
 			PrintWriter out = response.getWriter();
