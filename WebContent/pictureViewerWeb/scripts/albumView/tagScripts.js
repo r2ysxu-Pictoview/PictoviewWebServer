@@ -58,14 +58,14 @@ function generateTagsTableRow(albumid, category, tagJson) {
     
     // New Tag Button
     tagButton.innerText = "+";
+    tagButton.className = "tagAddButton";
     tagButton.onclick = function() {
-    	uploadTag(tagCell, albumid, category);
+    	addNewTag(tagButton, tagCell, albumid, category);
 	};
 	
 	cateCell.innerText = category;
 	
     $.each(tagJson, function(i, value) {
-
         tagCell.appendChild(generateTagNameDiv(value.tagName));
 	});
     
@@ -77,13 +77,15 @@ function generateTagsTableRow(albumid, category, tagJson) {
 	return tagRow;
 }
 
-function uploadTag(tagCell, albumid, category) {
+function addNewTag(tagButton, tagCell, albumid, category) {
 	tagCell.appendChild(generateAddCellElements(tagCell, albumid, category));
+	
 }
 
 function generateAddCellElements(tagCell, albumid, category) {
     var tagButtonDiv = document.createElement("div");
     tagButtonDiv.id = "addTagButtonDiv";
+    tagButtonDiv.className = "tagAddButtonDiv";
     var tagNameInput = document.createElement("input");
 	tagNameInput.type = "text";
 	var tagSubmit = document.createElement("button");
