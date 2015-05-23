@@ -1,4 +1,4 @@
-package com.viewer.servlet;
+package com.viewer.bean;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

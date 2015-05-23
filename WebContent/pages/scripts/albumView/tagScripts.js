@@ -4,7 +4,7 @@ var allUserTags;
 function getAdditionAlbumInfo(rowIndex) {
 	var albumid = albumJson[rowIndex].id;
 	if (albumid != null) {
-		$.get('albumServlet/tags', {
+		$.get('/PictureViewerWebServer/albums/tag/get.do', {
 			"albumId" : albumid
 		}, function(response) {
 			createTagsDiv(JSON.parse(response), rowIndex);
@@ -111,7 +111,7 @@ function generateTagNameDiv(tagName) {
 function tagAlbum(tagCell, tagButtonDiv, albumid, category, tagNameInput) {
 	var tagName = tagNameInput.value;
 	console.log(albumid);
-	$.get('albumServlet/tags/create', {
+	$.get('/PictureViewerWebServer/albums/tag/create.do', {
 		"albumId" : albumid,
 		"categoryName"  : category,
 		"tagName" : tagName

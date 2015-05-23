@@ -1,70 +1,57 @@
-package com.viewer.servlet.album;
+package com.viewer.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.viewer.bean.BeanManager;
 import com.viewer.beans.AlbumBeanLocal;
 import com.viewer.dto.AlbumTagsDTO;
 import com.viewer.dto.TagsDTO;
-import com.viewer.servlet.BeanManager;
+import com.viewer.util.StringUtil;
 
-/**
- * Servlet implementation class AlbumViewInfoServlet
- */
-@WebServlet("/pictureViewerWeb/albumServlet/tags")
-public class AlbumViewTagsServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+public class TagController {
 
 	private AlbumBeanLocal albumBean;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public AlbumViewTagsServlet() {
+	public TagController() {
 		albumBean = BeanManager.getAlbumBeanLocal();
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		try {
-			long albumId = Long.parseLong(request.getParameter("albumId"));
+	@ResponseBody
+	@RequestMapping("/albums/tag/get")
+	public String fetchAlbumTagInfo(@RequestParam("albumId") long albumId) {
 
+		try {
 			AlbumTagsDTO albumTags = albumBean.fetchUserAlbumTags(1, albumId);
 			String json = generateAlbumInfoJSON(albumTags);
-
-			// Write JSON
-			PrintWriter out = response.getWriter();
-			out.println(json);
-			out.close();
+			return json;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	@ResponseBody
+	@RequestMapping("/albums/tag/create")
+	public void createAlbumTag(@RequestParam("albumId") long albumId,
+			@RequestParam("categoryName") String category,
+			@RequestParam("tagName") String tag) {
+		try {
+			if (StringUtil.notNullEmpty(category, tag)) {
+				albumBean.tagUserAlbum(1, albumId, tag, category);
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private String generateAlbumInfoJSON(AlbumTagsDTO albumTags) {
