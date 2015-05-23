@@ -15,10 +15,10 @@ function getAlbumsResponse() {
 	if (albumId == null) {
 		albumId = 0;
 	}
-	$.get('galleryServlet',{
+	$.get('/PictureViewerWebServer/albums/get.do',{
 		"albumId" : albumId
 	}, function(response) {
-		onInitialResponse(response);
+		onInitialResponse(JSON.parse(response));
 	}).fail(function() {
 		alert("Response Failed");
 	});
@@ -59,8 +59,8 @@ function generateAlbumRow(id, coverId, name) {
 	
 	// Set Cover image
 	if (coverId != 0) {
-		albumCover.src = "/PictureViewerWebServer/web/images/thumbnail?" + "photoId="
-			+ coverId + "&albumId=" + id;
+		albumCover.src = "/PictureViewerWebServer/images/thumbnail.do" + "?photoid="
+			+ coverId;
 	} else {
 		albumCover.src = "resources/images/noimage.jpg";
 	}
@@ -91,7 +91,7 @@ function generatePhotoDiv(index, id) {
 
 	// Create Image
 	var image = document.createElement("img");
-	image.src = "/PictureViewerWebServer/web/images/thumbnail?" + "photoId=" + id;
+	image.src = "/PictureViewerWebServer/images/thumbnail.do" + "?photoid=" + id;
 	image.className = "imageThumbnail";
 	
 	photoDiv.onclick = function() {
@@ -118,7 +118,7 @@ function populatePhotos(json) {
 function getOriginalImage(index, id) {
 	currentPhotoIndex = index;
 	var originalImage = document.getElementById("enlargedPhoto");
-	originalImage.src = "/PictureViewerWebServer/web/images?" + "photoId=" + id;
+	originalImage.src = "/PictureViewerWebServer/images" + "?photoid=" + id;
 	var modalImageDiv = document.getElementById("imageModal");
 	modalImageDiv.className = "modalDialog showDialog";
 }
