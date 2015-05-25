@@ -34,12 +34,12 @@ function onInitialResponse(response) {
 function populateAlbums(json) {
 	albumJson = json;
 	$.each(json, function(i, value) {
-		var albumA = generateAlbumRow(value.id, value.coverId, value.name)
+		var albumA = generateAlbumRow(value.id, value.coverId, value.name, value.subtitle)
 		$("#albumsTable").append(albumA);
 	});
 }
 
-function generateAlbumRow(id, coverId, name) {
+function generateAlbumRow(id, coverId, name, subtitle) {
 	var albumRow = document.createElement("tr");
 	var albumAnchor = document.createElement("a");
 	var albumCell = document.createElement("td");
@@ -64,20 +64,21 @@ function generateAlbumRow(id, coverId, name) {
 	} else {
 		albumCover.src = "resources/images/noimage.jpg";
 	}
-	albumAnchor.href = "galleryView.html" + "?albumId=" + id;
+	albumAnchor.href = "albumView.html" + "?albumId=" + id;
 	
 	albumName.innerText = name;
+	albumSubtitle.innerText = subtitle;
 	albumExpand.onclick = function() {
 		getAdditionAlbumInfo(albumRow.rowIndex);
 	};
 	
 	// Append elements
-	albumNameDiv.appendChild(albumName);
+	albumAnchor.appendChild(albumName);
+	albumNameDiv.appendChild(albumAnchor);
 	albumNameDiv.appendChild(albumSubtitle);
 	albumInfo.appendChild(albumCover);
 	albumInfo.appendChild(albumNameDiv);
-	albumAnchor.appendChild(albumInfo)
-	albumCell.appendChild(albumAnchor);
+	albumCell.appendChild(albumInfo);
 	albumCell.appendChild(albumExpand);
 	albumRow.appendChild(albumCell);
 	

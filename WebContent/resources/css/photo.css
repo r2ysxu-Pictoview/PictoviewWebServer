@@ -1,0 +1,18 @@
+.imageThumbnail {
+	margin: 5px;
+	height: 80px;
+	width: 80px;
+}
+
+.photoAlbum {
+	display: inline;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

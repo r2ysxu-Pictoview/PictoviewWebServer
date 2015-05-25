@@ -1,21 +1,13 @@
 package com.viewer.controller;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
-
-import javax.imageio.stream.ImageInputStream;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,6 +23,21 @@ public class AlbumsController {
 
 	public AlbumsController() {
 		albumBean = BeanManager.getAlbumBeanLocal();
+	}
+	
+	/**
+	 * Gets the Album page
+	 * 
+	 * @param albumId
+	 * @return JSON containing load information
+	 */
+	@RequestMapping("/albums")
+	public String fetchAlbumPage(ModelMap map) {
+
+		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, 0);
+		map.put("albumList", albums);
+		
+		return "albumView";
 	}
 
 	/**
@@ -58,80 +65,34 @@ public class AlbumsController {
 				categoriesJSON);
 
 		// Write JSON
-		return responseJson.toString();
+		return albumJson.toString();
+	}
+	
+	/**
+	 * Gets initial information for page load
+	 * 
+	 * @param albumId
+	 * @return JSON containing load information
+	 */
+	@ResponseBody
+	@RequestMapping("/albums/search")
+	public String fetchAlbumSearchInfo(@RequestParam("albumId") long albumId, String searchName, String searchTag) {
+
+		System.out.println("albums/get " + albumId);
+		
+		String[] tags = searchTag.split(" ");
+
+		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(1, searchName, tags);
+		JSONArray albumJson = generateAlbumJSON(albums);
+
+		// Write JSON
+		return albumJson.toString();
 	}
 
 	@ResponseBody
 	@RequestMapping("/albums/create")
 	public void createAlbum() {
 		albumBean.createAlbum(1, null);
-	}
-
-	/**
-	 * Gets Image thumbnail
-	 * 
-	 * @param photoid
-	 * @return byte array of image
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/images/thumbnail", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public void fetchAlbumPhotoThumbnail(@RequestParam("photoid") long photoid,
-			OutputStream responseOutput) {
-		System.out.println("images/get " + photoid);
-		try {
-			// Get Image
-			byte[] data = albumBean.fetchPhotoThumbnailData(1, photoid, 0);
-			writeImageDataToStream(data, responseOutput);
-			// return data;
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void writeImageDataToStream(byte[] data, OutputStream out) {
-		try {
-			InputStream is = new BufferedInputStream(new ByteArrayInputStream(
-					data));
-
-			// Copy the contents of the file to the output stream
-			byte[] buf = new byte[1024];
-			int count = 0;
-			while ((count = is.read(buf)) >= 0) {
-				out.write(buf, 0, count);
-			}
-
-			is.close();
-			out.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/images", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public void fetchAlbumPhoto(@RequestParam("photoid") long photoid,
-			OutputStream responseOutput) {
-
-		ImageInputStream is = albumBean.fetchPhotoData(1, photoid);
-		writeImageStreamToResponse(is, responseOutput);
-	}
-
-	private void writeImageStreamToResponse(ImageInputStream is,
-			OutputStream out) {
-		try {
-
-			// Copy the contents of the file to the output stream
-			byte[] buf = new byte[1024];
-			int count = 0;
-			while ((count = is.read(buf)) >= 0) {
-				out.write(buf, 0, count);
-			}
-
-			is.close();
-			out.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
 	}
 
 	/**
@@ -189,6 +150,7 @@ public class AlbumsController {
 				JSONObject albumJSON = new JSONObject();
 				albumJSON.put("id", album.getId());
 				albumJSON.put("name", album.getName());
+				albumJSON.put("subtitle", album.getSubtitle());
 				albumJSON.put("coverId", album.getCoverId());
 				albumsJSON.put(albumJSON);
 			}
