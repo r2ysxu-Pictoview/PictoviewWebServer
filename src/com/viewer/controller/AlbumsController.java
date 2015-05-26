@@ -55,15 +55,6 @@ public class AlbumsController {
 		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, albumId);
 		JSONArray albumJson = generateAlbumJSON(albums);
 
-		List<PhotoDTO> photos = albumBean.fetchUserAlbumPhotos(1, albumId);
-		JSONArray photoJson = generatePhotoJSON(photos);
-
-		List<String> categories = albumBean.fetchAllUserCategories(1);
-		JSONArray categoriesJSON = generateCategoryJSON(categories);
-
-		JSONObject responseJson = generateResponseJson(albumJson, photoJson,
-				categoriesJSON);
-
 		// Write JSON
 		return albumJson.toString();
 	}

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,9 +10,17 @@
 <link rel="stylesheet" type="text/css"
 	href="resources/css/galleryModal.css" />
 <script type="text/javascript" src="scripts/photoView/photoScript.js"></script>
+<script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
 </head>
 <body>
-	<div id="photos" class="photoAlbum"></div>
+	<p id="photoCount">${photoCount}</p>
+	<div id="photos" class="photoAlbum">
+		<c:forEach var="photo" items="${photoList}" varStatus="status">
+			<img id="photo-${photo.id}"
+				src="images/thumbnail.do?photoid=${photo.id}" class="imageThumbnail"
+				onclick="getOriginalImage(${status.index}, ${photo.id})" />
+		</c:forEach>
+	</div>
 	<div id="imageModal" class="modalDialog">
 		<div class="navbutton navbuttonPrev" onclick="getPrevOriginalImage()">
 			<div class="modalButtonIcon">

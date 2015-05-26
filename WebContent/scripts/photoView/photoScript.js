@@ -1,3 +1,5 @@
+var currentPhotoIndex = -1;
+
 function getOriginalImage(index, id) {
 	currentPhotoIndex = index;
 	var originalImage = document.getElementById("enlargedPhoto");
@@ -7,16 +9,22 @@ function getOriginalImage(index, id) {
 }
 
 function getNextOriginalImage() {
-	if (currentPhotoIndex < photoJson.length - 1) {
+	var photoCount = $('#photoCount')[0].innerText;
+	console.log(photoCount);
+	if (currentPhotoIndex < photoCount - 1) {
 		var nextIndex = currentPhotoIndex + 1;
-		getOriginalImage(nextIndex, photoJson[nextIndex].id);
+		var imgElem = $('#photos')[0].children[nextIndex];
+		var id = imgElem.id.split("-")[1];
+		console.log(imgElem);
+		getOriginalImage(nextIndex, id);
 	}
 }
 
 function getPrevOriginalImage() {
 	if (currentPhotoIndex > 0) {
 		var prevIndex = currentPhotoIndex - 1;
-		getOriginalImage(prevIndex, photoJson[prevIndex].id);
+		var id = $('#photos')[0].children[prevIndex].id.split("-")[1];
+		getOriginalImage(prevIndex, id);
 	}
 }
 

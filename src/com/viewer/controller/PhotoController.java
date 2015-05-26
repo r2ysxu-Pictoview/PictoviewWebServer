@@ -26,10 +26,12 @@ public class PhotoController {
 	 * @return JSON containing load information
 	 */
 	@RequestMapping("/photos")
-	public String fetchPhotoPage(ModelMap map, @RequestParam("albumId") long albumId) {
+	public String fetchPhotoPage(ModelMap map,
+			@RequestParam("albumId") long albumId) {
 
 		List<PhotoDTO> photos = albumBean.fetchUserAlbumPhotos(1, albumId);
 		map.put("photoList", photos);
+		map.put("photoCount", ""+photos.size());
 
 		return "photoView";
 	}
