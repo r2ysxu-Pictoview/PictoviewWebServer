@@ -30,25 +30,36 @@ function populateAlbums(albumId, json) {
 
 function generateAlbumRow(id, coverId, name, subtitle) {
 	var albumRow = document.createElement("tr");
-	var albumAnchor = document.createElement("a");
 	var albumCell = document.createElement("td");
-	var albumInfo = document.createElement("div");
-	var albumCover = document.createElement("img");
-	var albumNameDiv = document.createElement("div");
-	var albumName = document.createElement("h3");
-	var albumSubtitle = document.createElement("h4");
+	
 	var albumSubTable = document.createElement("table");
 
 	// Setting class
 	albumCell.className = "albumCell";
-	albumInfo.className = "albumInfo";
-	albumCover.className = "albumCover";
-	albumNameDiv.className = "albumName";
 	albumSubTable.className = "albumsTable";
 
 	albumCell.id = "albumCell-" + id;
 	albumSubTable.id = "albumSub-" + id;
+	
+	albumCell.onclick = function() {
+		return expandAlbum(albumCell);
+	};
 
+	// Append elements
+	albumCell.appendChild(generateAlbumsRowInfo(id, name, subtitle, coverId));
+	albumCell.appendChild(generateAlbumsRowTag(id));
+	albumCell.appendChild(albumSubTable);
+	albumRow.appendChild(albumCell);
+	return albumRow;
+}
+
+function generateAlbumsRowInfo(id, name, subtitle, coverId) {
+	var albumInfo = document.createElement("div");
+	var albumCover = document.createElement("img");
+	
+	albumInfo.className = "albumInfo";
+	albumCover.className = "albumCover";
+	
 	// Set Cover image
 	if (coverId != 0) {
 		albumCover.src = "/PictureViewerWebServer/images/thumbnail.do"
@@ -56,24 +67,45 @@ function generateAlbumRow(id, coverId, name, subtitle) {
 	} else {
 		albumCover.src = "resources/images/noimage.jpg";
 	}
+
+	albumInfo.appendChild(albumCover);
+	albumInfo.appendChild(generateAlbumsRowName(id, name, subtitle));
+	return albumInfo;
+}
+
+function generateAlbumsRowName(id, name, subtitle) {
+	var albumNameDiv = document.createElement("div");
+	var albumAnchor = document.createElement("a");
+	var albumName = document.createElement("h3");
+	var albumSubtitle = document.createElement("h4");
+
+	albumNameDiv.className = "albumName";
 	albumAnchor.href = "photos.do" + "?albumId=" + id;
 
+	// Set Album Name
 	albumName.innerText = name;
 	albumSubtitle.innerText = subtitle;
 	
-	albumCell.onclick = function(event) {
-		return expandAlbum(albumCell);
-	};
-
-	// Append elements
 	albumAnchor.appendChild(albumName);
 	albumNameDiv.appendChild(albumAnchor);
 	albumNameDiv.appendChild(albumSubtitle);
-	albumInfo.appendChild(albumCover);
-	albumInfo.appendChild(albumNameDiv);
-	albumCell.appendChild(albumInfo);
-	albumCell.appendChild(albumSubTable);
-	albumRow.appendChild(albumCell);
+	return albumNameDiv;
+}
 
-	return albumRow;
+function generateAlbumsRowTag(albumid) {
+	var albumTagDiv = document.createElement("div");
+	var albumTagTable = document.createElement("table");
+	var albumAddCategory = document.createElement("button");
+	
+	getAdditionAlbumTagInfo(albumid, albumTagTable);
+	
+	// Set Category
+	albumAddCategory.onclick = function() {
+		showAddCategory(albumid, albumTagDiv, albumTagTable);
+	}
+	albumAddCategory.innerText = 'New Category';
+
+	albumTagDiv.appendChild(albumTagTable);
+	albumTagDiv.appendChild(albumAddCategory);
+	return albumTagDiv;
 }

@@ -79,7 +79,6 @@ function generateTagsTableRow(albumid, category, tagJson) {
 
 function addNewTag(tagButton, tagCell, albumid, category) {
 	tagCell.appendChild(generateAddCellElements(tagCell, albumid, category));
-	
 }
 
 function generateAddCellElements(tagCell, albumid, category) {
@@ -101,13 +100,6 @@ function generateAddCellElements(tagCell, albumid, category) {
     return tagButtonDiv;
 }
 
-function generateTagNameDiv(tagName) {
-	var tagDiv = document.createElement("div");
-	tagDiv.innerText = tagName;
-	tagDiv.className = "tagNameDiv";
-	return tagDiv;
-}
-
 function tagAlbum(tagCell, tagButtonDiv, albumid, category, tagNameInput) {
 	var tagName = tagNameInput.value;
 	console.log(albumid);
@@ -125,4 +117,11 @@ function tagAlbum(tagCell, tagButtonDiv, albumid, category, tagNameInput) {
 	
 	//Remove input
 	tagCell.removeChild(tagButtonDiv);
+}
+
+function generateTagNameDiv(tagName) {
+	var tagDiv = document.createElement("div");
+	tagDiv.innerText = tagName;
+	tagDiv.className = "tagNameDiv";
+	return tagDiv;
 }
