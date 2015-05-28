@@ -15,6 +15,8 @@ import com.viewer.bean.BeanManager;
 import com.viewer.beans.AlbumBeanLocal;
 import com.viewer.dto.AlbumDTO;
 import com.viewer.dto.PhotoDTO;
+import com.viewer.dto.SearchQueryDTO;
+import com.viewer.util.SearchParser;
 
 @Controller
 public class AlbumsController {
@@ -24,7 +26,7 @@ public class AlbumsController {
 	public AlbumsController() {
 		albumBean = BeanManager.getAlbumBeanLocal();
 	}
-	
+
 	/**
 	 * Gets the Album page
 	 * 
@@ -36,7 +38,7 @@ public class AlbumsController {
 
 		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, 0);
 		map.put("albumList", albums);
-		
+
 		return "albumView";
 	}
 
@@ -58,7 +60,7 @@ public class AlbumsController {
 		// Write JSON
 		return albumJson.toString();
 	}
-	
+
 	/**
 	 * Gets initial information for page load
 	 * 
@@ -67,14 +69,17 @@ public class AlbumsController {
 	 */
 	@ResponseBody
 	@RequestMapping("/albums/search")
-	public String fetchAlbumSearchInfo(@RequestParam("albumId") long albumId, String searchName, String searchTag) {
-
-		System.out.println("albums/get " + albumId);
+	public String fetchAlbumSearchInfo(
+			@RequestParam("nameQuery") String nameQuery,
+			@RequestParam("tagQuery") String tagQuery) {
+		SearchParser sp = new SearchParser();
+		if (!tagQuery.startsWith("tags:")) tagQuery = "tags:" + tagQuery;
 		
-		String[] tags = searchTag.split(" ");
+		SearchQueryDTO searchQuery = sp.parseSearchName(nameQuery, tagQuery);
 
-		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(1, searchName, tags);
+		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(1, searchQuery);
 		JSONArray albumJson = generateAlbumJSON(albums);
+		System.out.println(albumJson);
 
 		// Write JSON
 		return albumJson.toString();
@@ -84,28 +89,6 @@ public class AlbumsController {
 	@RequestMapping("/albums/create")
 	public void createAlbum() {
 		albumBean.createAlbum(1, null);
-	}
-
-	/**
-	 * Combines the JSON objects & arrays required for the page
-	 * 
-	 * @param albumJson
-	 * @param photoJson
-	 * @param categoryJSON
-	 * @return JSON object or null if it fails
-	 */
-	private JSONObject generateResponseJson(JSONArray albumJson,
-			JSONArray photoJson, JSONArray categoryJSON) {
-		try {
-			JSONObject responseJson = new JSONObject();
-			responseJson.put("subAlbums", albumJson);
-			responseJson.put("photos", photoJson);
-			responseJson.put("categories", categoryJSON);
-			return responseJson;
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	/**
