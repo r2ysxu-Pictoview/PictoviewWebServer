@@ -1,11 +1,15 @@
 package com.viewer.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.viewer.bean.BeanManager;
 import com.viewer.beans.AlbumBeanLocal;
@@ -25,14 +29,42 @@ public class PhotoController {
 	 * @param albumId
 	 * @return JSON containing load information
 	 */
-	@RequestMapping("/photos")
+	@RequestMapping("/albums/photos")
 	public String fetchPhotoPage(ModelMap map,
 			@RequestParam("albumId") long albumId) {
 
 		List<PhotoDTO> photos = albumBean.fetchUserAlbumPhotos(1, albumId);
 		map.put("photoList", photos);
-		map.put("photoCount", ""+photos.size());
+		map.put("photoCount", "" + photos.size());
+		map.put("albumId", albumId);
 
 		return "photoView";
+	}
+
+	@RequestMapping(value = "albums/upload", method = RequestMethod.POST)
+	public String handleFileUpload(ModelMap map,
+			@RequestParam("albumId") Long albumId,
+			@RequestParam("file") List<MultipartFile> files) {
+		
+		for (MultipartFile file : files) {
+			processPhotoFiles(albumId, file);
+		}
+		List<PhotoDTO> photos = albumBean.fetchUserAlbumPhotos(1, albumId);
+		map.put("photoList", photos);
+		map.put("photoCount", "" + photos.size());
+		map.put("albumId", albumId);
+		return "photoView";
+	}
+
+	private void processPhotoFiles(long albumId, MultipartFile file) {
+		try {
+			String name = file.getOriginalFilename();
+			InputStream data = file.getInputStream();
+			albumBean.uploadPhoto(1, albumId, name, data);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

@@ -109,3 +109,18 @@ function generateAlbumsRowTag(albumid) {
 	albumTagDiv.appendChild(albumAddCategory);
 	return albumTagDiv;
 }
+
+function createAlbum() {
+	var albumName = $('#newAlbumName')[0].value;
+	
+	$.post('create.do', {
+		"parentId" : 0,
+		"albumName" : albumName
+	}, function(response) {
+		if (response.eq('empty'))
+			alert('Please fill out all fields');
+	}).fail(function() {
+		alert("Response Failed");
+	});
+	return false;
+}

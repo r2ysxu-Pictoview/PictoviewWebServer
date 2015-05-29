@@ -13,6 +13,13 @@
 <script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
 </head>
 <body>
+
+	<form method="POST" enctype="multipart/form-data" action="upload.do">
+		<input type="text" name="albumId" value="${ albumId }" hidden />
+		<label for="uploadPhoto">Choose File</label> <input type="file" name="file" multiple>
+		<br />
+		<button type="submit">Upload</button>
+	</form>
 	<p id="photoCount">${photoCount}</p>
 	<div id="photos" class="photoAlbum">
 		<c:forEach var="photo" items="${photoList}" varStatus="status">

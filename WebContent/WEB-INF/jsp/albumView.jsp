@@ -9,7 +9,6 @@
 <link rel="stylesheet" type="text/css" href="resources/css/gallery.css" />
 <script type="text/javascript" src="scripts/albumView/albumScript.js"></script>
 <script type="text/javascript" src="scripts/albumView/tagScript.js"></script>
-<script type="text/javascript" src="scripts/albumView/searchScript.js"></script>
 <script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
 </head>
 <body>
@@ -20,6 +19,10 @@
 					<input type="text" id="albumSearchInput" name="nameQuery" />
 					<input type="text" id="albumSearchTagInput" name="tagQuery" />
 					<button id="searchButton">Search</button>
+				</form>
+				<form id="createForm" onsubmit="createAlbum()">
+					<input type="text" id="newAlbumName" name="albumName" />
+					<button id="createButton">New Album</button>
 				</form>
 			</div>
 			<!-- <button id="createAlbum" onclick="createAlbum()">New Album</button> -->

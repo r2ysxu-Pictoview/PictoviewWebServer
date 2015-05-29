@@ -1,9 +1,6 @@
 package com.viewer.controller;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.imageio.stream.ImageInputStream;
@@ -33,36 +30,17 @@ public class ImageController {
 	 * @param photoid
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/images/thumbnail", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	@RequestMapping(value = "albums/images/thumbnail", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
 	public void fetchAlbumPhotoThumbnail(@RequestParam("photoid") long photoid,
 			OutputStream responseOutput) {
 		System.out.println("images/get " + photoid);
 		try {
 			// Get Image
-			byte[] data = albumBean.fetchPhotoThumbnailData(1, photoid, 0);
-			writeImageDataToStream(data, responseOutput);
+			ImageInputStream is = albumBean.fetchPhotoThumbnailData(1, photoid, 0);
+			writeImageStreamToResponse(is, responseOutput);
 			// return data;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-		}
-	}
-
-	private void writeImageDataToStream(byte[] data, OutputStream out) {
-		try {
-			InputStream is = new BufferedInputStream(new ByteArrayInputStream(
-					data));
-
-			// Copy the contents of the file to the output stream
-			byte[] buf = new byte[1024];
-			int count = 0;
-			while ((count = is.read(buf)) >= 0) {
-				out.write(buf, 0, count);
-			}
-
-			is.close();
-			out.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
 		}
 	}
 
@@ -73,7 +51,7 @@ public class ImageController {
 	 * @param responseOutput
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/images", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	@RequestMapping(value = "albums/images", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
 	public void fetchAlbumPhoto(@RequestParam("photoid") long photoid,
 			OutputStream responseOutput) {
 

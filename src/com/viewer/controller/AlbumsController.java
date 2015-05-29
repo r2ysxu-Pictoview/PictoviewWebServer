@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,6 +17,7 @@ import com.viewer.beans.AlbumBeanLocal;
 import com.viewer.dto.AlbumDTO;
 import com.viewer.dto.SearchQueryDTO;
 import com.viewer.util.SearchParser;
+import com.viewer.util.StringUtil;
 
 @Controller
 public class AlbumsController {
@@ -48,7 +50,7 @@ public class AlbumsController {
 	 * @return JSON containing load information
 	 */
 	@ResponseBody
-	@RequestMapping("/albums/get")
+	@RequestMapping("/albums/albums/get")
 	public String fetchAlbumPageInfo(@RequestParam("albumId") long albumId) {
 
 		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, albumId);
@@ -69,10 +71,12 @@ public class AlbumsController {
 			@RequestParam("nameQuery") String nameQuery,
 			@RequestParam("tagQuery") String tagQuery, ModelMap map) {
 		SearchParser sp = new SearchParser();
-		if (!tagQuery.startsWith("tags:")) tagQuery = "tags:" + tagQuery;
-		
+		if (!tagQuery.startsWith("tags:"))
+			tagQuery = "tags:" + tagQuery;
+
 		SearchQueryDTO searchQuery = sp.parseSearchName(nameQuery, tagQuery);
-		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(1, searchQuery);
+		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(1,
+				searchQuery);
 
 		map.put("albumList", albums);
 
@@ -80,9 +84,18 @@ public class AlbumsController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/albums/create")
-	public void createAlbum() {
-		albumBean.createAlbum(1, null);
+	@RequestMapping(value = "/albums/create", method = RequestMethod.POST)
+	public String createAlbum(
+			@RequestParam("albumName") String name,
+			@RequestParam(required = false, value = "albumSub") String subtitle,
+			@RequestParam(required = false, value = "parentId") Long parentId) {
+		if (StringUtil.notNullEmpty(name)) {
+			if (parentId == null)
+				parentId = new Long(0);
+			albumBean.createAlbum(1, name, subtitle, parentId);
+			return "success";
+		}
+		return "empty";
 	}
 
 	/**
