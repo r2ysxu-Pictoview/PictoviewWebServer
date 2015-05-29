@@ -32,7 +32,7 @@ public class AlbumsController {
 	 * @param albumId
 	 * @return JSON containing load information
 	 */
-	@RequestMapping("/albums")
+	@RequestMapping("/albums/albums")
 	public String fetchAlbumPage(ModelMap map) {
 
 		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, 0);
@@ -64,7 +64,7 @@ public class AlbumsController {
 	 * @param albumId
 	 * @return JSON containing load information
 	 */
-	@RequestMapping("/search")
+	@RequestMapping("/albums/search")
 	public String fetchAlbumSearchInfo(
 			@RequestParam("nameQuery") String nameQuery,
 			@RequestParam("tagQuery") String tagQuery, ModelMap map) {
