@@ -16,9 +16,11 @@
 	<div id="headerDiv">
 		<div id="createAlbumDiv">
 			<div>
-				<input type="text" id="albumSearchInput" />
-				<input type="text" id="albumSearchTagInput" />
-				<button id="searchButton" onclick="searchAlbums(); return false;">Search</button>
+				<form method="GET" action="/PictureViewerWebServer/search.do" >
+					<input type="text" id="albumSearchInput" name="nameQuery" />
+					<input type="text" id="albumSearchTagInput" name="tagQuery" />
+					<button id="searchButton">Search</button>
+				</form>
 			</div>
 			<!-- <button id="createAlbum" onclick="createAlbum()">New Album</button> -->
 		</div>

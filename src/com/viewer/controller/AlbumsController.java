@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.viewer.bean.BeanManager;
 import com.viewer.beans.AlbumBeanLocal;
 import com.viewer.dto.AlbumDTO;
-import com.viewer.dto.PhotoDTO;
 import com.viewer.dto.SearchQueryDTO;
 import com.viewer.util.SearchParser;
 
@@ -52,8 +51,6 @@ public class AlbumsController {
 	@RequestMapping("/albums/get")
 	public String fetchAlbumPageInfo(@RequestParam("albumId") long albumId) {
 
-		System.out.println("albums/get " + albumId);
-
 		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, albumId);
 		JSONArray albumJson = generateAlbumJSON(albums);
 
@@ -67,48 +64,25 @@ public class AlbumsController {
 	 * @param albumId
 	 * @return JSON containing load information
 	 */
-	@ResponseBody
-	@RequestMapping("/albums/search")
+	@RequestMapping("/search")
 	public String fetchAlbumSearchInfo(
 			@RequestParam("nameQuery") String nameQuery,
-			@RequestParam("tagQuery") String tagQuery) {
+			@RequestParam("tagQuery") String tagQuery, ModelMap map) {
 		SearchParser sp = new SearchParser();
 		if (!tagQuery.startsWith("tags:")) tagQuery = "tags:" + tagQuery;
 		
 		SearchQueryDTO searchQuery = sp.parseSearchName(nameQuery, tagQuery);
-
 		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(1, searchQuery);
-		JSONArray albumJson = generateAlbumJSON(albums);
-		System.out.println(albumJson);
 
-		// Write JSON
-		return albumJson.toString();
+		map.put("albumList", albums);
+
+		return "albumView";
 	}
 
 	@ResponseBody
 	@RequestMapping("/albums/create")
 	public void createAlbum() {
 		albumBean.createAlbum(1, null);
-	}
-
-	/**
-	 * Turns a collection of CategoryDTOs into JSON array
-	 * 
-	 * @param categories
-	 * @return JSON array object
-	 */
-	private JSONArray generateCategoryJSON(List<String> categories) {
-		JSONArray categoriesJSON = new JSONArray();
-		try {
-			for (String category : categories) {
-				JSONObject categoryJSON = new JSONObject();
-				categoryJSON.put("category", category);
-				categoriesJSON.put(categoryJSON);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return categoriesJSON;
 	}
 
 	/**
@@ -132,26 +106,5 @@ public class AlbumsController {
 			e.printStackTrace();
 		}
 		return albumsJSON;
-	}
-
-	/**
-	 * Turns a collection of PhotoDTOs into JSON array
-	 * 
-	 * @param photos
-	 * @return JSON array object
-	 */
-	private JSONArray generatePhotoJSON(List<PhotoDTO> photos) {
-		JSONArray photosJSON = new JSONArray();
-		try {
-			for (PhotoDTO photo : photos) {
-				JSONObject photoJSON = new JSONObject();
-				photoJSON.put("id", photo.getId());
-				photoJSON.put("name", photo.getName());
-				photosJSON.put(photoJSON);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return photosJSON;
 	}
 }
