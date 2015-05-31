@@ -49,11 +49,7 @@ public class PhotoController {
 		for (MultipartFile file : files) {
 			processPhotoFiles(albumId, file);
 		}
-		List<PhotoDTO> photos = albumBean.fetchUserAlbumPhotos(1, albumId);
-		map.put("photoList", photos);
-		map.put("photoCount", "" + photos.size());
-		map.put("albumId", albumId);
-		return "photoView";
+		return "redirect:/albums/photos.do?albumId=" + albumId;
 	}
 
 	private void processPhotoFiles(long albumId, MultipartFile file) {
