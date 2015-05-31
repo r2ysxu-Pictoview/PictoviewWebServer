@@ -51,13 +51,10 @@ public class AlbumsController {
 	 */
 	@ResponseBody
 	@RequestMapping("/albums/albums/get")
-	public String fetchAlbumPageInfo(@RequestParam("albumId") long albumId) {
-
-		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, albumId);
-		JSONArray albumJson = generateAlbumJSON(albums);
+	public String fetchAlbumPageInfo(@RequestParam("albumId") long parentId) {
 
 		// Write JSON
-		return albumJson.toString();
+		return fetchAlbums(parentId);
 	}
 
 	/**
@@ -83,19 +80,34 @@ public class AlbumsController {
 		return "albumView";
 	}
 
-	@ResponseBody
+	/**
+	 * Creates an albums
+	 * 
+	 * @param name
+	 * @param subtitle
+	 * @param parentId
+	 * @return album page
+	 */
 	@RequestMapping(value = "/albums/create", method = RequestMethod.POST)
 	public String createAlbum(
 			@RequestParam("albumName") String name,
 			@RequestParam(required = false, value = "albumSub") String subtitle,
 			@RequestParam(required = false, value = "parentId") Long parentId) {
+
+		System.out.println("albums/create");
 		if (StringUtil.notNullEmpty(name)) {
 			if (parentId == null)
 				parentId = new Long(0);
 			albumBean.createAlbum(1, name, subtitle, parentId);
-			return "success";
 		}
-		return "empty";
+		return "redirect:/albums/albums.do";
+	}
+
+	private String fetchAlbums(long parentId) {
+		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, parentId);
+		JSONArray albumJson = generateAlbumJSON(albums);
+
+		return albumJson.toString();
 	}
 
 	/**

@@ -20,12 +20,11 @@
 					<input type="text" id="albumSearchTagInput" name="tagQuery" />
 					<button id="searchButton">Search</button>
 				</form>
-				<form id="createForm" onsubmit="createAlbum()">
+				<form id="createForm" method="POST" action="/PictureViewerWebServer/albums/create.do">
 					<input type="text" id="newAlbumName" name="albumName" />
 					<button id="createButton">New Album</button>
 				</form>
 			</div>
-			<!-- <button id="createAlbum" onclick="createAlbum()">New Album</button> -->
 		</div>
 	</div>
 	<table id="albumsTable" class="albumsTable">
@@ -47,7 +46,7 @@
 							<h3>${album.subtitle}</h3>
 						</div>
 					</div>
-					<table id="albumSub-${album.id}" class="albumsTable"></table>
+					<table id="albumTable-${album.id}" class="albumsTable"></table>
 				</td>
 			</tr>
 		</c:forEach>
