@@ -19,7 +19,8 @@
 
 .modalFrame {
 	text-align: center;
-	width: 100%;
+	margin-left:10px;
+	margin-right:10px;
 }
 
 .modalImage {
@@ -44,7 +45,6 @@
 	height: 100%;
 	text-align: left;
 	float: left;
-	z-index: 3;
 }
 
 .navbuttonNext {
@@ -52,7 +52,6 @@
 	float: right;
 	text-align: right;
 	position: relative;
-	z-index: 3;
 }
 
 .modalButtonIcon {
@@ -84,6 +83,7 @@
 	-ms-transition: opacity 0.5s ease-in-out;
 	-o-transition: opacity 0.5s ease-in-out;
 	transition: opacity 0.5s ease-in-out;
+	z-index: 3;
 }
 
 .navbutton:hover {

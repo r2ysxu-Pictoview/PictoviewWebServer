@@ -10,12 +10,10 @@ function getOriginalImage(index, id) {
 
 function getNextOriginalImage() {
 	var photoCount = $('#photoCount')[0].innerText;
-	console.log(photoCount);
 	if (currentPhotoIndex < photoCount - 1) {
 		var nextIndex = currentPhotoIndex + 1;
 		var imgElem = $('#photos')[0].children[nextIndex];
 		var id = imgElem.id.split("-")[1];
-		console.log(imgElem);
 		getOriginalImage(nextIndex, id);
 	}
 }

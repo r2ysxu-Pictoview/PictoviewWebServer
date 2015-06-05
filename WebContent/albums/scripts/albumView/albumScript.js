@@ -1,8 +1,28 @@
 function expandAlbum(td) {
 	event.stopPropagation();
 	var albumId = td.id.split("-")[1];
+	generateAlbumControlOptions(albumId);
 	getAlbumsResponse(albumId);
 	return true;
+}
+
+function generateAlbumControlOptions(albumId) {
+	if ($("#albumExpand-" + albumId).is(':empty')) {
+		var button = document.createElement('button');
+		button.innerText = 'New Album';
+		button.onclick = function () {
+			showNewAlbumCommand(albumId);
+		}
+		
+		$('#albumExpand-' + albumId).append(button);
+	} else {
+		$('#albumExpand-' +albumId).toggle();
+	}
+}
+
+function showNewAlbumCommand(albumId) {
+	$('#newAlbumParentId')[0].value = albumId;
+	$('#albumModal').addClass("showDialog");
 }
 
 function getAlbumsResponse(albumId) {
@@ -19,35 +39,42 @@ function getAlbumsResponse(albumId) {
 }
 
 function populateAlbums(albumId, json) {
-	if ($("#albumSub-" + albumId).is(':empty')) {
+	if ($("#albumTable-" + albumId).is(':empty')) {
 		$.each(json, function(i, value) {
 			var albumA = generateAlbumRow(value.id, value.coverId, value.name,
 					value.subtitle)
-			$("#albumSub-" + albumId).append(albumA);
+			$("#albumTable-" + albumId).append(albumA);
 		});
+	}else {
+		$('#albumTable-' +albumId).toggle();
 	}
 }
 
 function generateAlbumRow(id, coverId, name, subtitle) {
 	var albumRow = document.createElement("tr");
 	var albumCell = document.createElement("td");
-	
 	var albumSubTable = document.createElement("table");
+	var albumExpand = document.createElement("div");
 
 	// Setting class
 	albumCell.className = "albumCell";
 	albumSubTable.className = "albumsTable";
-
+	
 	albumCell.id = "albumCell-" + id;
-	albumSubTable.id = "albumSub-" + id;
+	albumSubTable.id = "albumTable-" + id;
+	albumExpand.id = "albumExpand-" + id;
 	
 	albumCell.onclick = function() {
 		return expandAlbum(albumCell);
 	};
+	
+	var albumsRowTag = generateAlbumsRowTag(id);
+	$(albumsRowTag).toggle();
 
 	// Append elements
 	albumCell.appendChild(generateAlbumsRowInfo(id, name, subtitle, coverId));
-	albumCell.appendChild(generateAlbumsRowTag(id));
+	albumCell.appendChild(albumsRowTag);
+	albumCell.appendChild(albumExpand);
 	albumCell.appendChild(albumSubTable);
 	albumRow.appendChild(albumCell);
 	return albumRow;
@@ -62,7 +89,7 @@ function generateAlbumsRowInfo(id, name, subtitle, coverId) {
 	
 	// Set Cover image
 	if (coverId != 0) {
-		albumCover.src = "/PictureViewerWebServer/images/thumbnail.do"
+		albumCover.src = "/PictureViewerWebServer/albums/images/thumbnail.do"
 				+ "?photoid=" + coverId;
 	} else {
 		albumCover.src = "resources/images/noimage.jpg";
@@ -97,6 +124,8 @@ function generateAlbumsRowTag(albumid) {
 	var albumTagTable = document.createElement("table");
 	var albumAddCategory = document.createElement("button");
 	
+	albumTagDiv.id = "albumTagInfo-" + albumid;
+	
 	getAdditionAlbumTagInfo(albumid, albumTagTable);
 	
 	// Set Category
@@ -121,4 +150,8 @@ function createAlbum() {
 		alert("Response Failed");
 	});
 	return false;
+}
+
+function closeModal() {
+	$("#albumModal").removeClass('showDialog');
 }

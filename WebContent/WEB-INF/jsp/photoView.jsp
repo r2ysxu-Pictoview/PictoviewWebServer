@@ -7,8 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Photos</title>
 <link rel="stylesheet" type="text/css" href="resources/css/photo.css" />
-<link rel="stylesheet" type="text/css"
-	href="resources/css/galleryModal.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/galleryModal.css" />
 <script type="text/javascript" src="scripts/photoView/photoScript.js"></script>
 <script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
 </head>

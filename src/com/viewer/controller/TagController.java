@@ -47,6 +47,7 @@ public class TagController {
 			@RequestParam("tagName") String tag) {
 		try {
 			if (StringUtil.notNullEmpty(category, tag)) {
+				albumBean.createCategory(1, category);
 				albumBean.tagUserAlbum(1, albumId, tag, category);
 			}
 		} catch (NumberFormatException e) {

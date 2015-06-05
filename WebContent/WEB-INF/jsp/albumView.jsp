@@ -7,25 +7,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Albums</title>
 <link rel="stylesheet" type="text/css" href="resources/css/gallery.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/galleryModal.css" />
 <script type="text/javascript" src="scripts/albumView/albumScript.js"></script>
 <script type="text/javascript" src="scripts/albumView/tagScript.js"></script>
 <script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
 </head>
 <body>
 	<div id="headerDiv">
-		<div id="createAlbumDiv">
-			<div>
-				<form method="GET" action="/PictureViewerWebServer/search.do" >
-					<input type="text" id="albumSearchInput" name="nameQuery" />
-					<input type="text" id="albumSearchTagInput" name="tagQuery" />
-					<button id="searchButton">Search</button>
-				</form>
-				<form id="createForm" method="POST" action="/PictureViewerWebServer/albums/create.do">
-					<input type="text" id="newAlbumName" name="albumName" />
-					<button id="createButton">New Album</button>
-				</form>
-			</div>
+		<div id="searchAlbumDiv">
+			<form method="GET" action="/PictureViewerWebServer/albums/search.do" >
+				<input type="text" id="albumSearchInput" name="nameQuery" />
+				<input type="text" id="albumSearchTagInput" name="tagQuery" />
+				<button id="searchButton">Search</button>
+			</form>
 		</div>
+		<button onclick="showNewAlbumCommand(0)">New Album</button>
 	</div>
 	<table id="albumsTable" class="albumsTable">
 		<c:forEach var="album" items="${albumList}">
@@ -46,10 +42,25 @@
 							<h3>${album.subtitle}</h3>
 						</div>
 					</div>
+					<div id="albumExpand-${album.id}"></div>
 					<table id="albumTable-${album.id}" class="albumsTable"></table>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
+	<div id="albumModal" class="modalDialog">
+		<div class="modalFrame">
+			<div class="modalDiv">
+				<h4>Create New Album</h4>
+				<form id="createForm" method="POST" action="/PictureViewerWebServer/albums/create.do">
+					<input type="hidden" id="newAlbumParentId" name="parentId" value="0" />
+					<label for="newAlbumName">Name</label>
+					<input type="text" id="newAlbumName" name="albumName" />
+					<button id="createButton">New Album</button>
+				</form>
+			</div>
+		</div>
+		<div class="closeModal" onclick="closeModal()"></div>
+	</div>
 </body>
 </html>

@@ -102,3 +102,14 @@ a {
 	text-decoration: none;
 	color: #000000;
 }
+
+.modalDiv {
+	background-color: white;
+	display: inline-block;
+	margin-top: 25vh;
+	padding: 25px;
+	z-index: 3;
+	position: relative;
+	border-radius: 5px;
+	box-shadow: 0 3px 3px rgba(0,0,0,0.4);
+}
