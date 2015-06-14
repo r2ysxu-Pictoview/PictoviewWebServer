@@ -80,7 +80,9 @@ function generateTagsTableRow(albumid, category, tagJson) {
 	};
 
 	cateCell.innerText = category;
+	cateCell.width = "30%";
 
+	tagCell.width = "70%";
 	$.each(tagJson, function(i, value) {
 		tagCell.appendChild(generateTagNameDiv(value.tagName));
 	});

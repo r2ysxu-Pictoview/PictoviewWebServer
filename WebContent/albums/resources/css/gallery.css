@@ -81,12 +81,9 @@
 }
 
 .albumTagTable {
+	border: 1px solid black;
 	width: 100%;
-}
-
-.albumTagTable td {
-	display: inline-block;
-	width: 50%;
+	table-layout: fixed;
 }
 
 .tagNameDiv {
