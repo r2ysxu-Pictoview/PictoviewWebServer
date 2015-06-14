@@ -16,6 +16,7 @@ function showAddCategory(albumid, albumTagDiv, table) {
 	createCategoryDiv.appendChild(categoryInput);
 	createCategoryDiv.appendChild(categoryAdd);
 	albumTagDiv.appendChild(createCategoryDiv);
+	return true;
 }
 
 function addCategory(albumid, table, categoryInput) {

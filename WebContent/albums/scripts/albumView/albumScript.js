@@ -16,7 +16,14 @@ function generateAlbumControlOptions(albumId) {
 		
 		$('#albumExpand-' + albumId).append(button);
 	} else {
-		$('#albumExpand-' +albumId).toggle();
+		$('#albumExpand-' + albumId).toggle();
+	}
+	
+	if ($('#albumTagInfo-'+ albumId).is(':empty')) {
+		var albumsRowTag = generateAlbumsRowTag(albumId);
+		$('#albumTagInfo-'+ albumId).append(albumsRowTag);
+	} else {
+		$('#albumTagInfo-'+ albumId).toggle();
 	}
 }
 
@@ -50,37 +57,63 @@ function populateAlbums(albumId, json) {
 	}
 }
 
-function generateAlbumRow(id, coverId, name, subtitle) {
+function generateAlbumRow(albumid, coverId, name, subtitle) {
 	var albumRow = document.createElement("tr");
 	var albumCell = document.createElement("td");
-	var albumSubTable = document.createElement("table");
-	var albumExpand = document.createElement("div");
+	var albumExpanded = generateAlbumExpandedInformation(albumid);
+	var albumContent = generateAlbumsContent(albumid, name, subtitle, coverId);
 
-	// Setting class
 	albumCell.className = "albumCell";
-	albumSubTable.className = "albumsTable";
-	
-	albumCell.id = "albumCell-" + id;
-	albumSubTable.id = "albumTable-" + id;
-	albumExpand.id = "albumExpand-" + id;
-	
-	albumCell.onclick = function() {
-		return expandAlbum(albumCell);
-	};
-	
-	var albumsRowTag = generateAlbumsRowTag(id);
-	$(albumsRowTag).toggle();
+	albumCell.id = "albumCell-" + albumid;
 
 	// Append elements
-	albumCell.appendChild(generateAlbumsRowInfo(id, name, subtitle, coverId));
-	albumCell.appendChild(albumsRowTag);
-	albumCell.appendChild(albumExpand);
-	albumCell.appendChild(albumSubTable);
+	albumCell.appendChild(albumContent);
+	albumCell.appendChild(albumExpanded);
 	albumRow.appendChild(albumCell);
 	return albumRow;
 }
 
-function generateAlbumsRowInfo(id, name, subtitle, coverId) {
+function generateAlbumsContent(albumid, name, subtitle, coverId) {
+	var albumContent = document.createElement("div");
+	var albumExpandButton = document.createElement("input");
+	
+	albumContent.className = "albumContent";
+	
+	albumExpandButton.id = "albumExpandButton-" + albumid;
+	albumExpandButton.type = "image";
+	albumExpandButton.src= "resources/images/expandButton.png";
+	albumExpandButton.className = "albumExpandButton";
+	albumExpandButton.onclick = function() {
+		return expandAlbum(albumExpandButton);
+	};
+	
+	albumContent.appendChild(generateAlbumsContentInfo(albumid, name, subtitle, coverId));
+	albumContent.appendChild(albumExpandButton);
+	
+	return albumContent;
+}
+
+function generateAlbumExpandedInformation(albumid) {
+	var albumExpanded = document.createElement("div");
+	var albumTags = document.createElement("div");
+	var albumSubTable = document.createElement("table");
+	var albumExpand = document.createElement("div");
+	
+	albumExpand.id = "albumExpand-" + albumid;
+	
+	albumTags.id = "albumTagInfo-" + albumid;
+
+	albumSubTable.className = "albumsTable";
+	albumSubTable.id = "albumTable-" + albumid;
+	
+	albumExpanded.appendChild(albumTags);
+	albumExpanded.appendChild(albumExpand);
+	albumExpanded.appendChild(albumSubTable);
+	
+	return albumExpanded;
+}
+
+function generateAlbumsContentInfo(id, name, subtitle, coverId) {
 	var albumInfo = document.createElement("div");
 	var albumCover = document.createElement("img");
 	
@@ -96,11 +129,11 @@ function generateAlbumsRowInfo(id, name, subtitle, coverId) {
 	}
 
 	albumInfo.appendChild(albumCover);
-	albumInfo.appendChild(generateAlbumsRowName(id, name, subtitle));
+	albumInfo.appendChild(generateAlbumsNameDiv(id, name, subtitle));
 	return albumInfo;
 }
 
-function generateAlbumsRowName(id, name, subtitle) {
+function generateAlbumsNameDiv(id, name, subtitle) {
 	var albumNameDiv = document.createElement("div");
 	var albumAnchor = document.createElement("a");
 	var albumName = document.createElement("h3");
@@ -130,7 +163,7 @@ function generateAlbumsRowTag(albumid) {
 	
 	// Set Category
 	albumAddCategory.onclick = function() {
-		showAddCategory(albumid, albumTagDiv, albumTagTable);
+		return showAddCategory(albumid, albumTagDiv, albumTagTable);
 	}
 	albumAddCategory.innerText = 'New Category';
 

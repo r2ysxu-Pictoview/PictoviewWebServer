@@ -26,24 +26,30 @@
 	<table id="albumsTable" class="albumsTable">
 		<c:forEach var="album" items="${albumList}">
 			<tr>
-				<td id="albumCell-${album.id}" class="albumCell" onclick="expandAlbum(this)">
-					<div class="albumInfo">
-						<c:choose>
-							<c:when test="${album.coverId == 0}">
-								<img src="resources/images/noimage.jpg" class="albumCover" />
-							</c:when>
-							<c:otherwise>
-								<img src="images/thumbnail.do?photoid=${album.coverId}"
-									class="albumCover" />
-							</c:otherwise>
-						</c:choose>
-						<div class="albumName">
-							<a href="photos.do?albumId=${album.id}"><h4>${album.name}</h4></a>
-							<h3>${album.subtitle}</h3>
+				<td id="albumCell-${album.id}" class="albumCell">
+					<div class="albumContent">
+						<div class="albumInfo">
+							<c:choose>
+								<c:when test="${album.coverId == 0}">
+									<img src="resources/images/noimage.jpg" class="albumCover" />
+								</c:when>
+								<c:otherwise>
+									<img src="images/thumbnail.do?photoid=${album.coverId}"
+										class="albumCover" />
+								</c:otherwise>
+							</c:choose>
+							<div class="albumName">
+								<a href="photos.do?albumId=${album.id}"><h4>${album.name}</h4></a>
+								<h3>${album.subtitle}</h3>
+							</div>
 						</div>
+						<input type="image" src="resources/images/expandButton.png" id="albumExpandButton-${album.id}" class="albumExpandButton" onclick="expandAlbum(this)" />
 					</div>
-					<div id="albumExpand-${album.id}"></div>
-					<table id="albumTable-${album.id}" class="albumsTable"></table>
+					<div class="albumExpanded">
+						<div id="albumTagInfo-${album.id}"></div>
+						<div id="albumExpand-${album.id}"></div>
+						<table id="albumTable-${album.id}" class="albumsTable"></table>
+					</div>
 				</td>
 			</tr>
 		</c:forEach>

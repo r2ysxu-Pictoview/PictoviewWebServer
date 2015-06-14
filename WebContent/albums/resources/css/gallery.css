@@ -35,8 +35,8 @@
 }
 
 .albumCover {
-	width: 80px;
-	height: 80px;
+	width: auto;
+	height: 8vh;
 	float: left;
 }
 
@@ -54,6 +54,15 @@
 .albumName>h4 {
 	margin: 0;
 	padding: 0;
+}
+
+.albumExpandButton {
+	float : right;
+	background: none;
+	outline: 0;
+	border: 0;
+	width: 8vw;
+	height: 8vh;
 }
 
 .albumExpand {
