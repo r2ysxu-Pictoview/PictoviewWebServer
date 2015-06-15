@@ -33,7 +33,6 @@ public class ImageController {
 	@RequestMapping(value = "albums/images/thumbnail", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
 	public void fetchAlbumPhotoThumbnail(@RequestParam("photoid") long photoid,
 			OutputStream responseOutput) {
-		System.out.println("images/get " + photoid);
 		try {
 			// Get Image
 			ImageInputStream is = albumBean.fetchPhotoThumbnailData(1, photoid, 0);

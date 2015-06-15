@@ -12,4 +12,9 @@ public class StringUtil {
 		}
 		return true;
 	}
+	
+	public static String emptyIfNull(String value) {
+		if (value == null) return "";
+		return value;
+	}
 }

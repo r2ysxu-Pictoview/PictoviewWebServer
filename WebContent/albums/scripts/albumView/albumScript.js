@@ -8,13 +8,12 @@ function expandAlbum(td) {
 
 function generateAlbumControlOptions(albumId) {
 	if ($("#albumExpand-" + albumId).is(':empty')) {
-		var button = document.createElement('button');
-		button.innerText = 'New Album';
-		button.onclick = function () {
+		var newAlbum = document.createElement('button');
+		newAlbum.innerText = 'New Album';
+		newAlbum.onclick = function () {
 			showNewAlbumCommand(albumId);
 		}
-		
-		$('#albumExpand-' + albumId).append(button);
+		$('#albumExpand-' + albumId).append(newAlbum);
 	} else {
 		$('#albumExpand-' + albumId).toggle();
 	}
@@ -168,7 +167,7 @@ function generateAlbumsRowTag(albumid) {
 	albumAddCategory.innerText = 'New Category';
 
 	albumTagDiv.appendChild(albumTagTable);
-	albumTagDiv.appendChild(albumAddCategory);
+	$('#albumExpand-'+albumid).append(albumAddCategory);
 	return albumTagDiv;
 }
 

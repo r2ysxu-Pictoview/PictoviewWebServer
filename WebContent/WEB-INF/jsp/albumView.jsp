@@ -10,16 +10,34 @@
 <link rel="stylesheet" type="text/css" href="resources/css/galleryModal.css" />
 <script type="text/javascript" src="scripts/albumView/albumScript.js"></script>
 <script type="text/javascript" src="scripts/albumView/tagScript.js"></script>
+<script type="text/javascript" src="scripts/albumView/searchScript.js"></script>
 <script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
 </head>
 <body>
 	<div id="headerDiv">
 		<div id="searchAlbumDiv">
-			<form method="GET" action="/PictureViewerWebServer/albums/search.do" >
-				<input type="text" id="albumSearchInput" name="nameQuery" />
-				<input type="text" id="albumSearchTagInput" name="tagQuery" />
-				<button id="searchButton">Search</button>
-			</form>
+			<label for="albumSearchInput">Name</label>
+			<input type="text" id="albumSearchInput" />
+			<table id="tagSearchTable">
+				<thead>
+				  <tr>
+				     <th>Category</th>
+				     <th>Tags</th>
+				  </tr>
+				 </thead>
+				<tbody>
+					<tr>
+						<td>
+							<input type="text" id="albumSearchCateInput0" value="tags" />
+						</td><td>
+							<input type="text" id="albumSearchTagInput0" />
+						</td><td>
+							<input type="button" id="addAlbumSearchTag" value="+" onclick="addSearchCriteria()" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<button id="searchButton" onclick="submitSearchQuery()">Search</button>
 		</div>
 		<button onclick="showNewAlbumCommand(0)">New Album</button>
 	</div>
@@ -39,8 +57,8 @@
 								</c:otherwise>
 							</c:choose>
 							<div class="albumName">
-								<a href="photos.do?albumId=${album.id}"><h4>${album.name}</h4></a>
-								<h3>${album.subtitle}</h3>
+								<a href="photos.do?albumId=${album.id}"><h3>${album.name}</h3></a>
+								<h4>${album.subtitle}</h4>
 							</div>
 						</div>
 						<input type="image" src="resources/images/expandButton.png" id="albumExpandButton-${album.id}" class="albumExpandButton" onclick="expandAlbum(this)" />
