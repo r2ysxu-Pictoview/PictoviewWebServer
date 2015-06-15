@@ -14,64 +14,74 @@
 <script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
 </head>
 <body>
-	<div id="headerDiv">
-		<div id="searchAlbumDiv">
-			<label for="albumSearchInput">Name</label>
-			<input type="text" id="albumSearchInput" />
-			<table id="tagSearchTable">
-				<thead>
-				  <tr>
-				     <th>Category</th>
-				     <th>Tags</th>
-				  </tr>
-				 </thead>
-				<tbody>
-					<tr>
-						<td>
-							<input type="text" id="albumSearchCateInput0" value="tags" />
-						</td><td>
-							<input type="text" id="albumSearchTagInput0" />
-						</td><td>
-							<input type="button" id="addAlbumSearchTag" value="+" onclick="addSearchCriteria()" />
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<button id="searchButton" onclick="submitSearchQuery()">Search</button>
+	<div id="headerDiv" class="floatingHeader">
+		<div class="bannerDiv">
+			<div id="searchAlbumDiv">
+			<form onsubmit="submitSearchQuery();return false;" >
+				<div class="searchBar">
+					<img src="resources/images/search-icon-hi.png" class="searchBarIcon" />
+					<input type="text" id="albumSearchInput" class="searchBarInput" />
+					<input type="submit" style="display:none" />
+				</div>
+				<input type="image" id="showTagSearch" src="resources/images/menuBarIcon.png" onclick="toggleTagSearch(); return false;" class="searchShowTagTable" />
+				<table id="searchTagTable" class="searchTagTable" style="display:none">
+					<thead>
+					  <tr>
+					     <th width="35%">Category</th>
+					     <th width="70%">Tags</th>
+					     <th width="5%"></th>
+					  </tr>
+					 </thead>
+					<tbody>
+						<tr>
+							<td>
+								<input type="text" id="albumSearchCateInput0" value="tags" />
+							</td><td>
+								<input type="text" id="albumSearchTagInput0" />
+							</td><td>
+								<input type="button" id="addAlbumSearchTag" value="+" onclick="addSearchCriteria(); return false;" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				</form>
+			</div>
 		</div>
-		<button onclick="showNewAlbumCommand(0)">New Album</button>
 	</div>
-	<table id="albumsTable" class="albumsTable">
-		<c:forEach var="album" items="${albumList}">
-			<tr>
-				<td id="albumCell-${album.id}" class="albumCell">
-					<div class="albumContent">
-						<div class="albumInfo">
-							<c:choose>
-								<c:when test="${album.coverId == 0}">
-									<img src="resources/images/noimage.jpg" class="albumCover" />
-								</c:when>
-								<c:otherwise>
-									<img src="images/thumbnail.do?photoid=${album.coverId}"
-										class="albumCover" />
-								</c:otherwise>
-							</c:choose>
-							<div class="albumName">
-								<a href="photos.do?albumId=${album.id}"><h3>${album.name}</h3></a>
-								<h4>${album.subtitle}</h4>
+	<div id="contentDiv" class="content">
+		<input type="button" onclick="showNewAlbumCommand(0)" value="New Album" />
+		<table id="albumsTable" class="albumsTable">
+			<c:forEach var="album" items="${albumList}">
+				<tr>
+					<td id="albumCell-${album.id}" class="albumCell">
+						<div class="albumContent">
+							<div class="albumInfo">
+								<c:choose>
+									<c:when test="${album.coverId == 0}">
+										<img src="resources/images/noimage.jpg" class="albumCover" />
+									</c:when>
+									<c:otherwise>
+										<img src="images/thumbnail.do?photoid=${album.coverId}"
+											class="albumCover" />
+									</c:otherwise>
+								</c:choose>
+								<div class="albumName">
+									<a href="photos.do?albumId=${album.id}"><h3>${album.name}</h3></a>
+									<h4>${album.subtitle}</h4>
+								</div>
 							</div>
+							<input type="image" src="resources/images/expandButton.png" id="albumExpandButton-${album.id}" class="albumExpandButton" onclick="expandAlbum(this)" />
 						</div>
-						<input type="image" src="resources/images/expandButton.png" id="albumExpandButton-${album.id}" class="albumExpandButton" onclick="expandAlbum(this)" />
-					</div>
-					<div class="albumExpanded">
-						<div id="albumTagInfo-${album.id}"></div>
-						<div id="albumExpand-${album.id}"></div>
-						<table id="albumTable-${album.id}" class="albumsTable"></table>
-					</div>
-				</td>
-			</tr>
-		</c:forEach>
-	</table>
+						<div class="albumExpanded">
+							<div id="albumTagInfo-${album.id}"></div>
+							<div id="albumExpand-${album.id}"></div>
+							<table id="albumTable-${album.id}" class="albumsTable"></table>
+						</div>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
 	<div id="albumModal" class="modalDialog">
 		<div class="modalFrame">
 			<div class="modalDiv">

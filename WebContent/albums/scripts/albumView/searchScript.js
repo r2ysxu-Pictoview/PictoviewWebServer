@@ -1,7 +1,7 @@
 var searchCriteria = 1;
 
 function addSearchCriteria() {
-	$('#tagSearchTable').append(generateCriteria());
+	$('#searchTagTable').append(generateCriteria());
 }
 
 function generateCriteria() {
@@ -45,6 +45,7 @@ function submitSearchQuery() {
 		alert("Response Failed");
 	});
 	searchCriteria = 1;
+	return false;
 }
 
 function populateSearchResults(json) {
@@ -55,4 +56,8 @@ function populateSearchResults(json) {
 		console.log(albumA);
 		$("#albumsTable").append(albumA);
 	});
+}
+
+function toggleTagSearch() {
+	$('#searchTagTable').toggle();
 }

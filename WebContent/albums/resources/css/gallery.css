@@ -36,7 +36,7 @@
 
 .albumCover {
 	width: auto;
-	height: 8vh;
+	height: 4em;
 	float: left;
 }
 
@@ -57,12 +57,12 @@
 }
 
 .albumExpandButton {
-	float : right;
+	float: right;
 	background: none;
 	outline: 0;
 	border: 0;
-	width: 8vw;
-	height: 8vh;
+	width: 2em;
+	height: 5em;
 }
 
 .albumExpand {
@@ -104,9 +104,107 @@
 	float: right;
 }
 
+.searchTagTable {
+	display: inline-block;
+	table-layout: fixed;
+	width: 90%;
+	background: rgba(255, 255, 255, 0.8);
+	border-radius: 0.3em;
+	padding-bottom: 0.3em;
+}
+
+.searchTagTable td > input[type=text] {
+	width: 99%;
+}
+
+.floatingHeader {
+	position: fixed;
+	border: 1px solid;
+	top: 0;
+	z-index: 1;
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+	width: 99%;
+	left: 0.5%;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+#searchButton {
+	
+}
+
+.searchBar {
+	width: 90%;
+	background: white;
+	clear: both;
+	position: relative;
+	margin-bottom: 0.3em;
+	border-radius: 0.2em;
+	display: inline-block;
+}
+
+.searchBar>* {
+	font-size: 42pt;
+}
+
+.searchBarIcon {
+	width: 1em;
+	height: 1em;
+	vertical-align: text-bottom;
+	margin-left: 0.3em;
+}
+
+.searchShowTagTable {
+	font-size: 42pt;
+	background: 0;
+	border: 0px;
+	outline: 0;
+	width: 1em;
+	height: 1em;
+	vertical-align: text-bottom;
+}
+
+.searchBarInput {
+	outline: 0;
+	border: 0px solid;
+	width: 85%;
+}
+
+.bannerDiv {
+	margin-left: 1.2em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+}
+
+.content {
+	margin-top: 6em;
+}
+
 a {
 	text-decoration: none;
 	color: #000000;
+}
+
+body {
+	background-image: url("../images/bg-repeat.png");
+	background-repeat: repeat;
+	font-size: 18pt;
+}
+
+input {
+	font-size: 18pt;
+}
+
+input[type=text] {
+	border-radius: 0.3em;
+}
+
+button {
+	font-size: 18pt;
+}
+
+h3 {
+	margin: 0;
 }
 
 .modalDiv {
@@ -117,5 +215,5 @@ a {
 	z-index: 3;
 	position: relative;
 	border-radius: 5px;
-	box-shadow: 0 3px 3px rgba(0,0,0,0.4);
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
 }

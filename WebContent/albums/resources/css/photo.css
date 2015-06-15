@@ -16,3 +16,8 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+body {
+    background-image: url("../images/bg-repeat.png");
+    background-repeat: repeat;
+}
