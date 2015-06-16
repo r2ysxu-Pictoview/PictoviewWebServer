@@ -44,9 +44,16 @@ function getAlbumsResponse(albumId) {
 	});
 }
 
+function deleteDuplicateSearchedAlbum(id) {
+	var duplicateAlbumRow = document.getElementById('albumRow-'+id);
+	if (duplicateAlbumRow != null)
+		document.getElementById('albumsTable').deleteRow(duplicateAlbumRow.rowIndex);
+}
+
 function populateAlbums(albumId, json) {
 	if ($("#albumTable-" + albumId).is(':empty')) {
 		$.each(json, function(i, value) {
+			deleteDuplicateSearchedAlbum(value.id);
 			var albumA = generateAlbumRow(value.id, value.coverId, value.name,
 					value.subtitle)
 			$("#albumTable-" + albumId).append(albumA);
@@ -63,6 +70,7 @@ function generateAlbumRow(albumid, coverId, name, subtitle) {
 	var albumContent = generateAlbumsContent(albumid, name, subtitle, coverId);
 
 	albumCell.className = "albumCell";
+	albumRow.id = "albumRow-" + albumid;
 	albumCell.id = "albumCell-" + albumid;
 
 	// Append elements
@@ -145,10 +153,10 @@ function generateAlbumsNameDiv(id, name, subtitle) {
 	albumName.innerText = name;
 	albumSubtitle.innerText = subtitle;
 	
-	albumAnchor.appendChild(albumName);
-	albumNameDiv.appendChild(albumAnchor);
+	albumNameDiv.appendChild(albumName);
 	albumNameDiv.appendChild(albumSubtitle);
-	return albumNameDiv;
+	albumAnchor.appendChild(albumNameDiv);
+	return albumAnchor;
 }
 
 function generateAlbumsRowTag(albumid) {

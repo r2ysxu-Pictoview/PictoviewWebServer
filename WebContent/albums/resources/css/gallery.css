@@ -3,28 +3,7 @@
 }
 
 .albumsTable td {
-	background: rgb(226, 226, 226); /* Old browsers */
-	background: -moz-linear-gradient(top, rgba(226, 226, 226, 1) 0%,
-		rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%,
-		rgba(254, 254, 254, 1) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(226,
-		226, 226, 1)), color-stop(50%, rgba(219, 219, 219, 1)),
-		color-stop(51%, rgba(209, 209, 209, 1)),
-		color-stop(100%, rgba(254, 254, 254, 1))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, rgba(226, 226, 226, 1) 0%,
-		rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%,
-		rgba(254, 254, 254, 1) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, rgba(226, 226, 226, 1) 0%,
-		rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%,
-		rgba(254, 254, 254, 1) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, rgba(226, 226, 226, 1) 0%,
-		rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%,
-		rgba(254, 254, 254, 1) 100%); /* IE10+ */
-	background: linear-gradient(to bottom, rgba(226, 226, 226, 1) 0%,
-		rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%,
-		rgba(254, 254, 254, 1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2',
-		endColorstr='#fefefe', GradientType=0); /* IE6-9 */
+	background : rgba(0, 0, 0, 0.4);
 	border-style: solid;
 	border-width: 1px;
 	position: relative;
@@ -36,7 +15,7 @@
 
 .albumCover {
 	width: auto;
-	height: 4em;
+	height: 5em;
 	float: left;
 }
 
@@ -49,11 +28,17 @@
 .albumName>h3 {
 	margin: 0;
 	padding: 0;
+	color : white;
 }
 
 .albumName>h4 {
 	margin: 0;
 	padding: 0;
+	color : white;
+}
+
+h3 {
+	font-size: 32pt;
 }
 
 .albumExpandButton {
@@ -61,7 +46,7 @@
 	background: none;
 	outline: 0;
 	border: 0;
-	width: 2em;
+	width: 3em;
 	height: 5em;
 }
 
@@ -84,6 +69,11 @@
 	border: 1px solid black;
 	width: 100%;
 	table-layout: fixed;
+}
+
+.albumTagTable > tr > td {
+	border: 1px solid black;
+	color: white;
 }
 
 .tagNameDiv {
@@ -167,7 +157,7 @@
 .searchBarInput {
 	outline: 0;
 	border: 0px solid;
-	width: 85%;
+	width: 80%;
 }
 
 .bannerDiv {
@@ -188,11 +178,11 @@ a {
 body {
 	background-image: url("../images/bg-repeat.png");
 	background-repeat: repeat;
-	font-size: 18pt;
+	font-size: 26pt;
 }
 
 input {
-	font-size: 18pt;
+	font-size: 26pt;
 }
 
 input[type=text] {
@@ -200,7 +190,7 @@ input[type=text] {
 }
 
 button {
-	font-size: 18pt;
+	font-size: 26pt;
 }
 
 h3 {
@@ -216,4 +206,9 @@ h3 {
 	position: relative;
 	border-radius: 5px;
 	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+}
+
+.herebutnothere {
+	position: absolute;
+	left: -9999px;
 }

@@ -21,7 +21,8 @@
 				<div class="searchBar">
 					<img src="resources/images/search-icon-hi.png" class="searchBarIcon" />
 					<input type="text" id="albumSearchInput" class="searchBarInput" />
-					<input type="submit" style="display:none" />
+					<!-- iOS Hack -->
+					<input type="submit" class="herebutnothere" />
 				</div>
 				<input type="image" id="showTagSearch" src="resources/images/menuBarIcon.png" onclick="toggleTagSearch(); return false;" class="searchShowTagTable" />
 				<table id="searchTagTable" class="searchTagTable" style="display:none">
@@ -52,7 +53,7 @@
 		<input type="button" onclick="showNewAlbumCommand(0)" value="New Album" />
 		<table id="albumsTable" class="albumsTable">
 			<c:forEach var="album" items="${albumList}">
-				<tr>
+				<tr id="albumRow-${album.id}">
 					<td id="albumCell-${album.id}" class="albumCell">
 						<div class="albumContent">
 							<div class="albumInfo">
@@ -65,10 +66,12 @@
 											class="albumCover" />
 									</c:otherwise>
 								</c:choose>
-								<div class="albumName">
-									<a href="photos.do?albumId=${album.id}"><h3>${album.name}</h3></a>
-									<h4>${album.subtitle}</h4>
-								</div>
+								<a href="photos.do?albumId=${album.id}">
+									<div class="albumName">
+										<h3>${album.name}</h3>
+										<h4>${album.subtitle}</h4>
+									</div>
+								</a>
 							</div>
 							<input type="image" src="resources/images/expandButton.png" id="albumExpandButton-${album.id}" class="albumExpandButton" onclick="expandAlbum(this)" />
 						</div>
@@ -84,8 +87,8 @@
 	</div>
 	<div id="albumModal" class="modalDialog">
 		<div class="modalFrame">
-			<div class="modalDiv">
-				<h4>Create New Album</h4>
+			<div class="modalDiv largeText">
+				<h3>Create New Album</h3>
 				<form id="createForm" method="POST" action="/PictureViewerWebServer/albums/create.do">
 					<input type="hidden" id="newAlbumParentId" name="parentId" value="0" />
 					<label for="newAlbumName">Name</label>

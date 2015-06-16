@@ -66,7 +66,6 @@ public class AlbumsController {
 	@ResponseBody
 	@RequestMapping(value="/albums/search", method = RequestMethod.POST)
 	public String fetchAlbumSearchInfo(@RequestBody final MultiValueMap<String, String> query) {
-		System.out.println("Raw: " + query);
 		
 		List<String> name = query.get("name[]");
 		if (name == null) name = new ArrayList<String>();
