@@ -56,7 +56,7 @@ public class PhotoController {
 		try {
 			String name = file.getOriginalFilename();
 			InputStream data = file.getInputStream();
-			albumBean.uploadPhoto(1, albumId, name, data);
+			albumBean.uploadPhoto(1, albumId, name, data, 1);
 
 		} catch (IOException e) {
 			e.printStackTrace();

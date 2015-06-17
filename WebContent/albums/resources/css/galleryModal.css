@@ -23,10 +23,6 @@
 	margin-right:10px;
 }
 
-.modalImage {
-	width : 100%;
-}
-
 .modalOpener {
 	text-align: center;
 }
@@ -95,4 +91,16 @@
 	left:0;
 	bottom:0;
 	right:0;
+    max-width:99%;
+    max-height:99%;
+}
+
+.fullImageWide {
+	width: 100%;
+	height: auto;
+}
+
+.fullImageTall {
+	height: 100%;
+	width: auto;
 }

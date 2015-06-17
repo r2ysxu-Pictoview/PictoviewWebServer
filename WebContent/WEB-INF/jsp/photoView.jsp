@@ -12,7 +12,7 @@
 <script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
 </head>
 <body>
-	<p style="display:inline-block">Displaying <span id="photoCount">${photoCount}</span> photos</p>
+	<p style="display:inline-block;color:white;">Displaying <span id="photoCount">${photoCount}</span> photos</p>
 	<input type="button" value="Upload" onclick="showUploadForm()" class="showUploadButton" />
 	<hr />
 	<div id="photos" class="photoAlbum">
@@ -50,9 +50,7 @@
 			</div>
 		</div>
 		<div class="modalFrame">
-			<div class="modalImage">
-				<img id="enlargedPhoto" class="fullImage noselect" />
-			</div>
+			<img id="enlargedPhoto" class="fullImage noselect" />
 		</div>
 		<div class="closeModal" onclick="closeModal('imageModal')"></div>
 	</div>

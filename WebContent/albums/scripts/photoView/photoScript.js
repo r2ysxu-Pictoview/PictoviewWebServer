@@ -6,6 +6,14 @@ function getOriginalImage(index, id) {
 	originalImage.src = "images.do" + "?photoid=" + id;
 	var modalImageDiv = document.getElementById("imageModal");
 	modalImageDiv.className = "modalDialog showDialog";
+	originalImage.onload = function() {
+		$('#enlargedPhoto').removeClass('fullImageWide fullImageTall');
+		 if (originalImage.clientWidth > originalImage.clientHeight) {
+			$('#enlargedPhoto').addClass('fullImageWide');
+		} else {
+			$('#enlargedPhoto').addClass('fullImageTall');
+		}
+	}
 }
 
 function getNextOriginalImage() {
