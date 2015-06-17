@@ -103,6 +103,7 @@ input {
 	right:0;
     max-width:99%;
     max-height:99%;
+    z-index: 2;
 }
 
 .fullImageWide {

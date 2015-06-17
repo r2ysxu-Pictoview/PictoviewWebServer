@@ -1,5 +1,19 @@
 var currentPhotoIndex = -1;
 
+$(document).ready(function() {
+	var swiper = new Hammer(document.getElementById('enlargedPhoto'));
+
+	swiper.on('swipeleft', function(event) {
+		getNextOriginalImage();
+	});
+	swiper.on('swiperight', function(event) {
+		getPrevOriginalImage();
+	});
+	swiper.on('swipedown', function(event) {
+		closeModal('imageModal');
+	});
+});
+
 function getOriginalImage(index, id) {
 	currentPhotoIndex = index;
 	var originalImage = document.getElementById("enlargedPhoto");
@@ -7,6 +21,7 @@ function getOriginalImage(index, id) {
 	var modalImageDiv = document.getElementById("imageModal");
 	modalImageDiv.className = "modalDialog opaque showDialog";
 	originalImage.onload = function() {
+		
 		$('#enlargedPhoto').removeClass('fullImageWide fullImageTall');
 		 if (originalImage.clientWidth > originalImage.clientHeight) {
 			$('#enlargedPhoto').addClass('fullImageWide');
