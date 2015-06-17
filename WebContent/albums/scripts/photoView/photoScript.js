@@ -26,7 +26,12 @@ function getPrevOriginalImage() {
 	}
 }
 
-function closeModal() {
-	var modalImageDiv = document.getElementById("imageModal");
+function closeModal(modal) {
+	var modalImageDiv = document.getElementById(modal);
 	modalImageDiv.className = "modalDialog";
+}
+
+function showUploadForm() {
+	var modalImageDiv = document.getElementById("uploadModal");
+	modalImageDiv.className = "modalDialog showDialog";
 }

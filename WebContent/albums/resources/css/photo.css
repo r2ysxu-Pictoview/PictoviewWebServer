@@ -1,7 +1,7 @@
 .imageThumbnail {
-	margin: 5px;
-	height: 80px;
-	width: 80px;
+	margin: 0.2em;
+	height: 6em;
+	width: 6em;
 }
 
 .photoAlbum {
@@ -9,15 +9,38 @@
 }
 
 .noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 body {
-    background-image: url("../images/bg-repeat.png");
-    background-repeat: repeat;
+	background-image: url("../images/bg-repeat.png");
+	background-repeat: repeat;
+	font-size: 26pt;
+}
+
+input {
+	font-size: 26pt;
+}
+
+.showUploadButton {
+	display: inline-block;
+}
+
+.modalUplaod {
+	color: white;
+	z-index: 2;
+	position: fixed;
+	top: 0; bottom: 0;
+	left: 0; right: 0;
+	margin: auto;
+	background: rgba(0, 0, 0, 0.8);
+	border-radius: 0.3em;
+	height: 6em;
+	border: 1px solid black;
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
 }

@@ -12,20 +12,27 @@
 <script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
 </head>
 <body>
-
-	<form method="POST" enctype="multipart/form-data" action="upload.do">
-		<input type="text" name="albumId" value="${ albumId }" hidden />
-		<label for="uploadPhoto">Choose File</label> <input type="file" name="file" multiple>
-		<br />
-		<button type="submit">Upload</button>
-	</form>
-	<p id="photoCount">${photoCount}</p>
+	<p style="display:inline-block">Displaying <span id="photoCount">${photoCount}</span> photos</p>
+	<input type="button" value="Upload" onclick="showUploadForm()" class="showUploadButton" />
+	<hr />
 	<div id="photos" class="photoAlbum">
 		<c:forEach var="photo" items="${photoList}" varStatus="status">
 			<img id="photo-${photo.id}"
 				src="images/thumbnail.do?photoid=${photo.id}" class="imageThumbnail"
 				onclick="getOriginalImage(${status.index}, ${photo.id})" />
 		</c:forEach>
+	</div>
+	<div id="uploadModal" class="modalDialog">
+		<div id="uploadDiv" class="modalFrame modalUplaod">
+			<p>Please choose Images to Upload</p>
+			<form method="POST" enctype="multipart/form-data" action="upload.do">
+				<input type="text" name="albumId" value="${ albumId }" hidden />
+				<label for="uploadPhoto">Choose File</label>
+				<input type="file" name="file" multiple>
+				<input type="submit" value="Upload"/>
+			</form>
+		</div>
+		<div class="closeModal" onclick="closeModal('uploadModal')"></div>
 	</div>
 	<div id="imageModal" class="modalDialog">
 		<div class="navbutton navbuttonPrev" onclick="getPrevOriginalImage()">
@@ -47,7 +54,7 @@
 				<img id="enlargedPhoto" class="fullImage noselect" />
 			</div>
 		</div>
-		<div class="closeModal" onclick="closeModal()"></div>
+		<div class="closeModal" onclick="closeModal('imageModal')"></div>
 	</div>
 </body>
 </html>
