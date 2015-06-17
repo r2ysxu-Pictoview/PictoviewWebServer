@@ -5,7 +5,7 @@ function getOriginalImage(index, id) {
 	var originalImage = document.getElementById("enlargedPhoto");
 	originalImage.src = "images.do" + "?photoid=" + id;
 	var modalImageDiv = document.getElementById("imageModal");
-	modalImageDiv.className = "modalDialog showDialog";
+	modalImageDiv.className = "modalDialog opaque showDialog";
 	originalImage.onload = function() {
 		$('#enlargedPhoto').removeClass('fullImageWide fullImageTall');
 		 if (originalImage.clientWidth > originalImage.clientHeight) {
@@ -36,10 +36,10 @@ function getPrevOriginalImage() {
 
 function closeModal(modal) {
 	var modalImageDiv = document.getElementById(modal);
-	modalImageDiv.className = "modalDialog";
+	modalImageDiv.className = "modalDialog opaque";
 }
 
 function showUploadForm() {
 	var modalImageDiv = document.getElementById("uploadModal");
-	modalImageDiv.className = "modalDialog showDialog";
+	modalImageDiv.className = "modalDialog opaque showDialog";
 }

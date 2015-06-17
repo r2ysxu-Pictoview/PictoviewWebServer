@@ -17,12 +17,6 @@
 	pointer-events: auto;
 }
 
-.modalFrame {
-	text-align: center;
-	margin-left:10px;
-	margin-right:10px;
-}
-
 .modalOpener {
 	text-align: center;
 }
@@ -33,74 +27,4 @@
 	height: 100%;
 	z-index: 1;
 	top: 0;
-}
-
-.navbuttonPrev {
-	height: 100%;
-	text-align: left;
-	float: left;
-}
-
-.navbuttonNext {
-	height: 100%;
-	float: right;
-	text-align: right;
-	position: relative;
-}
-
-.modalButtonIcon {
-	position: absolute;
-	top: 45%;
-	width: 70px;
-}
-
-.modalSvg {
-	height: 68px;
-	width: 38px;
-}
-
-.modalSvgLeft {
-	margin-left: 25px;
-}
-
-.modalSvgRight {
-	margin-right: 25px;
-	margin-left: -25px;
-}
-
-.navbutton {
-	opacity: 0.2;
-	position: relative;
-	width: 2.5em;
-	-webkit-transition: opacity 0.5s ease-in-out;
-	-moz-transition: opacity 0.5s ease-in-out;
-	-ms-transition: opacity 0.5s ease-in-out;
-	-o-transition: opacity 0.5s ease-in-out;
-	transition: opacity 0.5s ease-in-out;
-	z-index: 3;
-}
-
-.navbutton:hover {
-	opacity: 1;
-}
-
-.fullImage {
-	position: absolute;
-	margin: auto;
-	top:0;
-	left:0;
-	bottom:0;
-	right:0;
-    max-width:99%;
-    max-height:99%;
-}
-
-.fullImageWide {
-	width: 100%;
-	height: auto;
-}
-
-.fullImageTall {
-	height: 100%;
-	width: auto;
 }

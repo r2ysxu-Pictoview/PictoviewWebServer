@@ -22,7 +22,7 @@
 				onclick="getOriginalImage(${status.index}, ${photo.id})" />
 		</c:forEach>
 	</div>
-	<div id="uploadModal" class="modalDialog">
+	<div id="uploadModal" class="modalDialog opaque">
 		<div id="uploadDiv" class="modalFrame modalUplaod">
 			<p>Please choose Images to Upload</p>
 			<form method="POST" enctype="multipart/form-data" action="upload.do">
@@ -49,9 +49,7 @@
 					stroke-width="5" fill="none" /> </svg>
 			</div>
 		</div>
-		<div class="modalFrame">
-			<img id="enlargedPhoto" class="fullImage noselect" />
-		</div>
+		<img id="enlargedPhoto" class="fullImage noselect" />
 		<div class="closeModal" onclick="closeModal('imageModal')"></div>
 	</div>
 </body>
