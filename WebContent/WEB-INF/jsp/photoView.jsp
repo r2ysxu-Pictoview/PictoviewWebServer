@@ -35,14 +35,14 @@
 		<div class="closeModal" onclick="closeModal('uploadModal')"></div>
 	</div>
 	<div id="imageModal" class="modalDialog">
-		<div class="navbutton navbuttonPrev" onclick="getPrevOriginalImage()">
+		<div class="navbutton navbuttonPrev noselect" onclick="getPrevOriginalImage()">
 			<div class="modalButtonIcon">
 				<svg class="modalSvg modalSvgLeft"> <polyline
 					stroke-linejoin="round" points="35,5 5,35 35,65" stroke="black"
 					stroke-width="5" fill="none" /> </svg>
 			</div>
 		</div>
-		<div class="navbutton navbuttonNext" onclick="getNextOriginalImage()">
+		<div class="navbutton navbuttonNext noselect" onclick="getNextOriginalImage()">
 			<div class="modalButtonIcon">
 				<svg class="modalSvg modalSvgRight"> <polyline
 					stroke-linejoin="round" points="5,5 35,35 5,65" stroke="black"
