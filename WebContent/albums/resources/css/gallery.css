@@ -11,6 +11,7 @@
 
 .albumInfo {
 	display: inline-block;
+	max-width: 85vw;
 }
 
 .albumCover {
@@ -22,7 +23,11 @@
 .albumName {
 	margin-left: 10px;
 	margin-top: 15px;
-	float: left;
+	display: inline-block;
+	max-width: 70%;
+	max-height: 1.5em;
+	overflow-x: hidden;
+	overflow-y: hidden;
 }
 
 .albumName>h3 {
@@ -42,7 +47,8 @@ h3 {
 }
 
 .albumExpandButton {
-	float: right;
+	position: absolute;
+	right: 0.2em;
 	background: none;
 	outline: 0;
 	border: 0;
