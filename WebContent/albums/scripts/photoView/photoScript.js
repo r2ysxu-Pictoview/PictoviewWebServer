@@ -1,8 +1,18 @@
 var currentPhotoIndex = -1;
 
 $(document).ready(function() {
-	var swiper = new Hammer(document.getElementById('enlargedPhoto'));
 
+	console.log($('#albumIdInput').val());
+	loadAlbums($('#albumIdInput').val());
+	addSwipeEvents();
+});
+
+function loadAlbums(albumId) {
+	getAlbumsResponse(albumId);
+}
+
+function addSwipeEvents() {
+	var swiper = new Hammer(document.getElementById('enlargedPhoto'));
 	swiper.on('swipeleft', function(event) {
 		getNextOriginalImage();
 	});
@@ -12,7 +22,7 @@ $(document).ready(function() {
 	swiper.on('swipedown', function(event) {
 		closeModal('imageModal');
 	});
-});
+}
 
 function getOriginalImage(index, id) {
 	currentPhotoIndex = index;

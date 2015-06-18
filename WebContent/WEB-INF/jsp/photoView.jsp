@@ -6,15 +6,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Photos</title>
+<link rel="stylesheet" type="text/css" href="resources/css/gallery.css" />
 <link rel="stylesheet" type="text/css" href="resources/css/photo.css" />
 <link rel="stylesheet" type="text/css" href="resources/css/galleryModal.css" />
 <script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="scripts/hammer.min.js"></script>
 <script type="text/javascript" src="scripts/photoView/photoScript.js"></script>
+<script type="text/javascript" src="scripts/albumView/albumScript.js"></script>
+<script type="text/javascript" src="scripts/albumView/tagScript.js"></script>
 </head>
 <body>
 	<p style="display:inline-block;color:white;">Displaying <span id="photoCount">${photoCount}</span> photos</p>
 	<input type="button" value="Upload" onclick="showUploadForm()" class="showUploadButton" />
+	<hr />
+	<table id="albumTable-${albumId}" class="albumsTable"></table>
 	<hr />
 	<div id="photos" class="photoAlbum">
 		<c:forEach var="photo" items="${photoList}" varStatus="status">
@@ -27,7 +32,7 @@
 		<div id="uploadDiv" class="modalFrame modalUplaod">
 			<p>Please choose Images to Upload</p>
 			<form method="POST" enctype="multipart/form-data" action="upload.do">
-				<input type="text" name="albumId" value="${ albumId }" hidden />
+				<input id="albumIdInput" type="text" name="albumId" value="${albumId}" hidden />
 				<label for="uploadPhoto">Choose File</label>
 				<input type="file" name="file" multiple>
 				<input type="submit" value="Upload"/>
