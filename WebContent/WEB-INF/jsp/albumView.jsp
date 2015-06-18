@@ -8,10 +8,10 @@
 <title>Albums</title>
 <link rel="stylesheet" type="text/css" href="resources/css/gallery.css" />
 <link rel="stylesheet" type="text/css" href="resources/css/galleryModal.css" />
-<script type="text/javascript" src="scripts/albumView/lib/albumScript.js"></script>
-<script type="text/javascript" src="scripts/albumView/lib/tagScript.js"></script>
+<script type="text/javascript" src="scripts/lib/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="scripts/albumView/albumScript.js"></script>
+<script type="text/javascript" src="scripts/albumView/tagScript.js"></script>
 <script type="text/javascript" src="scripts/albumView/searchScript.js"></script>
-<script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
 </head>
 <body>
 	<div id="headerDiv" class="floatingHeader">
