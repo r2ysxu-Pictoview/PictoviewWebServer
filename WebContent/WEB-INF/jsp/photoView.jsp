@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -9,8 +9,8 @@
 <link rel="stylesheet" type="text/css" href="resources/css/gallery.css" />
 <link rel="stylesheet" type="text/css" href="resources/css/photo.css" />
 <link rel="stylesheet" type="text/css" href="resources/css/galleryModal.css" />
-<script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
-<script type="text/javascript" src="scripts/hammer.min.js"></script>
+<script type="text/javascript" src="scripts/lib/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="scripts/lib/hammer.min.js"></script>
 <script type="text/javascript" src="scripts/photoView/photoScript.js"></script>
 <script type="text/javascript" src="scripts/albumView/albumScript.js"></script>
 <script type="text/javascript" src="scripts/albumView/tagScript.js"></script>
@@ -38,7 +38,7 @@
 				<input type="submit" value="Upload"/>
 			</form>
 		</div>
-		<div class="closeModal" onclick="closeModal('uploadModal')"></div>
+		<div class="closeModal" onclick="closePhotoModal('uploadModal')"></div>
 	</div>
 	<div id="imageModal" class="modalDialog">
 		<div id="nextButton" class="navbutton navbuttonPrev noselect" onclick="getPrevOriginalImage()">
@@ -56,7 +56,7 @@
 			</div>
 		</div>
 		<img id="enlargedPhoto" class="fullImage noselect" />
-		<div class="closeModal" onclick="closeModal('imageModal')"></div>
+		<div class="closeModal" onclick="closePhotoModal('imageModal')"></div>
 	</div>
 </body>
 </html>

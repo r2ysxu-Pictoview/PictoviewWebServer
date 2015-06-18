@@ -192,6 +192,6 @@ function createAlbum() {
 	return false;
 }
 
-function closeModal() {
+function closeAlbumModal() {
 	$("#albumModal").removeClass('showDialog');
 }

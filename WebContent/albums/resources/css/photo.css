@@ -107,13 +107,11 @@ input {
 .fullImageWide {
 	width: 100%;
 	height: auto;
-	max-width: 100%;
 }
 
 .fullImageTall {
 	height: 100%;
 	width: auto;
-	max-height: 100%;
 }
 
 .opaque {

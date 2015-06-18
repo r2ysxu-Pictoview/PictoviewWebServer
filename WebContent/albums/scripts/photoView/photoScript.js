@@ -1,18 +1,16 @@
 var currentPhotoIndex = -1;
 
 $(document).ready(function() {
-
-	console.log($('#albumIdInput').val());
 	loadAlbums($('#albumIdInput').val());
-	addSwipeEvents();
+	addSwipeEvents($('#enlargedPhoto')[0]);
 });
 
 function loadAlbums(albumId) {
 	getAlbumsResponse(albumId);
 }
 
-function addSwipeEvents() {
-	var swiper = new Hammer(document.getElementById('enlargedPhoto'));
+function addSwipeEvents(element) {
+	var swiper = new Hammer(element);
 	swiper.on('swipeleft', function(event) {
 		getNextOriginalImage();
 	});
@@ -20,24 +18,32 @@ function addSwipeEvents() {
 		getPrevOriginalImage();
 	});
 	swiper.on('swipedown', function(event) {
-		closeModal('imageModal');
+		closePhotoModal('imageModal');
 	});
+}
+
+function loadImage(id, cIndex) {
+	var originalImage = document.getElementById("enlargedPhoto");
+	originalImage.src = "images.do" + "?photoid=" + id;
+
+	originalImage.onload = function() {
+		setImageDisplaySize($('#enlargedPhoto'), originalImage);
+	}
 }
 
 function getOriginalImage(index, id) {
 	currentPhotoIndex = index;
-	var originalImage = document.getElementById("enlargedPhoto");
-	originalImage.src = "images.do" + "?photoid=" + id;
+	loadImage(id, 0);
 	var modalImageDiv = document.getElementById("imageModal");
 	modalImageDiv.className = "modalDialog opaque showDialog";
-	originalImage.onload = function() {
-		
-		$('#enlargedPhoto').removeClass('fullImageWide fullImageTall');
-		 if (originalImage.clientWidth > originalImage.clientHeight) {
-			$('#enlargedPhoto').addClass('fullImageWide');
-		} else {
-			$('#enlargedPhoto').addClass('fullImageTall');
-		}
+}
+
+function setImageDisplaySize(jElement, originalImage) {
+	jElement.removeClass('fullImageWide fullImageTall');
+	 if (originalImage.clientWidth > originalImage.clientHeight) {
+		jElement.addClass('fullImageWide');
+	} else {
+		jElement.addClass('fullImageTall');
 	}
 }
 
@@ -59,7 +65,7 @@ function getPrevOriginalImage() {
 	}
 }
 
-function closeModal(modal) {
+function closePhotoModal(modal) {
 	var modalImageDiv = document.getElementById(modal);
 	modalImageDiv.className = "modalDialog opaque";
 }
