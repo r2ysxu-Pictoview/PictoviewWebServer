@@ -26,6 +26,9 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 					class="org.springframework.http.converter.StringHttpMessageConverter">
 					<property name="supportedMediaTypes" value="text/plain;charset=UTF-8" />
 				</bean>
+				<bean class="org.springframework.http.converter.ResourceHttpMessageConverter"></bean>
+            	<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"></bean>
+            	<bean class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter"></bean>
 			</array>
 		</property>
 	</bean>

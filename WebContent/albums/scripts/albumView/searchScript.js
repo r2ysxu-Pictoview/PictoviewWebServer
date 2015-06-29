@@ -42,7 +42,6 @@ function submitSearchQuery() {
 		var tags = matchSpaceQuotes($('#albumSearchTagInput' + i).val());
 		data.cate.push({ "category" : category, "tags" : tags });
 	}
-	console.log(data);
 	
 	$.post('search.do', data, function(response) {
 		populateSearchResults(JSON.parse(response));
@@ -57,8 +56,7 @@ function populateSearchResults(json) {
 	$('#albumsTable').empty();
 	$.each(json, function(i, value) {
 		var albumA = generateAlbumRow(value.id, value.coverId, value.name,
-				value.subtitle)
-		console.log(albumA);
+				value.subtitle);
 		$("#albumsTable").append(albumA);
 	});
 }
