@@ -1,4 +1,5 @@
 var searchCriteria = 1;
+var availableTags = [];
 
 function addSearchCriteria() {
 	$('#searchTagTable').append(generateCriteria());
@@ -20,6 +21,10 @@ function generateCriteria() {
 	td2.appendChild(tagInput);
 	tr.appendChild(td1);
 	tr.appendChild(td2);
+	
+    $(tagInput).autocomplete({
+      source: availableTags
+    });
 	
 	searchCriteria += 1;
 	return tr;
@@ -59,5 +64,13 @@ function populateSearchResults(json) {
 }
 
 function toggleTagSearch() {
+	
+	$.get('/PictureViewerWebServer/albums/category/get.do', function(response) {
+		availableTags = JSON.parse(response);
+	});
+	
+	$('#albumSearchCateInput0').autocomplete({
+        source: availableTags
+    });
 	$('#searchTagTable').toggle();
 }

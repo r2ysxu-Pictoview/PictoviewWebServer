@@ -39,6 +39,20 @@ public class TagController {
 		}
 		return null;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/albums/category/get")
+	public String fetchCategories() {
+
+		try {
+			List<String> categories = albumBean.fetchAllUserCategories(1);
+			String json = new JSONArray(categories).toString();
+			return json;
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@ResponseBody
 	@RequestMapping("/albums/tag/create")
