@@ -8,16 +8,19 @@ import com.viewer.beans.AlbumBeanLocal;
 
 public class BeanManager {
 	
-	public static AlbumBeanLocal getAlbumBeanLocal() {
-		AlbumBeanLocal albumBean;
+	static AlbumBeanLocal albumBean;
+	
+	static {
 		try {
 			Context c = new InitialContext();
 			albumBean = (AlbumBeanLocal) c
 					.lookup("java:global/PictureViewerEAR/PictureViewerEJB/AlbumBean!com.viewer.beans.AlbumBeanLocal");
 		} catch (NamingException e1) {
 			e1.printStackTrace();
-			return null;
 		}
+	}
+	
+	public static AlbumBeanLocal getAlbumBeanLocal() {
 		return albumBean;
 	}
 
