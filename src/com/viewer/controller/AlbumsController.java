@@ -42,7 +42,7 @@ public class AlbumsController {
 		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, 0);
 		map.put("albumList", albums);
 
-		return "albumView";
+		return "mobile/albumView";
 	}
 
 	/**
