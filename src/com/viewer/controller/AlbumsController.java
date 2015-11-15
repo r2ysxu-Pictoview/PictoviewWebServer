@@ -31,18 +31,33 @@ public class AlbumsController {
 	}
 
 	/**
-	 * Gets the Album page
+	 * Gets the Album page for mobile view
 	 * 
 	 * @param albumId
 	 * @return JSON containing load information
 	 */
-	@RequestMapping("/albums/albums")
-	public String fetchAlbumPage(ModelMap map) {
+	@RequestMapping("mobile/albums/albums")
+	public String fetchMobileAlbumPage(ModelMap map) {
 
 		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, 0);
 		map.put("albumList", albums);
 
 		return "mobile/albumView";
+	}
+	
+	/**
+	 * Gets the Album page
+	 * 
+	 * @param albumId
+	 * @return JSON containing load information
+	 */
+	@RequestMapping("albums/albums")
+	public String fetchAlbumPage(ModelMap map) {
+
+		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, 0);
+		map.put("albumList", albums);
+
+		return "browser/albumView";
 	}
 
 	/**
