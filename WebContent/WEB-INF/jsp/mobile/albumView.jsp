@@ -6,14 +6,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Albums</title>
-<link rel="stylesheet" type="text/css" href="resources/mobile/css/gallery.css" />
-<link rel="stylesheet" type="text/css" href="resources/mobile/css/galleryModal.css" />
-<link rel="stylesheet" type="text/css" href="resources/mobile/css/jquery-ui.min.css" />
-<script type="text/javascript" src="scripts/lib/jquery-2.1.3.min.js"></script>
-<script type="text/javascript" src="scripts/lib/jquery-ui.min.js"></script>
-<script type="text/javascript" src="scripts/mobile/albumView/albumScript.js"></script>
-<script type="text/javascript" src="scripts/mobile/albumView/tagScript.js"></script>
-<script type="text/javascript" src="scripts/mobile/albumView/searchScript.js"></script>
+<link rel="stylesheet" type="text/css" href="resources/css/gallery.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/galleryModal.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.min.css" />
+<script type="text/javascript" src="../../lib/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../../lib/jquery-ui.min.js"></script>
+<script type="text/javascript" src="scripts/albumView/albumScript.js"></script>
+<script type="text/javascript" src="scripts/albumView/tagScript.js"></script>
+<script type="text/javascript" src="scripts/albumView/searchScript.js"></script>
 </head>
 <body>
 	<div id="headerDiv" class="floatingHeader">
@@ -21,12 +21,12 @@
 			<div id="searchAlbumDiv">
 			<form onsubmit="submitSearchQuery();return false;" >
 				<div class="searchBar">
-					<img src="resources/mobile/images/search-icon-hi.png" class="searchBarIcon" />
+					<img src="resources/images/search-icon-hi.png" class="searchBarIcon" />
 					<input type="text" id="albumSearchInput" class="searchBarInput" />
 					<!-- iOS Hack -->
 					<input type="submit" class="herebutnothere" />
 				</div>
-				<input type="image" id="showTagSearch" src="resources/mobile/images/menuBarIcon.png" onclick="toggleTagSearch(); return false;" class="searchShowTagTable" />
+				<input type="image" id="showTagSearch" src="resources/images/menuBarIcon.png" onclick="toggleTagSearch(); return false;" class="searchShowTagTable" />
 				<table id="searchTagTable" class="searchTagTable" style="display:none">
 					<thead>
 					  <tr>
@@ -61,7 +61,7 @@
 							<div class="albumInfo">
 								<c:choose>
 									<c:when test="${album.coverId == 0}">
-										<img src="resources/mobile/images/noimage.jpg" class="albumCover" />
+										<img src="resources/images/noimage.jpg" class="albumCover" />
 									</c:when>
 									<c:otherwise>
 										<img src="images/thumbnail.do?photoid=${album.coverId}"
@@ -75,7 +75,7 @@
 									</div>
 								</a>
 							</div>
-							<input type="image" src="resources/mobile/images/expandButton.png" id="albumExpandButton-${album.id}" class="albumExpandButton" onclick="expandAlbum(this)" />
+							<input type="image" src="resources/images/expandButton.png" id="albumExpandButton-${album.id}" class="albumExpandButton" onclick="expandAlbum(this)" />
 						</div>
 						<div class="albumExpanded">
 							<div id="albumTagInfo-${album.id}"></div>

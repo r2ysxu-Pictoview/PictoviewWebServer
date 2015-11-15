@@ -88,7 +88,7 @@ function generateAlbumsContent(albumid, name, subtitle, coverId) {
 	
 	albumExpandButton.id = "albumExpandButton-" + albumid;
 	albumExpandButton.type = "image";
-	albumExpandButton.src= "resources/mobile/images/expandButton.png";
+	albumExpandButton.src= "resources/images/expandButton.png";
 	albumExpandButton.className = "albumExpandButton";
 	albumExpandButton.onclick = function() {
 		return expandAlbum(albumExpandButton);
@@ -132,7 +132,7 @@ function generateAlbumsContentInfo(id, name, subtitle, coverId) {
 		albumCover.src = "/PictureViewerWebServer/albums/images/thumbnail.do"
 				+ "?photoid=" + coverId;
 	} else {
-		albumCover.src = "resources/mobile/images/noimage.jpg";
+		albumCover.src = "resources/images/noimage.jpg";
 	}
 
 	albumInfo.appendChild(albumCover);
