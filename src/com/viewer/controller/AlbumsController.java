@@ -149,6 +149,7 @@ public class AlbumsController {
 				albumJSON.put("subtitle",
 						StringUtil.emptyIfNull(album.getSubtitle()));
 				albumJSON.put("coverId", album.getCoverId());
+				albumJSON.put("subalbums", new ArrayList<String>());
 				albumsJSON.put(albumJSON);
 			}
 		} catch (JSONException e) {

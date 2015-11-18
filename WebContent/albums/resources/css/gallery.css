@@ -1,3 +1,198 @@
-.leftNavBar {
-	
+.banner {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: rgba(38, 21, 13, 1);
+	background: -moz-linear-gradient(top, rgb(26, 26, 26) 0%, rgb(29, 24, 22) 12%, rgb(38, 21, 13) 66%, rgb(29, 24, 22) 88%, rgb(26, 26, 26) 100%);
+	background: -webkit-linear-gradient(top, rgb(26, 26, 26) 0%, rgb(29, 24, 22) 12%, rgb(38, 21, 13) 66%, rgb(29, 24, 22) 88%, rgb(26, 26, 26) 100%);
+	background: linear-gradient(to bottom, rgb(26, 26, 26) 0%, rgb(29, 24, 22) 12%, rgb(38, 21, 13) 66%, rgb(29, 24, 22) 88%, rgb(26, 26, 26) 100%);
+	border: 1px solid black;
+	z-index: 1;
+}
+.bannerContent {
+	width: 60em;
+	margin: 0 auto;
+	position: relative;
+}
+
+.userCover {
+	position: absolute;
+	left: 1em;
+	top: 1em;
+	width: auto;
+	height: 6em;
+	border: 1px solid black;
+}
+
+.leftControl {
+	padding-left: 8em;
+	display: inline-block;
+}
+
+.leftControl h4 {
+	color: white;
+}
+
+.rightControl {
+	position: absolute;
+	right: 0;
+	display: inline-block;
+	height: 100%;
+}
+
+.rightControl button {
+	height: 100%;
+	border: none;
+	color: white;
+	margin: 0;
+	background: rgba(0, 0, 0, 0.1);
+}
+
+.rightControl button:hover {
+	color: white;
+	background: rgba(0, 0, 0, 0.3);
+}
+
+/* Sidebar */
+
+.sidebar {
+	position: fixed;
+	width: 15em;
+	height: 100vh;
+	top: 10em;
+	padding: 0.5em;
+}
+
+.sideMenu {
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 5px;
+	padding: 0.3em;
+	color: white;
+}
+
+.searchBar {
+	clear: both;
+	position: relative;
+	margin-bottom: 0.3em;
+	border-radius: 0.2em;
+	display: inline-block;
+}
+
+.searchBarInput {
+	width: 80%;
+}
+
+.searchBarIcon {
+	width: 1em;
+	height: 1em;
+	vertical-align: text-bottom;
+	margin-left: 0.3em;
+}
+
+.searchTagTable {
+	display: inline-block;
+	table-layout: fixed;
+	width: 100%;
+	border-radius: 0.3em;
+	padding-bottom: 0.3em;
+	color: white;
+}
+
+.searchTagTable td > input[type=text] {
+	width: 99%;
+}
+
+.searchBox {
+	background-color: white;
+	border-radius: 3px;
+	border: 1px solid black;
+}
+
+.searchBox input {
+	border: none;
+}
+
+.searchTagTable input {
+	border-radius: 3px;
+}
+
+.criteriaButton {
+	width: 100%;
+	margin: 0 auto;
+}
+
+/* Main Content */
+
+.content {
+	width: 40em;
+	padding-top: 5em;
+	padding-left: 16em;
+}
+
+.albumsTable {
+	width: 100%;
+}
+
+.albumsTable td {
+	background : rgba(0, 0, 0, 0.4);
+	border-style: solid;
+	border-width: 1px;
+	position: relative;
+}
+
+.albumCover {
+	width: auto;
+	height: 5em;
+	float: left;
+}
+
+.albumName {
+	position: absolute;
+	margin-left: 10px;
+	margin-top: 15px;
+	display: inline-block;
+}
+
+.albumName>h3 {
+	margin: 0;
+	padding: 0;
+	color : white;
+	max-height: 1.5em;
+	overflow: hidden;
+}
+
+.albumName>h4 {
+	margin: 0;
+	padding: 0;
+	color : rgb(147, 146, 146);
+	max-height: 1.5em;
+	overflow-y: hidden;
+}
+
+.albumExpandButton {
+	position: absolute;
+	right: 0.2em;
+	background: none;
+	outline: 0;
+	border: 0;
+	width: 3em;
+	height: 5em;
+}
+
+.albumInfo {
+	display: inline-block;
+}
+
+.centerDiv {
+	width: 60em;
+	margin: 0 auto;
+	background-image: url("../images/bg-repeat.png");
+	background-repeat: repeat;
+}
+
+body {
+	background-color: black;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
