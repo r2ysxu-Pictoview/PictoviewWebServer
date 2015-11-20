@@ -1,0 +1,119 @@
+.imageThumbnail {
+	margin: 0.2em;
+	height: 6em;
+	width: 6em;
+}
+
+.photoAlbum {
+	display: inline;
+}
+
+.noselect {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+body {
+	background-image: url("../images/bg-repeat.png");
+	background-repeat: repeat;
+	font-size: 26pt;
+}
+
+input {
+	font-size: 26pt;
+}
+
+.showUploadButton {
+	display: inline-block;
+}
+
+.modalUplaod {
+	color: white;
+	z-index: 2;
+	position: fixed;
+	top: 0; bottom: 0;
+	left: 0; right: 0;
+	margin: auto;
+	background: rgba(0, 0, 0, 0.8);
+	border-radius: 0.3em;
+	height: 6em;
+	border: 1px solid black;
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+}
+
+.navbuttonPrev {
+	height: 100%;
+	text-align: left;
+	float: left;
+}
+
+.navbuttonNext {
+	height: 100%;
+	float: right;
+	text-align: right;
+	position: relative;
+}
+
+.modalButtonIcon {
+	position: absolute;
+	top: 45%;
+	width: 70px;
+}
+
+.modalSvg {
+	height: 68px;
+	width: 38px;
+}
+
+.modalSvgLeft {
+	margin-left: 25px;
+}
+
+.modalSvgRight {
+	margin-right: 25px;
+	margin-left: -25px;
+}
+
+.navbutton {
+	opacity: 0.2;
+	position: relative;
+	width: 2.5em;
+	-webkit-transition: opacity 0.5s ease-in-out;
+	-moz-transition: opacity 0.5s ease-in-out;
+	-ms-transition: opacity 0.5s ease-in-out;
+	-o-transition: opacity 0.5s ease-in-out;
+	transition: opacity 0.5s ease-in-out;
+	z-index: 3;
+}
+
+.navbutton:hover {
+	opacity: 1;
+}
+
+.fullImage {
+	position: absolute;
+	margin: auto;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+    z-index: 2;
+}
+
+.fullImageWide {
+	width: 100%;
+	height: auto;
+}
+
+.fullImageTall {
+	height: 100%;
+	width: auto;
+}
+
+.opaque {
+	background: black !important;
+}

@@ -10,7 +10,7 @@
 		<td id="albumCell-{{album.id}}" class="albumCell">
 			<div class="albumContent">
 				<div class="albumInfo">
-					<img src="resources/images/noimage.jpg" class="albumCover" />
+					<img ng-src="images/thumbnail.do?photoid={{album.coverId}}" class="albumCover" />
 					<a href="photos.do?albumId={{album.id}}">
 						<div class="albumName">
 							<h3>{{album.name}}</h3>
@@ -53,7 +53,7 @@
 					<h3>Search</h3>
 					<div class="searchBox">
 						<img src="resources/images/search-icon-hi.png" class="searchBarIcon" />
-						<input type="text" id="albumSearchInput" class="searchBarInput" />
+						<input type="text" id="albumSearchInput" ng-model="search.name" ng-value="name" class="searchBarInput" />
 					</div>
 					<table id="searchTagTable" class="searchTagTable">
 						<thead>
@@ -74,7 +74,7 @@
 						</tbody>
 					</table>
 					<input type="button" id="addNewSearchCategory" value="Add Category Criteria" ng-click="addCriteria()" class="criteriaButton" />
-					<input type="button" id="addNewSearchCategory" value="Search" class="criteriaButton" />
+					<input type="button" id="searchSubmit" value="Search" class="criteriaButton" ng-click="submitSearch()" />
 				</div>
 			</div>
 			<br />
