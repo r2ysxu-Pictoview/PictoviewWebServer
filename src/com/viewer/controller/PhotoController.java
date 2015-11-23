@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +19,12 @@ import com.viewer.dto.PhotoDTO;
 
 @Controller
 public class PhotoController {
+	
+	@Resource(mappedName = BeanManager.JNDI_NAME)
 	private AlbumBeanLocal albumBean;
 
 	public PhotoController() {
-		albumBean = BeanManager.getAlbumBeanLocal();
+		
 	}
 
 	/**

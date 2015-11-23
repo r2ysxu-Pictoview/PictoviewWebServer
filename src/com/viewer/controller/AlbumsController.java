@@ -3,6 +3,8 @@ package com.viewer.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,10 +26,10 @@ import com.viewer.util.StringUtil;
 @Controller
 public class AlbumsController {
 
+	@Resource(mappedName = BeanManager.JNDI_NAME)
 	private AlbumBeanLocal albumBean;
 
 	public AlbumsController() {
-		albumBean = BeanManager.getAlbumBeanLocal();
 	}
 
 	/**

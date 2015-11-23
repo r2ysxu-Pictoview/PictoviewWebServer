@@ -3,6 +3,7 @@ package com.viewer.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import javax.annotation.Resource;
 import javax.imageio.stream.ImageInputStream;
 
 import org.springframework.http.MediaType;
@@ -18,10 +19,10 @@ import com.viewer.beans.AlbumBeanLocal;
 @Controller
 public class ImageController {
 
+	@Resource(mappedName = BeanManager.JNDI_NAME)
 	private AlbumBeanLocal albumBean;
 
 	public ImageController() {
-		albumBean = BeanManager.getAlbumBeanLocal();
 	}
 
 	/**

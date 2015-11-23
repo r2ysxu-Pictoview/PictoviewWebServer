@@ -3,6 +3,8 @@ package com.viewer.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,10 +22,10 @@ import com.viewer.util.StringUtil;
 @Controller
 public class TagController {
 
+	@Resource(mappedName = BeanManager.JNDI_NAME)
 	private AlbumBeanLocal albumBean;
 
 	public TagController() {
-		albumBean = BeanManager.getAlbumBeanLocal();
 	}
 
 	@ResponseBody
