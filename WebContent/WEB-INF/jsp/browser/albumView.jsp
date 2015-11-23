@@ -30,7 +30,7 @@
 		</td>
 	</script>
 </header>
-<body ng-controller="AlbumSearchController">
+<body ng-controller="AlbumViewController">
 	<!-- Banner -->
 	<div id="banner" class="banner">
 		<div class="bannerContent">
@@ -85,7 +85,7 @@
 		</div>
 
 		<!-- Content -->
-		<div id="contentMenu" ng-controller="AlbumViewController" class="content">
+		<div id="contentMenu" class="content">
 			<div id="albumListMenu">
 				<table class="albumsTable">
 					<tr ng-repeat="album in albumList" ng-include="'albumTree.html'">

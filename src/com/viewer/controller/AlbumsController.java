@@ -71,7 +71,7 @@ public class AlbumsController {
 	public String fetchAlbumPageInfo(@RequestParam("albumId") long parentId) {
 		return fetchAlbums(parentId);
 	}
-
+	
 	/**
 	 * Gets initial information for page load
 	 * 
@@ -79,15 +79,27 @@ public class AlbumsController {
 	 * @return JSON containing load information
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/albums/search", method = RequestMethod.POST)
+	@RequestMapping(value = "albums/search", method = RequestMethod.POST)
 	public String fetchAlbumSearchInfo(
+			@RequestBody SearchQuery searchQuery) {
+		System.out.println(searchQuery);
+		 List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(1,
+				searchQuery.toSearchQueryDTO());
+		JSONArray albumJson = generateAlbumJSON(albums);
+		return albumJson.toString();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "mobile/albums/search", method = RequestMethod.POST)
+	public String fetchAlbumSearchInfoURL(
 			@RequestBody final MultiValueMap<String, String> query) {
 
 		List<String> name = query.get("name[]");
 		if (name == null)
 			name = new ArrayList<String>();
 
-		SearchQuery searchQuery = new SearchQuery(name);
+		SearchQuery searchQuery = new SearchQuery();
+		searchQuery.setNames(name);
 
 		int categoryCount = Integer.parseInt(query.getFirst("cateNum"));
 

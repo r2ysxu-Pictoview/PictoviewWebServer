@@ -1,10 +1,10 @@
 var albumApp = angular.module('albumViewApp', []);
 
 // Search Controller
-
 var categories = [{'category' : 'tags', 'tags' : ''}];
 
-albumApp.controller('AlbumSearchController', function($scope) {
+// Album Controller
+albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $http) {
 	var albumId = 0;
 	var maxCategory = 14;
 
@@ -18,10 +18,30 @@ albumApp.controller('AlbumSearchController', function($scope) {
 			maxCategory--;
 		}
 	}
-});
+	
+	$scope.submitSearch = function() {
+		var name =  matchSpaceQuotes($scope.search.name);
+		
+		var searchData = { "names" : name, "cate" : []};
+		for (var i = 0; i < categories.length; i++) {
+			var tags = matchSpaceQuotes(categories[i].tags);
+			searchData.cate.push({ "category" : categories[i].category, "tags" : tags });
+		} 
+		
+		console.log(searchData);
+		
+		$http.post('search.do', searchData).then(function successCallback(response) {
+			console.log(response);
+			$scope.albumList = response.data;
+		  }, function errorCallback(response) {
+		  });
+		
+		return false;
+	}
 
-albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $http) {
-	var albumId = 0;
+	function matchSpaceQuotes(str) {
+		return str.match(/(".*?"|[^" \s]+)(?=\s* |\s*$)/g) || [];
+	}
 
 	$scope.expandAlbum = function(albumData) {
 		if (albumData.subalbums.length == 0){
