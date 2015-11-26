@@ -21,7 +21,16 @@
 				<input type="image" src="resources/images/expandButton.png" id="albumExpandButton-{{album.id}}" class="albumExpandButton" ng-click="expandAlbum(album)" />
 			</div>
 			<div class="albumExpanded">
-				<div id="albumTagInfo-{{album.id}}"></div>
+				<div id="albumTagInfo-{{album.id}}" style="display:block;">
+					<table class="albumTagTable">
+						<tr ng-repeat="cate in album.categories">
+							<td width="30%">{{cate.category}}</td>
+							<td width="70%">
+								<div class="tagNameDiv" ng-repeat="tag in cate.tags">{{tag.tagName}}</div>
+							</td>
+						</tr>
+					</table>
+				</div>
 				<div id="albumExpand-{{album.id}}"></div>
 				<table id="subAlbums-{{album.id}}" class="albumsTable" style="display:block;">
 					<tr ng-repeat="album in album.subalbums" ng-include="'albumTree.html'"></tr>

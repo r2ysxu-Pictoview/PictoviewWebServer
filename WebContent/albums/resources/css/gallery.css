@@ -184,6 +184,27 @@
 	display: inline-block;
 }
 
+.albumTagTable {
+	border: 1px solid black;
+	width: 100%;
+	table-layout: fixed;
+}
+
+.albumTagTable tr td {
+	border: 1px solid black;
+	color: white;
+}
+
+.tagNameDiv {
+	float: left;
+	margin: 5px;
+	padding-left: 2px;
+	padding-right: 2px;
+	border: dashed 1px;
+	border-radius: 5px;
+	border: dashed 1px;
+}
+
 .centerDiv {
 	width: 60em;
 	margin: 0 auto;

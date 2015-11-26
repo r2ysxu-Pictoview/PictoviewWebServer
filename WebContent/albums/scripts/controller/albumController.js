@@ -44,22 +44,38 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 	}
 
 	$scope.expandAlbum = function(albumData) {
+		
+		// Get sub albums
 		if (albumData.subalbums.length == 0){
 			
 			$http.get('albums/get.do', { params :{
 				"albumId" : albumData.id
-				}}).then(function successCallback(response) {
-					albumData.subalbums = response.data;
-			  }, function errorCallback(response) {
-				  console.log(response);
-			  });
+			}}).then(function successCallback(response) {
+				albumData.subalbums = response.data;
+			}, function errorCallback(response) {});
 		} else {
 			var elem = document.getElementById('subAlbums-' + albumData.id);
 			if (elem.style.display == 'block') elem.style.display = 'none';
 			else elem.style.display = 'block';
 		}
+		
+		// Get album tags
+		if (albumData.categories == null) {
+			$http.get('tag/get.do', { params : {
+				"albumId" : albumData.id
+			}}).then( function successCallback(response) {
+				albumData.categories = response.data;
+			}, function errorCallback(response) {});
+			
+			albumData.categories =[];
+		} else {
+			var elem = document.getElementById('albumTagInfo-' + albumData.id);
+			if (elem.style.display == 'block') elem.style.display = 'none';
+			else elem.style.display = 'block';
+		}
 	}
 	
+	// Get album list
 	$http.get('albums/get.do', { params :{
 		"albumId" : albumId
 		}}).then(function successCallback(response) {
