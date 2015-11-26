@@ -208,6 +208,16 @@
 .centerDiv {
 	width: 60em;
 	margin: 0 auto;
+	background-repeat: repeat;
+}
+
+.centerBG {
+	position: fixed;
+	left: 0;
+	right: 0;
+	width: 60em;
+	height: 100vh;
+	margin: 0 auto;
 	background-image: url("../images/bg-repeat.png");
 	background-repeat: repeat;
 }

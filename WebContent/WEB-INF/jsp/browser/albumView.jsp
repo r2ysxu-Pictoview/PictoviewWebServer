@@ -54,6 +54,7 @@
 		</div>
 	</div>
 
+	<div class="centerBG"></div>
 	<div class="centerDiv">
 		<!-- Sidebar -->
 		<div id="sidebar" class="sidebar">
