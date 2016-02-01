@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
@@ -26,7 +27,7 @@ import com.viewer.util.StringUtil;
 @Controller
 public class AlbumsController {
 
-	@Resource(mappedName = BeanManager.JNDI_NAME)
+	@Resource(mappedName = BeanManager.ALBUM_JNDI_NAME)
 	private AlbumBeanLocal albumBean;
 
 	public AlbumsController() {
@@ -46,7 +47,7 @@ public class AlbumsController {
 
 		return "mobile/albumView";
 	}
-	
+
 	/**
 	 * Gets the Album page
 	 * 
@@ -73,7 +74,7 @@ public class AlbumsController {
 	public String fetchAlbumPageInfo(@RequestParam("albumId") long parentId) {
 		return fetchAlbums(parentId);
 	}
-	
+
 	/**
 	 * Gets initial information for page load
 	 * 
@@ -82,23 +83,19 @@ public class AlbumsController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "albums/search", method = RequestMethod.POST)
-	public String fetchAlbumSearchInfo(
-			@RequestBody SearchQuery searchQuery) {
+	public String fetchAlbumSearchInfo(@RequestBody SearchQuery searchQuery) {
 		System.out.println(searchQuery);
-		 List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(1,
-				searchQuery.toSearchQueryDTO());
+		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(1, searchQuery.toSearchQueryDTO());
 		JSONArray albumJson = generateAlbumJSON(albums);
 		return albumJson.toString();
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "mobile/albums/search", method = RequestMethod.POST)
-	public String fetchAlbumSearchInfoURL(
-			@RequestBody final MultiValueMap<String, String> query) {
+	public String fetchAlbumSearchInfoURL(@RequestBody final MultiValueMap<String, String> query) {
 
 		List<String> name = query.get("name[]");
-		if (name == null)
-			name = new ArrayList<String>();
+		if (name == null) name = new ArrayList<String>();
 
 		SearchQuery searchQuery = new SearchQuery();
 		searchQuery.setNames(name);
@@ -108,12 +105,9 @@ public class AlbumsController {
 		for (int i = 0; i < categoryCount; i++) {
 			String category = query.getFirst("cate[" + i + "][category]");
 			List<String> tags = query.get("cate[" + i + "][tags][]");
-			if (StringUtil.notNullEmpty(category) && tags != null
-					&& !tags.isEmpty())
-				searchQuery.addCategory(category, tags);
+			if (StringUtil.notNullEmpty(category) && tags != null && !tags.isEmpty()) searchQuery.addCategory(category, tags);
 		}
-		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(1,
-				searchQuery.toSearchQueryDTO());
+		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(1, searchQuery.toSearchQueryDTO());
 		JSONArray albumJson = generateAlbumJSON(albums);
 		return albumJson.toString();
 	}
@@ -127,14 +121,12 @@ public class AlbumsController {
 	 * @return album page
 	 */
 	@RequestMapping(value = "/albums/create", method = RequestMethod.POST)
-	public String createAlbum(
-			@RequestParam("albumName") String name,
+	public String createAlbum(@RequestParam("albumName") String name,
 			@RequestParam(required = false, value = "albumSub") String subtitle,
 			@RequestParam(required = false, value = "parentId") Long parentId) {
 
 		if (StringUtil.notNullEmpty(name)) {
-			if (parentId == null)
-				parentId = new Long(0);
+			if (parentId == null) parentId = new Long(0);
 			albumBean.createAlbum(1, name, subtitle, parentId);
 		}
 		return "redirect:/albums/albums.do";
@@ -160,8 +152,7 @@ public class AlbumsController {
 				JSONObject albumJSON = new JSONObject();
 				albumJSON.put("id", album.getId());
 				albumJSON.put("name", album.getName());
-				albumJSON.put("subtitle",
-						StringUtil.emptyIfNull(album.getSubtitle()));
+				albumJSON.put("subtitle", StringUtil.emptyIfNull(album.getSubtitle()));
 				albumJSON.put("coverId", album.getCoverId());
 				albumJSON.put("subalbums", new ArrayList<String>());
 				albumsJSON.put(albumJSON);

@@ -58,6 +58,7 @@
 	<div class="centerDiv">
 		<!-- Sidebar -->
 		<div id="sidebar" class="sidebar">
+			<!-- Search Bar -->
 			<div id="albumSearchMenu" class="sideMenu">
 				<div class="searchBar" >
 					<h3>Search</h3>

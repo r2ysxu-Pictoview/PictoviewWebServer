@@ -20,7 +20,7 @@ import com.viewer.dto.PhotoDTO;
 @Controller
 public class PhotoController {
 	
-	@Resource(mappedName = BeanManager.JNDI_NAME)
+	@Resource(mappedName = BeanManager.ALBUM_JNDI_NAME)
 	private AlbumBeanLocal albumBean;
 
 	public PhotoController() {

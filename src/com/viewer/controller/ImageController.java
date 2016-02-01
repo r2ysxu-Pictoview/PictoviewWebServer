@@ -19,7 +19,7 @@ import com.viewer.beans.AlbumBeanLocal;
 @Controller
 public class ImageController {
 
-	@Resource(mappedName = BeanManager.JNDI_NAME)
+	@Resource(mappedName = BeanManager.ALBUM_JNDI_NAME)
 	private AlbumBeanLocal albumBean;
 
 	public ImageController() {

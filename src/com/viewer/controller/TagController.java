@@ -22,7 +22,7 @@ import com.viewer.util.StringUtil;
 @Controller
 public class TagController {
 
-	@Resource(mappedName = BeanManager.JNDI_NAME)
+	@Resource(mappedName = BeanManager.ALBUM_JNDI_NAME)
 	private AlbumBeanLocal albumBean;
 
 	public TagController() {

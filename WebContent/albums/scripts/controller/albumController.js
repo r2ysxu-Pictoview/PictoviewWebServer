@@ -34,7 +34,7 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 			console.log(response);
 			$scope.albumList = response.data;
 		  }, function errorCallback(response) {
-		  });
+		});
 		
 		return false;
 	}
