@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
@@ -56,6 +55,8 @@ public class AlbumsController {
 	 */
 	@RequestMapping("albums/albums")
 	public String fetchAlbumPage(ModelMap map) {
+		
+		System.out.println("HERE albums/albums");
 
 		List<AlbumDTO> albums = albumBean.fetchAllUserAlbums(1, 0);
 		map.put("albumList", albums);

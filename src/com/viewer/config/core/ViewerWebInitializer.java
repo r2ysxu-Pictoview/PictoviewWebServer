@@ -1,6 +1,8 @@
-package com.viewer.config;
+package com.viewer.config.core;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import com.viewer.config.SpringWebConfig;
 
 public class ViewerWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
