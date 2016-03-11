@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import javax.imageio.stream.ImageInputStream;
 
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +27,22 @@ public class ImageController {
 	public ImageController() {
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "albums/images/cover", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	public void fetchAlbumCoverPhoto(@RequestParam("albumid") long albumId, OutputStream responseOutput) {
+		if (albumId == 0) return;
+
+		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		try {
+			// Get Image
+			ImageInputStream is = albumBean.fetchPhotoThumbnailData(principal.getUsername(), albumId, 0);
+			writeImageStreamToResponse(is, responseOutput);
+			// return data;
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * Gets Image thumbnail
 	 * 
@@ -32,12 +50,13 @@ public class ImageController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "albums/images/thumbnail", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public void fetchAlbumPhotoThumbnail(@RequestParam("photoid") long photoid,
-			OutputStream responseOutput) {
+	public void fetchAlbumPhotoThumbnail(@RequestParam("photoid") long photoid, OutputStream responseOutput) {
 		if (photoid == 0) return;
+
+		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
 			// Get Image
-			ImageInputStream is = albumBean.fetchPhotoThumbnailData(1, photoid, 0);
+			ImageInputStream is = albumBean.fetchPhotoThumbnailData(principal.getUsername(), photoid, 0);
 			writeImageStreamToResponse(is, responseOutput);
 			// return data;
 		} catch (NumberFormatException e) {
@@ -53,15 +72,14 @@ public class ImageController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "albums/images", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public void fetchAlbumPhoto(@RequestParam("photoid") long photoid,
-			OutputStream responseOutput) {
+	public void fetchAlbumPhoto(@RequestParam("photoid") long photoid, OutputStream responseOutput) {
 
-		ImageInputStream is = albumBean.fetchPhotoData(1, photoid);
+		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		ImageInputStream is = albumBean.fetchPhotoData(principal.getUsername(), photoid);
 		writeImageStreamToResponse(is, responseOutput);
 	}
 
-	private void writeImageStreamToResponse(ImageInputStream is,
-			OutputStream out) {
+	private void writeImageStreamToResponse(ImageInputStream is, OutputStream out) {
 		try {
 
 			// Copy the contents of the file to the output stream

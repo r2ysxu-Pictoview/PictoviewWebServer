@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +35,8 @@ public class TagController {
 	public String fetchAlbumTagInfo(@RequestParam("albumId") long albumId) {
 
 		try {
-			AlbumTagsDTO albumTags = albumBean.fetchUserAlbumTags(1, albumId);
+			UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			AlbumTagsDTO albumTags = albumBean.fetchUserAlbumTags(principal.getUsername(), albumId);
 			String json = generateAlbumInfoJSON(albumTags);
 			return json;
 		} catch (NumberFormatException e) {
@@ -47,7 +50,9 @@ public class TagController {
 	public String fetchCategories() {
 
 		try {
-			List<String> categories = albumBean.fetchAllUserCategories(1);
+
+			UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			List<String> categories = albumBean.fetchAllUserCategories(principal.getUsername());
 			String json = new JSONArray(categories).toString();
 			return json;
 		} catch (NumberFormatException e) {
@@ -62,9 +67,10 @@ public class TagController {
 			@RequestParam("categoryName") String category,
 			@RequestParam("tagName") String tag) {
 		try {
+			UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			if (StringUtil.notNullEmpty(category, tag)) {
-				albumBean.createCategory(1, category);
-				albumBean.tagUserAlbum(1, albumId, tag, category);
+				albumBean.createCategory(principal.getUsername(), category);
+				albumBean.tagUserAlbum(principal.getUsername(), albumId, tag, category);
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();

@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +39,8 @@ public class PhotoController {
 	public String fetchPhotoPage(ModelMap map,
 			@RequestParam("albumId") long albumId) {
 
-		List<PhotoDTO> photos = albumBean.fetchUserAlbumPhotos(1, albumId);
+		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<PhotoDTO> photos = albumBean.fetchUserAlbumPhotos(principal.getUsername(), albumId);
 		map.put("photoList", photos);
 		map.put("photoCount", "" + photos.size());
 		map.put("albumId", albumId);
@@ -60,7 +63,8 @@ public class PhotoController {
 		try {
 			String name = file.getOriginalFilename();
 			InputStream data = file.getInputStream();
-			albumBean.uploadPhoto(1, albumId, name, data, 1);
+			UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			albumBean.uploadPhoto(principal.getUsername(), albumId, name, data, 1);
 
 		} catch (IOException e) {
 			e.printStackTrace();
