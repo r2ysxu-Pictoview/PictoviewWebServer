@@ -25,7 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/account/**").permitAll()
 			.antMatchers("/albums/**").access("hasRole('ROLE_USER')")
-			.and().formLogin()
+			.and().formLogin().loginPage("/account/login.do")
+			.usernameParameter("username").passwordParameter("password")
+			.and().csrf()
 			.and().httpBasic();
 		//@formatter:on
 	}
