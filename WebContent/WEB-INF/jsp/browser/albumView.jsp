@@ -3,6 +3,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Albums</title>
 	<link rel="stylesheet" type="text/css" href="resources/css/gallery.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/galleryModal.css" />
 	<script type="text/javascript" src="../lib/angular.min.js"></script>
 	<script type="text/javascript" src="scripts/controller/albumController.js"></script>
 
@@ -93,6 +94,10 @@
 					<h3>Favourites</h3>
 					No favourites
 			</div>
+			<br />
+			<div id="albumOptions" class="sideMenu">
+				<input type="button" id="createNewAlbumButton" value="New Album" ng-click="showCreateAlbumModal()" class="criteriaButton" />
+			</div>
 		</div>
 
 		<!-- Content -->
@@ -104,6 +109,23 @@
 				</table>
 			</div>
 		</div>
+	</div>
+	
+	<!-- Modals -->
+	<div id="createAlbumModal" ng-class="modalDialog">
+		<div class="modalFrame">
+			<div class="modalDiv largeText">
+				<h3>Create New Album</h3>
+				<form id="createForm" method="POST" action="/PictureViewerWebServer/albums/create.do">
+					<input type="hidden" id="newAlbumParentId" name="parentId" value="0" />
+					<label for="newAlbumName">Name</label>
+					<input type="text" id="newAlbumName" name="albumName" />
+					<br />
+					<button id="createButton">New Album</button>
+				</form>
+			</div>
+		</div>
+		<div class="closeModal" ng-click="closeAlbumModal()"></div>
 	</div>
 </body>
 </html>

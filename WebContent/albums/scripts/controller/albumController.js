@@ -75,6 +75,16 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 		}
 	}
 	
+	$scope.modalDialog = 'modalDialog';
+	$scope.showCreateAlbumModal = function() {
+		$scope.modalDialog = 'modalDialog showDialog';
+	}
+	
+	$scope.closeAlbumModal = function() {
+		$scope.modalDialog = 'modalDialog';
+		return false;
+	}
+	
 	// Get album list
 	$http.get('albums/get.do', { params :{
 		"albumId" : albumId

@@ -40,12 +40,12 @@
 			<artifactId>spring-web</artifactId>
 			<version>${springVersion}</version>
 		</dependency>
-    	<dependency>
-        	<groupId>org.springframework.security</groupId>
-        	<artifactId>spring-security-web</artifactId>
-       		<version>${springSecurityVersion}</version>
-    	</dependency>
-    	<dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${springSecurityVersion}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${springSecurityVersion}</version>
@@ -81,10 +81,16 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<compilerVersion>1.7</compilerVersion>
 					<source>1.7</source>
 					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 		</plugins>
