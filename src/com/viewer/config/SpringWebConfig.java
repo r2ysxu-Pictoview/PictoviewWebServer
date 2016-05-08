@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @Configuration
 @ComponentScan({ "com.viewer.controller" })
-@Import({ SecurityConfig.class })
+@Import({ SpringSecurityConfig.class })
 public class SpringWebConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
