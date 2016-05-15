@@ -9,21 +9,16 @@
 <body ng-controller="LoginViewController">
     <fieldset>
         <legend>Please Login</legend>
-        <c:url var="loginUrl" value="/account/login.do" />
+        <c:url var="loginUrl" value="/login/login.do" />
 		<form name="loginForm" action="${loginUrl}" method="POST">
-			        <div id="loginMessage">${errorMessage}</div>
-		        <c:if test="${param.logout}">
-			        <div class="alert alert-success"> 
-			            You have been logged out.
-			        </div>
-		        </c:if>
-		        <label for="username">Username</label>
-		        <input type="text" id="username" name="username"/>
-		        <label for="password">Password</label>
-		        <input type="password" id="password" name="password"/>
-		        <div>
-		            <button type="submit">Log in</button>
-		        </div>
+			<div>${ errorMessage }</div>
+	        <label for="username">Username</label>
+	        <input type="text" id="username" name="username"/>
+	        <label for="password">Password</label>
+	        <input type="password" id="password" name="password"/>
+	        <div>
+	            <button type="submit">Log in</button>
+	        </div>
 		    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
 		<input type="button" value="Register">
@@ -46,6 +41,8 @@
 				<input type="email" id="emailReg" ng-model="rgdata.email" required />
 		        <label for="nameReg">Name</label>
 				<input type="text" id="nameReg" ng-model="rgdata.name" required />
+				<label for="description" >Description</label>
+				<textarea rows="4" cols="50" id="descriptionReg" ng-model="rgdata.description" ></textarea>
 		    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		    	<div>
 		            <button type="submit">Register</button>

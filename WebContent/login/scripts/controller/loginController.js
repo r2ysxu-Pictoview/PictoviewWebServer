@@ -10,11 +10,14 @@ albumApp.controller('LoginViewController', ['$scope','$http', '$location', funct
 		
 		$http.post('register.do', { 
 			"username" : creds.username,
-			"password" : creds.password,
+			"passkey" : creds.password,
 			"email": creds.email,
-			"name" : creds.name
+			"name" : creds.name,
+			"gender" : creds.gender,
+			"address" : creds.address,
+			"description" : creds.description
 		}).then(function successCallback(response) {
-				$location.path("/home.do")
+			$location.path("/home.do")
 		}, function errorCallback(response) {});
 	}
 	
