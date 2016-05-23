@@ -7,38 +7,7 @@
 	<script type="text/javascript" src="../lib/angular.min.js"></script>
 	<script type="text/javascript" src="scripts/controller/albumController.js"></script>
 
-	<script type="text/ng-template"  id="albumTree.html">
-		<td id="albumCell-{{album.id}}" class="albumCell">
-			<div class="albumContent">
-				<div class="albumInfo">
-					<img ng-src="images/thumbnail.do?photoid={{album.coverId}}" class="albumCover" />
-					<a href="photos.do?albumId={{album.id}}">
-						<div class="albumName">
-							<h3>{{album.name}}</h3>
-							<h4>{{album.subtitle}}</h4>
-						</div>
-					</a>
-				</div>
-				<input type="image" src="resources/images/expandButton.png" id="albumExpandButton-{{album.id}}" class="albumExpandButton" ng-click="expandAlbum(album)" />
-			</div>
-			<div class="albumExpanded">
-				<div id="albumTagInfo-{{album.id}}" style="display:block;">
-					<table class="albumTagTable">
-						<tr ng-repeat="cate in album.categories">
-							<td width="30%">{{cate.category}}</td>
-							<td width="70%">
-								<div class="tagNameDiv" ng-repeat="tag in cate.tags">{{tag.tagName}}</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div id="albumExpand-{{album.id}}"></div>
-				<table id="subAlbums-{{album.id}}" class="albumsTable" style="display:block;">
-					<tr ng-repeat="album in album.subalbums" ng-include="'albumTree.html'"></tr>
-				</table>
-			</div>
-		</td>
-	</script>
+	<script type="text/ng-template"  id="albumTree.html" src="resources/tempaltes/albumTemplate.html" ></script>
 </header>
 <body ng-controller="AlbumViewController">
 	<!-- Banner -->
@@ -116,16 +85,24 @@
 		<div class="modalFrame">
 			<div class="modalDiv largeText">
 				<h3>Create New Album</h3>
-				<form id="createForm" method="POST" action="/PictureViewerWebServer/albums/create.do">
+				<form id="createForm" method="POST" enctype="multipart/form-data" action="/PictureViewerWebServer/albums/create.do?${_csrf.parameterName}=${_csrf.token}">
 					<input type="hidden" id="newAlbumParentId" name="parentId" value="0" />
-					<label for="newAlbumName">Name</label>
-					<input type="text" id="newAlbumName" name="albumName" />
+		    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		    		
+					<label for="albumName">Name</label>
+					<input type="text" id="albumName" name="albumName" />
 					<br />
-					<button id="createButton">New Album</button>
+					<label for="newAlbumDescription">Description</label>
+					<textarea rows="4" cols="50" id="newAlbumDescription" ></textarea>
+					<br />
+					<label for="uploadPhoto">Choose File</label>
+					<input type="file" name="file">
+					<br />
+					<button type="submit" id="createButton">New Album</button>
 				</form>
 			</div>
-		</div>
 		<div class="closeModal" ng-click="closeAlbumModal()"></div>
+		</div>
 	</div>
 </body>
 </html>

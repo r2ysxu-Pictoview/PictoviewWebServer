@@ -1,5 +1,7 @@
 package com.viewer.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.viewer.bean.BeanManager;
 import com.viewer.beans.AlbumBeanLocal;
 import com.viewer.dto.AlbumDTO;
+import com.viewer.dto.PhotoDTO;
 import com.viewer.model.SearchQuery;
+import com.viewer.security.model.AlbumUser;
+import com.viewer.util.ResponseUtil;
 import com.viewer.util.StringUtil;
+import com.viewer.util.StringUtils;
 
 @Controller
 public class AlbumsController {
@@ -101,15 +108,36 @@ public class AlbumsController {
 	public String createAlbum(@RequestParam("albumName") String name,
 			@RequestParam(required = false, value = "albumSub") String subtitle,
 			@RequestParam(required = false, value = "permission") String permission,
+			@RequestParam(required = false, value = "description") String description,
+			@RequestParam(required = false, value = "file") MultipartFile file,
 			@RequestParam(required = false, value = "parentId") Long parentId) {
 
-		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (StringUtil.notNullEmpty(name)) {
 			if (parentId == null) parentId = new Long(0);
-			if (parentId == 0) albumBean.createAlbum(principal.getUsername(), name, subtitle, permission);
-			else albumBean.createAlbum(principal.getUsername(), name, subtitle, parentId);
+			
+			long albumid = 0;
+			if (parentId == 0) albumid = albumBean.createAlbum(principal.getUsername(), name, subtitle, description, permission);
+			else albumid = albumBean.createAlbum(principal.getUsername(), name, subtitle, description, parentId);
+			PhotoDTO coverPhoto = processPhotoFiles(albumid, principal.getUsername(), file);
+			albumBean.setAlbumCoverPhoto(principal.getUsername(), albumid, coverPhoto.getId());
 		}
 		return "redirect:/albums/albums.do";
+	}
+	
+
+	private PhotoDTO processPhotoFiles(long albumId, String username, MultipartFile file) {
+		try {
+			String name = file.getOriginalFilename();
+			String ext = ResponseUtil.convertContentTypeToExt(file.getContentType());
+			if (StringUtils.notNullEmpty(ext)) {
+				InputStream data = file.getInputStream();
+				return albumBean.uploadPhoto(username, albumId, name, ext, data, 1);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**

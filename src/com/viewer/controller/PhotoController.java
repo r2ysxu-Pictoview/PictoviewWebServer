@@ -18,6 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.viewer.bean.BeanManager;
 import com.viewer.beans.AlbumBeanLocal;
 import com.viewer.dto.PhotoDTO;
+import com.viewer.security.model.AlbumUser;
+import com.viewer.util.ResponseUtil;
+import com.viewer.util.StringUtils;
 
 @Controller
 public class PhotoController {
@@ -53,22 +56,25 @@ public class PhotoController {
 			@RequestParam("albumId") Long albumId,
 			@RequestParam("file") List<MultipartFile> files) {
 		
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		for (MultipartFile file : files) {
-			processPhotoFiles(albumId, file);
+			processPhotoFiles(albumId, principal.getUsername(), file);
 		}
 		return "redirect:/albums/photos.do?albumId=" + albumId;
 	}
 
-	private void processPhotoFiles(long albumId, MultipartFile file) {
+	private PhotoDTO processPhotoFiles(long albumId, String username, MultipartFile file) {
 		try {
 			String name = file.getOriginalFilename();
-			InputStream data = file.getInputStream();
-			UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			albumBean.uploadPhoto(principal.getUsername(), albumId, name, data, 1);
-
+			String ext = ResponseUtil.convertContentTypeToExt(file.getContentType());
+			if (StringUtils.notNullEmpty(ext)) {
+				InputStream data = file.getInputStream();
+				return albumBean.uploadPhoto(username, albumId, name, ext, data, 1);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		return null;
 	}
 }
