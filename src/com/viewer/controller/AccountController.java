@@ -20,7 +20,6 @@ import com.viewer.beans.AccountBeanLocal;
 import com.viewer.dto.UserCredentialDTO;
 import com.viewer.dto.UserDataDTO;
 import com.viewer.util.ResponseConstants;
-import com.viewer.util.StringUtils;
 
 @Controller
 public class AccountController {
