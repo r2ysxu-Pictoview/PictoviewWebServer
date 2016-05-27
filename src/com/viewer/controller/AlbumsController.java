@@ -74,8 +74,8 @@ public class AlbumsController {
 	@ResponseBody
 	@RequestMapping("/albums/albums/get")
 	public String fetchSubscribedAlbums(@RequestParam("albumId") long parentId) {
-		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<AlbumDTO> albums = albumBean.fetchViewableAlbums(principal.getUsername(), parentId);
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<AlbumDTO> albums = albumBean.fetchViewableAlbums(principal.getUserid(), parentId);
 		JSONArray albumJson = generateAlbumJSON(albums);
 
 		return albumJson.toString();
@@ -90,8 +90,8 @@ public class AlbumsController {
 	@ResponseBody
 	@RequestMapping(value = "albums/search", method = RequestMethod.POST)
 	public String fetchAlbumSearchInfo(@RequestBody SearchQuery searchQuery) {
-		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(principal.getUsername(), searchQuery.toSearchQueryDTO());
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(principal.getUserid(), searchQuery.toSearchQueryDTO());
 		JSONArray albumJson = generateAlbumJSON(albums);
 		return albumJson.toString();
 	}
@@ -117,22 +117,22 @@ public class AlbumsController {
 			if (parentId == null) parentId = new Long(0);
 			
 			long albumid = 0;
-			if (parentId == 0) albumid = albumBean.createAlbum(principal.getUsername(), name, subtitle, description, permission);
-			else albumid = albumBean.createAlbum(principal.getUsername(), name, subtitle, description, parentId);
-			PhotoDTO coverPhoto = processPhotoFiles(albumid, principal.getUsername(), file);
-			albumBean.setAlbumCoverPhoto(principal.getUsername(), albumid, coverPhoto.getId());
+			if (parentId == 0) albumid = albumBean.createAlbum(principal.getUserid(), name, subtitle, description, permission);
+			else albumid = albumBean.createAlbum(principal.getUserid(), name, subtitle, description, parentId);
+			PhotoDTO coverPhoto = processPhotoFiles(albumid, principal.getUserid(), file);
+			albumBean.setAlbumCoverPhoto(principal.getUserid(), albumid, coverPhoto.getId());
 		}
 		return "redirect:/albums/albums.do";
 	}
 	
 
-	private PhotoDTO processPhotoFiles(long albumId, String username, MultipartFile file) {
+	private PhotoDTO processPhotoFiles(long albumId, long userid, MultipartFile file) {
 		try {
 			String name = file.getOriginalFilename();
 			String ext = ResponseUtil.convertContentTypeToExt(file.getContentType());
 			if (StringUtils.notNullEmpty(ext)) {
 				InputStream data = file.getInputStream();
-				return albumBean.uploadPhoto(username, albumId, name, ext, data, 1);
+				return albumBean.uploadPhoto(userid, albumId, name, ext, data, 1);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

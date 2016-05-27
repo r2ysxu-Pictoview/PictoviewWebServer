@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.viewer.bean.BeanManager;
 import com.viewer.beans.AlbumBeanLocal;
+import com.viewer.security.model.AlbumUser;
 
 @Controller
 public class ImageController {
@@ -32,10 +33,10 @@ public class ImageController {
 	public void fetchAlbumCoverPhoto(@RequestParam("albumid") long albumId, OutputStream responseOutput) {
 		if (albumId == 0) return;
 
-		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
 			// Get Image
-			ImageInputStream is = albumBean.fetchPhotoThumbnailData(principal.getUsername(), albumId, 0);
+			ImageInputStream is = albumBean.fetchPhotoThumbnailData(principal.getUserid(), albumId, 0);
 			writeImageStreamToResponse(is, responseOutput);
 			// return data;
 		} catch (NumberFormatException e) {
@@ -53,10 +54,10 @@ public class ImageController {
 	public void fetchAlbumPhotoThumbnail(@RequestParam("photoid") long photoid, OutputStream responseOutput) {
 		if (photoid == 0) return;
 
-		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
 			// Get Image
-			ImageInputStream is = albumBean.fetchPhotoThumbnailData(principal.getUsername(), photoid, 0);
+			ImageInputStream is = albumBean.fetchPhotoThumbnailData(principal.getUserid(), photoid, 0);
 			writeImageStreamToResponse(is, responseOutput);
 			// return data;
 		} catch (NumberFormatException e) {
@@ -74,8 +75,8 @@ public class ImageController {
 	@RequestMapping(value = "albums/images", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
 	public void fetchAlbumPhoto(@RequestParam("photoid") long photoid, OutputStream responseOutput) {
 
-		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		ImageInputStream is = albumBean.fetchPhotoData(principal.getUsername(), photoid);
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		ImageInputStream is = albumBean.fetchPhotoData(principal.getUserid(), photoid);
 		writeImageStreamToResponse(is, responseOutput);
 	}
 

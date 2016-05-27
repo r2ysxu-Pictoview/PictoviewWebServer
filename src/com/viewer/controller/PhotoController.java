@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,8 +41,8 @@ public class PhotoController {
 	public String fetchPhotoPage(ModelMap map,
 			@RequestParam("albumId") long albumId) {
 
-		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<PhotoDTO> photos = albumBean.fetchUserAlbumPhotos(principal.getUsername(), albumId);
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<PhotoDTO> photos = albumBean.fetchUserAlbumPhotos(principal.getUserid(), albumId);
 		map.put("photoList", photos);
 		map.put("photoCount", "" + photos.size());
 		map.put("albumId", albumId);
@@ -59,18 +58,18 @@ public class PhotoController {
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		for (MultipartFile file : files) {
-			processPhotoFiles(albumId, principal.getUsername(), file);
+			processPhotoFiles(albumId, principal.getUserid(), file);
 		}
 		return "redirect:/albums/photos.do?albumId=" + albumId;
 	}
 
-	private PhotoDTO processPhotoFiles(long albumId, String username, MultipartFile file) {
+	private PhotoDTO processPhotoFiles(long albumId, long userid, MultipartFile file) {
 		try {
 			String name = file.getOriginalFilename();
 			String ext = ResponseUtil.convertContentTypeToExt(file.getContentType());
 			if (StringUtils.notNullEmpty(ext)) {
 				InputStream data = file.getInputStream();
-				return albumBean.uploadPhoto(username, albumId, name, ext, data, 1);
+				return albumBean.uploadPhoto(userid, albumId, name, ext, data, 1);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

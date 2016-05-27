@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +18,7 @@ import com.viewer.bean.BeanManager;
 import com.viewer.beans.AlbumBeanLocal;
 import com.viewer.dto.AlbumTagsDTO;
 import com.viewer.dto.TagsDTO;
+import com.viewer.security.model.AlbumUser;
 import com.viewer.util.StringUtil;
 
 @Controller
@@ -35,8 +35,8 @@ public class TagController {
 	public String fetchAlbumTagInfo(@RequestParam("albumId") long albumId) {
 
 		try {
-			UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			AlbumTagsDTO albumTags = albumBean.fetchUserAlbumTags(principal.getUsername(), albumId);
+			AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			AlbumTagsDTO albumTags = albumBean.fetchUserAlbumTags(principal.getUserid(), albumId);
 			String json = generateAlbumInfoJSON(albumTags);
 			return json;
 		} catch (NumberFormatException e) {
@@ -51,8 +51,8 @@ public class TagController {
 
 		try {
 
-			UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			List<String> categories = albumBean.fetchAllUserCategories(principal.getUsername());
+			AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			List<String> categories = albumBean.fetchAllUserCategories(principal.getUserid());
 			String json = new JSONArray(categories).toString();
 			return json;
 		} catch (NumberFormatException e) {
@@ -67,10 +67,10 @@ public class TagController {
 			@RequestParam("categoryName") String category,
 			@RequestParam("tagName") String tag) {
 		try {
-			UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			if (StringUtil.notNullEmpty(category, tag)) {
-				albumBean.createCategory(principal.getUsername(), category);
-				albumBean.tagUserAlbum(principal.getUsername(), albumId, tag, category);
+				albumBean.createCategory(principal.getUserid(), category);
+				albumBean.tagUserAlbum(principal.getUserid(), albumId, tag, category);
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();

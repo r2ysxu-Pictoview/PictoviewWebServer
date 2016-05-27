@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
@@ -22,6 +21,7 @@ import com.viewer.bean.BeanManager;
 import com.viewer.beans.AlbumBeanLocal;
 import com.viewer.dto.AlbumDTO;
 import com.viewer.model.SearchQuery;
+import com.viewer.security.model.AlbumUser;
 import com.viewer.util.StringUtil;
 
 @Controller
@@ -51,7 +51,7 @@ public class AlbumsMobileController {
 	@RequestMapping(value = "mobile/albums/search", method = RequestMethod.POST)
 	public String fetchAlbumSearchInfoURL(@RequestBody final MultiValueMap<String, String> query) {
 
-		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<String> name = query.get("name[]");
 		if (name == null) name = new ArrayList<String>();
 
@@ -65,7 +65,7 @@ public class AlbumsMobileController {
 			List<String> tags = query.get("cate[" + i + "][tags][]");
 			if (StringUtil.notNullEmpty(category) && tags != null && !tags.isEmpty()) searchQuery.addCategory(category, tags);
 		}
-		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(principal.getUsername(), searchQuery.toSearchQueryDTO());
+		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(principal.getUserid(), searchQuery.toSearchQueryDTO());
 		JSONArray albumJson = generateAlbumJSON(albums);
 		return albumJson.toString();
 	}
