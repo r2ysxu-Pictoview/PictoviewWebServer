@@ -35,9 +35,8 @@ public class ImageController {
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
 			// Get Image
-			ImageInputStream is = albumBean.fetchPhotoThumbnailData(principal.getUserid(), albumId, 0);
+			ImageInputStream is = albumBean.fetchAlbumCoverThumbnail(principal.getUserid(), albumId, 0);
 			writeImageStreamToResponse(is, responseOutput);
-			// return data;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
