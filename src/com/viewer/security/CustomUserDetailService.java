@@ -28,7 +28,7 @@ public class CustomUserDetailService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		UserCredentialDTO user = accountBean.verifyUser(username);
-		if (user == null) return null;
+		if (user == null) throw new UsernameNotFoundException("Wrong username or password");
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		return new AlbumUser(user.getUserid(), user.getUsername(), user.getPasskey(), authorities);
