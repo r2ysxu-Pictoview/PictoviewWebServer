@@ -6,8 +6,6 @@
 	<link rel="stylesheet" type="text/css" href="resources/css/galleryModal.css" />
 	<script type="text/javascript" src="../lib/angular.min.js"></script>
 	<script type="text/javascript" src="scripts/controller/albumController.js"></script>
-
-	<script type="text/ng-template"  id="albumTree.html" src="resources/tempaltes/albumTemplate.html" ></script>
 </header>
 <body ng-controller="AlbumViewController">
 	<!-- Banner -->
@@ -73,7 +71,7 @@
 		<div id="contentMenu" class="content">
 			<div id="albumListMenu">
 				<table class="albumsTable">
-					<tr ng-repeat="album in albumList" ng-include="'albumTree.html'">
+					<tr ng-repeat="album in albumList" ng-include="'resources/templates/albumTemplate.html'">
 					</tr>
 				</table>
 			</div>
