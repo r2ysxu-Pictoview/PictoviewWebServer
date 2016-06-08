@@ -64,6 +64,14 @@ public class AlbumsController {
 		return albumJson.toString();
 	}
 
+	@ResponseBody
+	@RequestMapping("/albums/albums/info")
+	public String fetchAlbumInfo(@RequestParam("albumId") long albumid) {
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		AlbumDTO albumInfo = albumBean.fetchUserAlbumInfo(principal.getUserid(), albumid);
+		return generateAlbumInfo(albumInfo).toString();
+	}
+
 	/**
 	 * Gets subscribed Albums
 	 * 
@@ -104,26 +112,25 @@ public class AlbumsController {
 	 * @return album page
 	 */
 	@RequestMapping(value = "/albums/create", method = RequestMethod.POST)
-	public String createAlbum(@RequestParam("albumName") String name,
-			@RequestParam(required = false, value = "albumSub") String subtitle,
+	public String createAlbum(@RequestParam("albumName") String name, @RequestParam(required = false, value = "albumSub") String subtitle,
 			@RequestParam(required = false, value = "permission") String permission,
 			@RequestParam(required = false, value = "description") String description,
-			@RequestParam(required = false, value = "file") MultipartFile file,
-			@RequestParam(required = false, value = "parentId") Long parentId) {
+			@RequestParam(required = false, value = "file") MultipartFile file, @RequestParam(required = false, value = "parentId") Long parentId) {
 
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (StringUtil.notNullEmpty(name)) {
 			if (parentId == null) parentId = new Long(0);
-			
+
 			long albumid = 0;
-			if (parentId == 0) albumid = albumBean.createAlbum(principal.getUserid(), name, subtitle, description, permission);
-			else albumid = albumBean.createAlbum(principal.getUserid(), name, subtitle, description, parentId);
+			if (parentId == 0)
+				albumid = albumBean.createAlbum(principal.getUserid(), name, subtitle, description, permission);
+			else
+				albumid = albumBean.createAlbum(principal.getUserid(), name, subtitle, description, parentId);
 			PhotoDTO coverPhoto = processPhotoFiles(albumid, principal.getUserid(), file);
 			albumBean.setAlbumCoverPhoto(principal.getUserid(), albumid, coverPhoto.getId());
 		}
 		return "redirect:/albums/albums.do";
 	}
-	
 
 	private PhotoDTO processPhotoFiles(long albumId, long userid, MultipartFile file) {
 		try {
@@ -137,6 +144,13 @@ public class AlbumsController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	protected JSONObject generateAlbumInfo(AlbumDTO album) {
+		JSONObject albumJSON = new JSONObject();
+		albumJSON.put("id", album.getId());
+		albumJSON.put("description", album.getDescription());
+		return albumJSON;
 	}
 
 	/**

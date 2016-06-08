@@ -90,8 +90,11 @@
 					<label for="albumName">Name</label>
 					<input type="text" id="albumName" name="albumName" />
 					<br />
+					<label for="albumName">Subtitle</label>
+					<input type="text" id="albumSub" name="albumSub" />
+					<br />
 					<label for="newAlbumDescription">Description</label>
-					<textarea rows="4" cols="50" id="newAlbumDescription" ></textarea>
+					<textarea rows="4" cols="50" id="newAlbumDescription" name="description" ></textarea>
 					<br />
 					<label for="uploadPhoto">Choose File</label>
 					<input type="file" name="file">

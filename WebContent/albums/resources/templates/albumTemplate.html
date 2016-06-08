@@ -13,6 +13,7 @@
 	</div>
 	<div class="albumExpanded">
 		<div id="albumTagInfo-{{album.id}}" style="display:block;">
+			<div id="albumDescription-{{album.id}}">{{album.description}}</div>
 			<table class="albumTagTable">
 				<tr ng-repeat="cate in album.categories">
 					<td width="30%">{{cate.category}}</td>

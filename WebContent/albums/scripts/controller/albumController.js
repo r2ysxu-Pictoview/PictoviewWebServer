@@ -73,6 +73,14 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 			if (elem.style.display == 'block') elem.style.display = 'none';
 			else elem.style.display = 'block';
 		}
+		
+		// Get album description
+		if (albumData.description == null) {
+			$http.get('albums/info.do', {params : { "albumId" : albumData.id }
+			}).then( function successCallback(response) {
+				albumData.description = response.data.description;
+			}, function errorCallback(response){});
+		}
 	}
 	
 	$scope.modalDialog = 'modalDialog';
