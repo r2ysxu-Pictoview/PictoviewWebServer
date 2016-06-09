@@ -76,6 +76,12 @@ public class TagController {
 			e.printStackTrace();
 		}
 	}
+	
+	@ResponseBody
+	@RequestMapping("/albums/tag/plus")
+	public void upvoteAlbumTag(@RequestParam("tagId") long tagId) {
+		albumBean.tagRelevanceAlbum(tagId);
+	}
 
 	private String generateAlbumInfoJSON(AlbumTagsDTO albumTags) {
 		JSONArray allTagsJSON = new JSONArray();
@@ -91,6 +97,7 @@ public class TagController {
 					JSONObject tagJSON = new JSONObject();
 					tagJSON.put("tagId", tag.getId());
 					tagJSON.put("tagName", tag.getName());
+					tagJSON.put("tagR", tag.getRelevance());
 					tagListJSON.put(tagJSON);
 				}
 				categoryJSON.put("tags", tagListJSON);
