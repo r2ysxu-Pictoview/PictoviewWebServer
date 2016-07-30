@@ -9,22 +9,37 @@
 				</div>
 			</a>
 		</div>
-		<input type="image" src="resources/images/expandButton.png" id="albumExpandButton-{{album.id}}" class="albumExpandButton" ng-click="expandAlbum(album)" />
+		<input type="image" src="resources/images/expandButton.png" id="albumExpandButton-{{album.id}}"
+			class="albumExpandButton" ng-click="albumExpand(album)" />
 	</div>
-	<div class="albumExpanded">
-		<div id="albumTagInfo-{{album.id}}" style="display:block;">
+	<div  id="albumExpand-{{album.id}}" class="albumExpanded" style="display:none;">
+		<div id="albumTagInfo-{{album.id}}">
 			<div id="albumDescription-{{album.id}}">{{album.description}}</div>
 			<table class="albumTagTable">
 				<tr ng-repeat="cate in album.categories">
-					<td width="30%">{{cate.category}}</td>
-					<td width="70%">
+					<td width="25%">
+						<span>{{cate.category}}</span>
+					</td>
+					<td width="75%">
 						<div class="tagNameDiv" ng-repeat="tag in cate.tags">{{tag.tagName}}</div>
+						<button class="album-add-tag-button" ng-click="albumAddNewTag(album.id, cate)">+</button>
+						<div id="albumExtraTag-{{album.id}}-{{cate.category}}" style="display:none;">
+							<input class="more-tags-input" type="text" ng-model="cate.newTags">
+							<button ng-click="albumSaveNewTag(album.id, cate)">Tag</button>
+						</div>
 					</td>
 				</tr>
 			</table>
 		</div>
-		<div id="albumExpand-{{album.id}}"></div>
-		<table id="subAlbums-{{album.id}}" class="albumsTable" style="display:block;">
+		<div id="albumOptions-{{album.id}}">
+			<div id="albumNewCategoryOption-{{album.id}}" style="display: none;">
+				<input id="albumExtraCategory-{{album.id}}" ng-model="cate.category">
+				<button ng-click="albumAddNewCategory(album)">Add Category</button>
+			</div>
+			<button ng-click="albumShowAddNewCategory(album)">New Category</button>
+			<button>New Album</button>
+		</div>
+		<table id="subAlbums-{{album.id}}" class="albumsTable">
 			<tr ng-repeat="album in album.subalbums" ng-include="'albumTemplate.html'"></tr>
 		</table>
 	</div>

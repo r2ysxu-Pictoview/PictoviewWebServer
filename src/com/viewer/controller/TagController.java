@@ -65,10 +65,10 @@ public class TagController {
 	@RequestMapping("/albums/tag/create")
 	public void createAlbumTag(@RequestParam("albumId") long albumId,
 			@RequestParam("categoryName") String category,
-			@RequestParam("tagName") String tag) {
+			@RequestParam("tags") List<String> tag) {
 		try {
 			AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			if (StringUtil.notNullEmpty(category, tag)) {
+			if (StringUtil.notNullEmpty(category)) {
 				albumBean.createCategory(principal.getUserid(), category);
 				albumBean.tagUserAlbum(principal.getUserid(), albumId, tag, category);
 			}

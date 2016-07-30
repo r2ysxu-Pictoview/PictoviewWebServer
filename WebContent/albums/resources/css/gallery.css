@@ -180,6 +180,11 @@
 	height: 5em;
 }
 
+.album-add-tag-button {
+	float: right;
+	margin-left: 0.5em;
+}
+
 .albumInfo {
 	display: inline-block;
 }

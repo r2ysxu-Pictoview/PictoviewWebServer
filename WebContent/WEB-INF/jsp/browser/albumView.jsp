@@ -4,6 +4,7 @@
 	<title>Albums</title>
 	<link rel="stylesheet" type="text/css" href="resources/css/gallery.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/galleryModal.css" />
+	<script type="text/javascript" src="../lib/jquery-2.1.3.min.js"></script>
 	<script type="text/javascript" src="../lib/angular.min.js"></script>
 	<script type="text/javascript" src="scripts/controller/albumController.js"></script>
 </header>
@@ -90,7 +91,7 @@
 					<label for="albumName">Name</label>
 					<input type="text" id="albumName" name="albumName" />
 					<br />
-					<label for="albumName">Subtitle</label>
+					<label for="albumSub">Subtitle</label>
 					<input type="text" id="albumSub" name="albumSub" />
 					<br />
 					<label for="newAlbumDescription">Description</label>

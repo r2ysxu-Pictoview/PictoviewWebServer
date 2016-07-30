@@ -26,7 +26,7 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 		for (var i = 0; i < categories.length; i++) {
 			var tags = matchSpaceQuotes(categories[i].tags);
 			searchData.cate.push({ "category" : categories[i].category, "tags" : tags });
-		} 
+		}
 		
 		console.log(searchData);
 		
@@ -43,22 +43,19 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 		return str.match(/(".*?"|[^" \s]+)(?=\s* |\s*$)/g) || [];
 	}
 
-	$scope.expandAlbum = function(albumData) {
-		
+	$scope.albumExpand = function(albumData) {
+
+		$('#albumExpand-' + albumData.id).toggle();
+
 		// Get sub albums
 		if (albumData.subalbums.length == 0){
-			
 			$http.get('albums/get.do', { params :{
 				"albumId" : albumData.id
 			}}).then(function successCallback(response) {
 				albumData.subalbums = response.data;
 			}, function errorCallback(response) {});
-		} else {
-			var elem = document.getElementById('subAlbums-' + albumData.id);
-			if (elem.style.display == 'block') elem.style.display = 'none';
-			else elem.style.display = 'block';
 		}
-		
+
 		// Get album tags
 		if (albumData.categories == null) {
 			$http.get('tag/get.do', { params : {
@@ -66,14 +63,10 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 			}}).then( function successCallback(response) {
 				albumData.categories = response.data;
 			}, function errorCallback(response) {});
-			
+
 			albumData.categories =[];
-		} else {
-			var elem = document.getElementById('albumTagInfo-' + albumData.id);
-			if (elem.style.display == 'block') elem.style.display = 'none';
-			else elem.style.display = 'block';
 		}
-		
+
 		// Get album description
 		if (albumData.description == null) {
 			$http.get('albums/info.do', {params : { "albumId" : albumData.id }
@@ -81,8 +74,35 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 				albumData.description = response.data.description;
 			}, function errorCallback(response){});
 		}
+	} //
+	
+	$scope.albumShowAddNewCategory = function(albumData) {
+		$('#albumNewCategoryOption-' + albumData.id).toggle();
 	}
 	
+	$scope.albumAddNewCategory = function(albumData) {
+		var categoryName = $('#albumExtraCategory-' + albumData.id).val();
+		if (categoryName && categoryName != '')
+			albumData.categories.push({"category" : categoryName, "tags" : []});
+	}
+	
+	$scope.albumAddNewTag = function(albumid, categoryData) {
+		$('#albumExtraTag-' + albumid + '-' + categoryData.category).toggle();
+		console.log(categoryData);
+	}
+	
+	$scope.albumSaveNewTag = function(albumid, categoryData) {
+		console.log(categoryData.newTags);
+		$.get('/PictureViewerWebServer/albums/tag/create.do', {
+			"albumId" : albumid,
+			"categoryName" : categoryData.category,
+			"tags" : categoryData.newTags
+		}, function(response) {
+		}).fail(function() {
+			alert("Response Failed");
+		});
+	}
+
 	$scope.modalDialog = 'modalDialog';
 	$scope.showCreateAlbumModal = function() {
 		$scope.modalDialog = 'modalDialog showDialog';
