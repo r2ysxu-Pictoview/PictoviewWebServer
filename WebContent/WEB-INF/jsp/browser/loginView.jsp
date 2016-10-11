@@ -27,7 +27,6 @@
 	<div id="registerModal">
 		<fieldset>
 			<legend>Registration</legend>
-			
 			<form name="registerForm" ng-submit="validateRegister()" >
 		        <label for="usernameReg">Username</label>
 				<input type="text" id="usernameReg" ng-model="rgdata.username"

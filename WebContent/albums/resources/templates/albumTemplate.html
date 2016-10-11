@@ -37,7 +37,8 @@
 				<button ng-click="albumAddNewCategory(album)">Add Category</button>
 			</div>
 			<button ng-click="albumShowAddNewCategory(album)">New Category</button>
-			<button>New Album</button>
+			<button ng-click="showCreateAlbumModal(album.id)">New Album</button>
+			<button>Subscribe</button>
 		</div>
 		<table id="subAlbums-{{album.id}}" class="albumsTable">
 			<tr ng-repeat="album in album.subalbums" ng-include="'albumTemplate.html'"></tr>

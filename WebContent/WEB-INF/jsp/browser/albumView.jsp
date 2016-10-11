@@ -64,7 +64,7 @@
 			</div>
 			<br />
 			<div id="albumOptions" class="sideMenu">
-				<input type="button" id="createNewAlbumButton" value="New Album" ng-click="showCreateAlbumModal()" class="criteriaButton" />
+				<input type="button" id="createNewAlbumButton" value="New Album" ng-click="showCreateAlbumModal(0)" class="criteriaButton" />
 			</div>
 		</div>
 

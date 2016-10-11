@@ -104,12 +104,14 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 	}
 
 	$scope.modalDialog = 'modalDialog';
-	$scope.showCreateAlbumModal = function() {
+	$scope.showCreateAlbumModal = function(parentId) {
 		$scope.modalDialog = 'modalDialog showDialog';
+		$('#newAlbumParentId').val(parentId);
 	}
 	
 	$scope.closeAlbumModal = function() {
 		$scope.modalDialog = 'modalDialog';
+		$('#newAlbumParentId').val(0);
 		return false;
 	}
 	
