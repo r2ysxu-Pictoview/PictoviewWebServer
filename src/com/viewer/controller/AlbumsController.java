@@ -131,6 +131,12 @@ public class AlbumsController {
 		}
 		return "redirect:/albums/albums.do";
 	}
+	
+	@RequestMapping(value = "/albums/subscribe", method = RequestMethod.POST)
+	public void subscribeToAlbum(@RequestParam("albumId") Long albumId ) {
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		albumBean.subscribeToAlbum(principal.getUserid(), albumId);
+	}
 
 	private PhotoDTO processPhotoFiles(long albumId, long userid, MultipartFile file) {
 		try {

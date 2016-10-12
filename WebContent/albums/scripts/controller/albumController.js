@@ -115,6 +115,15 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 		return false;
 	}
 	
+	$scope.subscribeToAlbum = function(albumid) {
+		var subscribeData = { "albumId" : albumid };
+		$.post('/PictureViewerWebServer/albums/subscribe.do', subscribeData)
+			.then(function successCallback(response) {
+				console.log(response);
+			  }, function errorCallback(response) {}
+		);
+	}
+	
 	// Get album list
 	$http.get('albums/get.do', { params :{
 		"albumId" : albumId
