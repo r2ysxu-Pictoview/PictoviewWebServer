@@ -120,8 +120,7 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 		$.post('/PictureViewerWebServer/albums/subscribe.do', subscribeData)
 			.then(function successCallback(response) {
 				console.log(response);
-			  }, function errorCallback(response) {}
-		);
+			  }, function errorCallback(response) {});
 	}
 	
 	// Get album list

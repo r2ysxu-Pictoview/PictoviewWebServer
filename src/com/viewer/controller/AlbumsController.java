@@ -131,11 +131,45 @@ public class AlbumsController {
 		}
 		return "redirect:/albums/albums.do";
 	}
-	
+
+	/**
+	 * Subscribes to an album
+	 * 
+	 * @param albumId
+	 */
 	@RequestMapping(value = "/albums/subscribe", method = RequestMethod.POST)
-	public void subscribeToAlbum(@RequestParam("albumId") Long albumId ) {
+	public void subscribeToAlbum(@RequestParam("albumId") Long albumId) {
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		albumBean.subscribeToAlbum(principal.getUserid(), albumId);
+	}
+
+	/**
+	 * Assigns a rating to album
+	 * 
+	 * @param albumId
+	 * @param rating
+	 */
+	@RequestMapping(value = "/albums/rating", method = RequestMethod.POST)
+	public void voteAlbumRating(@RequestParam("albumId") Long albumId, @RequestParam("rating") Integer rating) {
+		if (rating > 10 || rating < 0) return;
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		albumBean.voteAlbumRating(principal.getUserid(), albumId, rating);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/albums/rating", method = RequestMethod.GET)
+	public String fetchUserAlbumRating(@RequestParam("albumId") Long albumId) {
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		albumBean.fetchAlbumUserRating(principal.getUserid(), albumId);
+		return null;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/albums/rating/avg", method = RequestMethod.GET)
+	public String fetchAverageAlbumRating(@RequestParam("albumId") Long albumId) {
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		albumBean.fetchAlbumAverageRating(principal.getUserid(), albumId);
+		return null;
 	}
 
 	private PhotoDTO processPhotoFiles(long albumId, long userid, MultipartFile file) {
