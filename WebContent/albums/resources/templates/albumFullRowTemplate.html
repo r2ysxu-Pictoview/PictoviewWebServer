@@ -1,0 +1,94 @@
+<div class="albumRow" >
+	<!-- Left Cell -->
+	<div id="albumCell-{{albumGroup[0].id}}"  class="albumCell_container">
+		<div class="albumCell_name albumCell_nameTop">
+			<img src="resources/images/right_chevron.svg" class="expand_chevron left0" alt="Subalbums" ng-click="expandSubalbums(albumGroup[0])">
+			<span>{{albumGroup[0].name}}</span>
+		</div>
+		<div class="albumCell_box albumCell_box_left">
+			<div id="albumCellCategory-{{albumGroup[0].id}}" class="albumCell_category_box albumCell_category_box_left">
+				<table class="albumTagTable">
+					<tr ng-repeat="cate in albumGroup[0].categories">
+						<td width="25%">
+							<span>{{cate.category}}</span>
+						</td>
+						<td width="75%">
+							<div class="tagNameDiv" ng-repeat="tag in cate.tags">{{tag.tagName}}</div>
+							<button class="album-add-tag-button" ng-click="albumAddNewTag(albumGroup[0].id, cate)">+</button>
+							<div id="albumExtraTag-{{albumGroup[0].id}}-{{cate.category}}" style="display:none;">
+								<input class="more-tags-input" type="text" ng-model="cate.newTags">
+								<button ng-click="albumSaveNewTag(albumGroup[0], cate, $index)">Tag</button>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<button class="albumControlButton addCategoryButton" ng-click="albumAddNewCategory(albumData)" title="Add Category">C</button>
+				<div class="albumCell_controlsBox">
+					<button class="albumControlButton" title="New Album">N</button>
+				</div>
+			</div>
+			<div id="albumCellSubtitle-{{albumGroup[0].id}}" class="albumCell_subtitle albumCell_subtitle_left" ng-click="fetchCategories(albumGroup[0])">
+				<div class="albumCell_subtitle_text albumCell_subtitle_text_left">
+					<h4>{{albumGroup[0].subtitle}}</h4>
+				</div>
+			</div>
+			<div id="albumCellCover-{{albumGroup[0].coverId}}" class="albumCell_artbox">
+				<img ng-src="images/cover.do?albumid={{albumGroup[0].id}}" class="cover_art cover_art_left" />
+			</div>
+			<div class="albumCell_infoBox albumCell_infoBox_left">
+				<div class="albumCell_description">
+					<p>{{albumGroup[0].description}}</p>
+				</div>
+				<div class="albumCell_control_view">
+					<button class="albumControlButton" title="Subscribe">S</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Right Cell -->
+	<div id="albumCell-{{albumGroup[1].id}}"  class="albumCell_container" ng-if="albumGroup.length > 1">
+		<div class="albumCell_box albumCell_box_right">
+			<div id="albumCellCategory-{{albumGroup[1].id}}" class="albumCell_category_box albumCell_category_box_right">
+				<table class="albumTagTable">
+					<tr ng-repeat="cate in albumGroup[1].categories">
+						<td width="25%">
+							<span>{{cate.category}}</span>
+						</td>
+						<td width="75%">
+							<div class="tagNameDiv" ng-repeat="tag in cate.tags">{{tag.tagName}}</div>
+							<button class="album-add-tag-button" ng-click="albumAddNewTag(albumGroup[1].id, cate)">+</button>
+							<div id="albumExtraTag-{{albumGroup[1].id}}-{{cate.category}}" style="display:none;">
+								<input class="more-tags-input" type="text" ng-model="cate.newTags">
+								<button ng-click="albumSaveNewTag(albumGroup[1].id, cate)">Tag</button>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<button class="albumControlButton addCategoryButton" ng-click="albumAddNewCategory(albumData)" title="Add Category">C</button>
+				<div class="albumCell_controlsBox">
+					<button class="albumControlButton" title="New Album">N</button>
+				</div>
+			</div>
+			<div id="albumCellSubtitle-{{albumGroup[1].id}}" class="albumCell_subtitle albumCell_subtitle_right" ng-click="fetchCategories(albumGroup[1])">
+				<div class="albumCell_subtitle_text albumCell_subtitle_text_right">
+					<h4>{{albumGroup[1].subtitle}}</h4>
+				</div>
+			</div>
+			<div id="albumCellCover-{{albumGroup[1].coverId}}" class="albumCell_artbox albumCell_artbox_right">
+				<img ng-src="images/cover.do?albumid={{albumGroup[1].id}}" class="cover_art cover_art_right" />
+			</div>
+			<div class="albumCell_infoBox albumCell_infoBox_right">
+				<div class="albumCell_description">
+					<p>{{albumGroup[1].description}}</p>
+				</div>
+				<div class="albumCell_control_view">
+					<button class="albumControlButton" title="Subscribe">S</button>
+				</div>
+			</div>
+		</div>
+		<div class="albumCell_name albumCell_nameBottom">
+			<img src="resources/images/right_chevron.svg" class="expand_chevron right0" alt="Subalbums" ng-click="expandSubalbums(albumGroup[1])">
+			<span>{{albumGroup[1].name}}</span>
+		</div>
+	</div>
+</div>

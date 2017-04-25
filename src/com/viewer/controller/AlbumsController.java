@@ -48,6 +48,11 @@ public class AlbumsController {
 	public String fetchAlbumPage() {
 		return "browser/albumView";
 	}
+	
+	@RequestMapping("albums/useralbums")
+	public String fetchUserAlbumPage() {
+		return "browser/userAlbumView";
+	}
 
 	/**
 	 * Gets public albums
