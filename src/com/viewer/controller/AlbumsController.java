@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,14 +45,27 @@ public class AlbumsController {
 	 * @param albumId
 	 * @return JSON containing load information
 	 */
-	@RequestMapping("albums/albums")
+	@RequestMapping("albums/view")
 	public String fetchAlbumPage() {
 		return "browser/albumView";
 	}
-	
-	@RequestMapping("albums/useralbums")
-	public String fetchUserAlbumPage() {
+
+	@RequestMapping("albums/user")
+	public String fetchUserAlbumPage(Model model) {
+		model.addAttribute("headerMessage", "My Albums");
+		model.addAttribute("userControls", "true");
+		model.addAttribute("fetchUrl", "'user/get.do'");
+		model.addAttribute("searchUrl", "'user/search.do'");
 		return "browser/userAlbumView";
+	}
+
+	@RequestMapping("albums/subscribed")
+	public String fetchUserSubscribedPage(Model model) {
+		model.addAttribute("headerMessage", "My Subscribed Albums");
+		model.addAttribute("userControls", "false");
+		model.addAttribute("fetchUrl", "'subscribed/get.do'");
+		model.addAttribute("searchUrl", "'subscribed/search.do'");
+		return "broswer/userAlbumView";
 	}
 
 	/**
@@ -68,13 +82,15 @@ public class AlbumsController {
 
 		return albumJson.toString();
 	}
-
+	
 	@ResponseBody
-	@RequestMapping("/albums/albums/info")
-	public String fetchAlbumInfo(@RequestParam("albumId") long albumid) {
+	@RequestMapping("/albums/albums/get")
+	public String fetchUserViewableAlbums(@RequestParam("albumId") long parentId) {
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		AlbumDTO albumInfo = albumBean.fetchUserAlbumInfo(principal.getUserid(), albumid);
-		return generateAlbumInfo(albumInfo).toString();
+		List<AlbumDTO> albums = albumBean.fetchViewableAlbums(principal.getUserid(), parentId);
+		JSONArray albumJson = generateAlbumJSON(albums);
+
+		return albumJson.toString();
 	}
 
 	/**
@@ -84,10 +100,20 @@ public class AlbumsController {
 	 * @return JSON containing load information
 	 */
 	@ResponseBody
-	@RequestMapping("/albums/albums/get")
+	@RequestMapping("/albums/subscribed/get")
 	public String fetchSubscribedAlbums(@RequestParam("albumId") long parentId) {
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<AlbumDTO> albums = albumBean.fetchViewableAlbums(principal.getUserid(), parentId);
+		List<AlbumDTO> albums = albumBean.fetchUserSubscriptions(principal.getUserid(), parentId);
+		JSONArray albumJson = generateAlbumJSON(albums);
+
+		return albumJson.toString();
+	}
+	
+	@ResponseBody
+	@RequestMapping("/albums/user/get")
+	public String fetchUserAlbums(@RequestParam("albumId") long parentId) {
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<AlbumDTO> albums = albumBean.fetchUserAlbums(principal.getUserid(), parentId);
 		JSONArray albumJson = generateAlbumJSON(albums);
 
 		return albumJson.toString();
@@ -100,10 +126,26 @@ public class AlbumsController {
 	 * @return JSON containing albums
 	 */
 	@ResponseBody
-	@RequestMapping(value = "albums/search", method = RequestMethod.POST)
-	public String fetchAlbumSearchInfo(@RequestBody SearchQuery searchQuery) {
+	@RequestMapping(value = "albums/subscribed/search", method = RequestMethod.POST)
+	public String fetchAlbumSearchSubscribed(@RequestBody SearchQuery searchQuery) {
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(principal.getUserid(), searchQuery.toSearchQueryDTO());
+		List<AlbumDTO> albums = albumBean.fetchSearchUserSubscribedAlbums(principal.getUserid(),
+				searchQuery.toSearchQueryDTO());
+		JSONArray albumJson = generateAlbumJSON(albums);
+		return albumJson.toString();
+	}
+
+	/**
+	 * Gets searched albums
+	 * 
+	 * @param albumId
+	 * @return JSON containing albums
+	 */
+	@ResponseBody
+	@RequestMapping(value = "albums/user/search", method = RequestMethod.POST)
+	public String fetchAlbumSearchUser(@RequestBody SearchQuery searchQuery) {
+		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<AlbumDTO> albums = albumBean.fetchSearchUserAlbums(principal.getUserid(), searchQuery.toSearchQueryDTO());
 		JSONArray albumJson = generateAlbumJSON(albums);
 		return albumJson.toString();
 	}
@@ -117,20 +159,20 @@ public class AlbumsController {
 	 * @return album page
 	 */
 	@RequestMapping(value = "/albums/create", method = RequestMethod.POST)
-	public String createAlbum(@RequestParam("albumName") String name, @RequestParam(required = false, value = "albumSub") String subtitle,
+	public String createAlbum(@RequestParam("albumName") String name,
+			@RequestParam(required = false, value = "albumSub") String subtitle,
 			@RequestParam(required = false, value = "permission") String permission,
 			@RequestParam(required = false, value = "description") String description,
-			@RequestParam(required = false, value = "file") MultipartFile file, @RequestParam(required = false, value = "parentId") Long parentId) {
+			@RequestParam(required = false, value = "file") MultipartFile file,
+			@RequestParam(required = false, value = "parentId") Long parentId) {
 
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (StringUtil.notNullEmpty(name)) {
 			if (parentId == null) parentId = new Long(0);
 
 			long albumid = 0;
-			if (parentId == 0)
-				albumid = albumBean.createAlbum(principal.getUserid(), name, subtitle, description, permission);
-			else
-				albumid = albumBean.createAlbum(principal.getUserid(), name, subtitle, description, parentId);
+			if (parentId == 0) albumid = albumBean.createAlbum(principal.getUserid(), name, subtitle, description, permission);
+			else albumid = albumBean.createAlbum(principal.getUserid(), name, subtitle, description, parentId);
 			PhotoDTO coverPhoto = processPhotoFiles(albumid, principal.getUserid(), file);
 			albumBean.setAlbumCoverPhoto(principal.getUserid(), albumid, coverPhoto.getId());
 		}
@@ -168,7 +210,7 @@ public class AlbumsController {
 		albumBean.fetchAlbumUserRating(principal.getUserid(), albumId);
 		return null;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/albums/rating/avg", method = RequestMethod.GET)
 	public String fetchAverageAlbumRating(@RequestParam("albumId") Long albumId) {
@@ -214,6 +256,7 @@ public class AlbumsController {
 				albumJSON.put("subtitle", StringUtil.emptyIfNull(album.getSubtitle()));
 				albumJSON.put("coverId", 0);
 				albumJSON.put("subalbums", new ArrayList<String>());
+				albumJSON.put("description", album.getDescription());
 				albumsJSON.put(albumJSON);
 			}
 		} catch (JSONException e) {

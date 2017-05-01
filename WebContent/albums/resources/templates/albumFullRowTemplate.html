@@ -14,17 +14,17 @@
 						</td>
 						<td width="75%">
 							<div class="tagNameDiv" ng-repeat="tag in cate.tags">{{tag.tagName}}</div>
-							<button class="album-add-tag-button" ng-click="albumAddNewTag(albumGroup[0].id, cate)">+</button>
-							<div id="albumExtraTag-{{albumGroup[0].id}}-{{cate.category}}" style="display:none;">
+							<button ng-show="userControls" class="album-add-tag-button" ng-click="albumAddNewTag(albumGroup[0].id, cate)">+</button>
+							<div ng-show="userControls" id="albumExtraTag-{{albumGroup[0].id}}-{{cate.category}}" style="display:none;">
 								<input class="more-tags-input" type="text" ng-model="cate.newTags">
 								<button ng-click="albumSaveNewTag(albumGroup[0], cate, $index)">Tag</button>
 							</div>
 						</td>
 					</tr>
 				</table>
-				<button class="albumControlButton addCategoryButton" ng-click="albumAddNewCategory(albumData)" title="Add Category">C</button>
-				<div class="albumCell_controlsBox">
-					<button class="albumControlButton" title="New Album">N</button>
+				<div class="albumCell_controlsBox" ng-show="userControls">
+					<button class="albumControlButton addCategoryButton" ng-click="albumAddNewCategory(albumData)" title="Add Category">C</button>
+					<button class="albumControlButton" title="New Album" ng-click="showCreateAlbumModal(albumData.id)">N</button>
 				</div>
 			</div>
 			<div id="albumCellSubtitle-{{albumGroup[0].id}}" class="albumCell_subtitle albumCell_subtitle_left" ng-click="fetchCategories(albumGroup[0])">

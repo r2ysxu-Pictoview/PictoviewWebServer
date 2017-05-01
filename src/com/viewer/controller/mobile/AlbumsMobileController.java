@@ -65,7 +65,7 @@ public class AlbumsMobileController {
 			List<String> tags = query.get("cate[" + i + "][tags][]");
 			if (StringUtil.notNullEmpty(category) && tags != null && !tags.isEmpty()) searchQuery.addCategory(category, tags);
 		}
-		List<AlbumDTO> albums = albumBean.fetchSearchedUserAlbums(principal.getUserid(), searchQuery.toSearchQueryDTO());
+		List<AlbumDTO> albums = albumBean.fetchSearchUserSubscribedAlbums(principal.getUserid(), searchQuery.toSearchQueryDTO());
 		JSONArray albumJson = generateAlbumJSON(albums);
 		return albumJson.toString();
 	}

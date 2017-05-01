@@ -10,14 +10,24 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 	var maxCategory = 14;
 
 	$scope.categories = categories;
+	$scope.userControls = PageConfig.userControls;
 	
 	var albumId = 0;
 
+	// Search
+	$scope.showCriteria = function() {
+		$("#searchAdditionalCriteria").toggle();
+		$("#albumSearchInput").toggleClass('fullshow');
+	}
+
 	$scope.addCriteria = function() {
 		if (maxCategory >= 0){
-			$scope.categories.push({'category' : '', 'tags' : ''});
 			maxCategory--;
 		}
+	}
+
+	$scope.minusCriteria = function(index) {
+		$scope.categories.splice(index, 1);
 	}
 	
 	$scope.submitSearch = function() {
@@ -29,9 +39,10 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 			searchData.cate.push({ "category" : categories[i].category, "tags" : tags });
 		}
 		
-		$http.post('search.do', searchData).then(function successCallback(response) {
+		$http.post(PageConfig.searchUrl, searchData).then(function successCallback(response) {
 			console.log(response);
-			$scope.albumList = response.data;
+			albums[0] = response.data;
+			$scope.albumChunks = chunkify(albums[0]) || [];
 		  }, function errorCallback(response) {
 		});
 		
@@ -50,11 +61,14 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 				"albumId" : albumData.id
 			}}).then(function successCallback(response) {
 				albums[albumData.id] = response.data;
+				$scope.albumPath.push({'id' : albumData.id, 'name' : albumData.name});
+				$scope.albumChunks = chunkify(albums[albumData.id]) || [];
 			}, function errorCallback(response) {});
-		}
-		if ($scope.albumPath.length > 0 && $scope.albumPath[$scope.albumPath.length - 1].id != albumData.id) {
-			$scope.albumPath.push({'id' : albumData.id, 'name' : albumData.name});
-			$scope.albumChunks = chunkify(albums[albumData.id]) || [];
+		} else {
+			if ($scope.albumPath.length > 0 && $scope.albumPath[$scope.albumPath.length - 1].id != albumData.id) {
+				$scope.albumPath.push({'id' : albumData.id, 'name' : albumData.name});
+				$scope.albumChunks = chunkify(albums[albumData.id]) || [];
+			}
 		}
 	}
 	
@@ -112,9 +126,8 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 			alert("Response Failed");
 		});
 	}
-	
-	// Create Albums
 
+	// Create Albums
 	$scope.modalDialog = 'modalDialog';
 	$scope.showCreateAlbumModal = function(parentId) {
 		$scope.modalDialog = 'modalDialog showDialog';
@@ -149,10 +162,11 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 	};
 	
 	// Get album list
-	$http.get('albums/get.do', { params :{
+	$http.get(PageConfig.fetchUrl, { params :{
 		"albumId" : albumId
 		}}).then(function successCallback(response) {
-			$scope.albumChunks = chunkify(response.data) || [];
+			albums[0] = response.data;
+			$scope.albumChunks = chunkify(albums[0]) || [];
 	  }, function errorCallback(response) {
 		  console.log(response);
 	  });
