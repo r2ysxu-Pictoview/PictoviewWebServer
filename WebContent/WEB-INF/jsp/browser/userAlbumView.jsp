@@ -64,13 +64,13 @@
 				<span>Home</span>
 			</div>
 			<div>
-				<span>Public Albums</span>
+				<a class="no_link" href="public.do"><span>Public Albums</span></a>
 			</div>
 			<div>
-				<span>Subscriptions</span>
+				<a class="no_link" href="subscribed.do"><span>Subscriptions</span></a>
 			</div>
 			<div>
-				<span>My Albums</span>
+				<a class="no_link" href="user.do"><span>My Albums</span></a>
 			</div>
 		</div>
 		<div class="side_optionbar" ng-show="userControls">

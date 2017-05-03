@@ -65,7 +65,7 @@ public class AlbumsController {
 		model.addAttribute("userControls", "false");
 		model.addAttribute("fetchUrl", "'subscribed/get.do'");
 		model.addAttribute("searchUrl", "'subscribed/search.do'");
-		return "broswer/userAlbumView";
+		return "browser/userAlbumView";
 	}
 
 	/**

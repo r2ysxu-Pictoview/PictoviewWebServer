@@ -47,7 +47,7 @@ public class PhotoController {
 		map.put("photoCount", "" + photos.size());
 		map.put("albumId", albumId);
 
-		return "mobile/photoView";
+		return "browser/photoView";
 	}
 
 	@RequestMapping(value = "albums/upload", method = RequestMethod.POST)

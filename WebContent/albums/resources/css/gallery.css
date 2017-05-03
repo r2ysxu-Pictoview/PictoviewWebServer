@@ -3,9 +3,16 @@ body {
 	background-repeat: repeat;
 }
 
+.no_link {
+	text-decoration: none;
+	color: black;
+}
+
 .fullshow {
 	opacity: 1 !important;
 }
+
+
 
 /* Sidebar */
 
