@@ -64,7 +64,7 @@
 				<span>Home</span>
 			</div>
 			<div>
-				<a class="no_link" href="public.do"><span>Public Albums</span></a>
+				<a class="no_link" href="viewable.do"><span>All Albums</span></a>
 			</div>
 			<div>
 				<a class="no_link" href="subscribed.do"><span>Subscriptions</span></a>
@@ -97,7 +97,7 @@
 		<div class="modalFrame">
 			<div class="modalDiv largeText">
 				<h3>Create New Album</h3>
-				<form id="createForm" method="POST" enctype="multipart/form-data" action="/PictureViewerWebServer/albums/create.do?${_csrf.parameterName}=${_csrf.token}">
+				<form id="createForm" method="POST" enctype="multipart/form-data" action="/PictureViewerWebServer/albums/create.do">
 					<input type="hidden" id="newAlbumParentId" name="parentId" value="0" />
 		    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		    		

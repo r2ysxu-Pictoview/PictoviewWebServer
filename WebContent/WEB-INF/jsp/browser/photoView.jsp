@@ -29,6 +29,7 @@
 		<div id="uploadDiv" class="modalFrame modalUplaod">
 			<p>Please choose Images to Upload</p>
 			<form method="POST" enctype="multipart/form-data" action="upload.do">
+		    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<input id="albumIdInput" type="text" name="albumId" value="${albumId}" hidden />
 				<label for="uploadPhoto">Choose File</label>
 				<input type="file" name="file" multiple>

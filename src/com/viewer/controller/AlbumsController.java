@@ -67,6 +67,15 @@ public class AlbumsController {
 		model.addAttribute("searchUrl", "'subscribed/search.do'");
 		return "browser/userAlbumView";
 	}
+	
+	@RequestMapping("albums/viewable")
+	public String fetchUserViewablePage(Model model) {
+		model.addAttribute("headerMessage", "All Albums");
+		model.addAttribute("userControls", "false");
+		model.addAttribute("fetchUrl", "'albums/get.do'");
+		model.addAttribute("searchUrl", "'albums/search.do'");
+		return "browser/userAlbumView";
+	}
 
 	/**
 	 * Gets public albums
