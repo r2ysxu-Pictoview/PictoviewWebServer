@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.viewer.bean.BeanManager;
 import com.viewer.beans.AlbumBeanLocal;
-import com.viewer.dto.PhotoDTO;
+import com.viewer.dto.MediaDTO;
 import com.viewer.security.model.AlbumUser;
 import com.viewer.util.ResponseUtil;
 import com.viewer.util.StringUtils;
@@ -42,7 +42,7 @@ public class PhotoController {
 			@RequestParam("albumId") long albumId) {
 
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<PhotoDTO> photos = albumBean.fetchUserAlbumPhotos(principal.getUserid(), albumId);
+		List<MediaDTO> photos = albumBean.fetchUserAlbumMedia(principal.getUserid(), albumId);
 		map.put("photoList", photos);
 		map.put("photoCount", "" + photos.size());
 		map.put("albumId", albumId);
@@ -63,13 +63,13 @@ public class PhotoController {
 		return "redirect:/albums/photos.do?albumId=" + albumId;
 	}
 
-	private PhotoDTO processPhotoFiles(long albumId, long userid, MultipartFile file) {
+	private MediaDTO processPhotoFiles(long albumId, long userid, MultipartFile file) {
 		try {
 			String name = file.getOriginalFilename();
 			String ext = ResponseUtil.convertContentTypeToExt(file.getContentType());
 			if (StringUtils.notNullEmpty(ext)) {
 				InputStream data = file.getInputStream();
-				return albumBean.uploadPhoto(userid, albumId, name, ext, data, 1);
+				return albumBean.uploadMedium(userid, albumId, name, ext, data, 1);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

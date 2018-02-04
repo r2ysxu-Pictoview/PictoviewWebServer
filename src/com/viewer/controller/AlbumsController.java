@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.viewer.bean.BeanManager;
 import com.viewer.beans.AlbumBeanLocal;
 import com.viewer.dto.AlbumDTO;
-import com.viewer.dto.PhotoDTO;
+import com.viewer.dto.MediaDTO;
 import com.viewer.model.SearchQuery;
 import com.viewer.security.model.AlbumUser;
 import com.viewer.util.ResponseUtil;
@@ -67,7 +67,7 @@ public class AlbumsController {
 		model.addAttribute("searchUrl", "'subscribed/search.do'");
 		return "browser/userAlbumView";
 	}
-	
+
 	@RequestMapping("albums/viewable")
 	public String fetchUserViewablePage(Model model) {
 		model.addAttribute("headerMessage", "All Albums");
@@ -91,12 +91,14 @@ public class AlbumsController {
 
 		return albumJson.toString();
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/albums/albums/get")
-	public String fetchUserViewableAlbums(@RequestParam("albumId") long parentId) {
+	public String fetchUserViewableAlbums(@RequestParam("albumId") long parentId,
+			@RequestParam(value = "limit", defaultValue = "50", required = false) int limit,
+			@RequestParam(value = "offset", defaultValue = "0", required = false) int offset) {
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<AlbumDTO> albums = albumBean.fetchViewableAlbums(principal.getUserid(), parentId);
+		List<AlbumDTO> albums = albumBean.fetchViewableAlbums(principal.getUserid(), parentId, 0, limit, offset);
 		JSONArray albumJson = generateAlbumJSON(albums);
 
 		return albumJson.toString();
@@ -110,19 +112,23 @@ public class AlbumsController {
 	 */
 	@ResponseBody
 	@RequestMapping("/albums/subscribed/get")
-	public String fetchSubscribedAlbums(@RequestParam("albumId") long parentId) {
+	public String fetchSubscribedAlbums(@RequestParam("albumId") long parentId,
+			@RequestParam(value = "limit", defaultValue = "50", required = false) int limit,
+			@RequestParam(value = "offset", defaultValue = "0", required = false) int offset) {
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<AlbumDTO> albums = albumBean.fetchUserSubscriptions(principal.getUserid(), parentId);
+		List<AlbumDTO> albums = albumBean.fetchUserSubscriptions(principal.getUserid(), parentId, 0, limit, offset);
 		JSONArray albumJson = generateAlbumJSON(albums);
 
 		return albumJson.toString();
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/albums/user/get")
-	public String fetchUserAlbums(@RequestParam("albumId") long parentId) {
+	public String fetchUserAlbums(@RequestParam("albumId") long parentId,
+			@RequestParam(value = "limit", defaultValue = "50", required = false) int limit,
+			@RequestParam(value = "offset", defaultValue = "0", required = false) int offset) {
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<AlbumDTO> albums = albumBean.fetchUserAlbums(principal.getUserid(), parentId);
+		List<AlbumDTO> albums = albumBean.fetchUserAlbums(principal.getUserid(), parentId, 0, limit, offset);
 		JSONArray albumJson = generateAlbumJSON(albums);
 
 		return albumJson.toString();
@@ -182,7 +188,7 @@ public class AlbumsController {
 			long albumid = 0;
 			if (parentId == 0) albumid = albumBean.createAlbum(principal.getUserid(), name, subtitle, description, permission);
 			else albumid = albumBean.createAlbum(principal.getUserid(), name, subtitle, description, parentId);
-			PhotoDTO coverPhoto = processPhotoFiles(albumid, principal.getUserid(), file);
+			MediaDTO coverPhoto = processPhotoFiles(albumid, principal.getUserid(), file);
 			albumBean.setAlbumCoverPhoto(principal.getUserid(), albumid, coverPhoto.getId());
 		}
 		return "redirect:/albums/albums.do";
@@ -228,13 +234,13 @@ public class AlbumsController {
 		return null;
 	}
 
-	private PhotoDTO processPhotoFiles(long albumId, long userid, MultipartFile file) {
+	private MediaDTO processPhotoFiles(long albumId, long userid, MultipartFile file) {
 		try {
 			String name = file.getOriginalFilename();
 			String ext = ResponseUtil.convertContentTypeToExt(file.getContentType());
 			if (StringUtils.notNullEmpty(ext)) {
 				InputStream data = file.getInputStream();
-				return albumBean.uploadPhoto(userid, albumId, name, ext, data, 1);
+				return albumBean.uploadMedium(userid, albumId, name, ext, data, 1);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -266,6 +272,7 @@ public class AlbumsController {
 				albumJSON.put("coverId", 0);
 				albumJSON.put("subalbums", new ArrayList<String>());
 				albumJSON.put("description", album.getDescription());
+				albumJSON.put("ratings", album.getRating());
 				albumsJSON.put(albumJSON);
 			}
 		} catch (JSONException e) {

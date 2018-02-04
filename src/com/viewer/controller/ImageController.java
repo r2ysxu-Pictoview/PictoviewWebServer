@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 
 import org.springframework.http.MediaType;
@@ -35,9 +36,10 @@ public class ImageController {
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
 			// Get Image
-			ImageInputStream is = albumBean.fetchAlbumCoverThumbnail(principal.getUserid(), albumId, 0);
+			ImageInputStream is = ImageIO.createImageInputStream(
+					albumBean.fetchAlbumCover(principal.getUserid(), albumId).getThumbnailDataStream());
 			writeImageStreamToResponse(is, responseOutput);
-		} catch (NumberFormatException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -55,10 +57,10 @@ public class ImageController {
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
 			// Get Image
-			ImageInputStream is = albumBean.fetchPhotoThumbnailData(principal.getUserid(), photoid, 0);
+			ImageInputStream is = ImageIO.createImageInputStream(
+					albumBean.fetchMedia(principal.getUserid(), photoid).getThumbnailDataStream());
 			writeImageStreamToResponse(is, responseOutput);
-			// return data;
-		} catch (NumberFormatException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -74,8 +76,14 @@ public class ImageController {
 	public void fetchAlbumPhoto(@RequestParam("photoid") long photoid, OutputStream responseOutput) {
 
 		AlbumUser principal = (AlbumUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		ImageInputStream is = albumBean.fetchPhotoData(principal.getUserid(), photoid);
-		writeImageStreamToResponse(is, responseOutput);
+		ImageInputStream is;
+		try {
+			is = ImageIO.createImageInputStream(
+					albumBean.fetchMedia(principal.getUserid(), photoid).getDataStream());
+			writeImageStreamToResponse(is, responseOutput);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void writeImageStreamToResponse(ImageInputStream is, OutputStream out) {
