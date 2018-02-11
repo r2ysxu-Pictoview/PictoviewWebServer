@@ -24,7 +24,7 @@ import com.viewer.util.StringUtil;
 @Controller
 public class TagController {
 
-	@Resource(mappedName = BeanManager.ALBUM_JNDI_NAME)
+	@Resource(mappedName = BeanManager.PHOTO_ALBUM_JNDI_NAME)
 	private AlbumBeanLocal albumBean;
 
 	public TagController() {

@@ -22,7 +22,7 @@ import com.viewer.security.model.AlbumUser;
 @Controller
 public class ImageController {
 
-	@Resource(mappedName = BeanManager.ALBUM_JNDI_NAME)
+	@Resource(mappedName = BeanManager.PHOTO_ALBUM_JNDI_NAME)
 	private AlbumBeanLocal albumBean;
 
 	public ImageController() {

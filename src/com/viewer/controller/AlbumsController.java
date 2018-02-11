@@ -33,7 +33,7 @@ import com.viewer.util.StringUtils;
 @Controller
 public class AlbumsController {
 
-	@Resource(mappedName = BeanManager.ALBUM_JNDI_NAME)
+	@Resource(mappedName = BeanManager.PHOTO_ALBUM_JNDI_NAME)
 	protected AlbumBeanLocal albumBean;
 
 	public AlbumsController() {
