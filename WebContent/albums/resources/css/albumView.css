@@ -1,5 +1,5 @@
 body {
-    background-image: url(../images/bg-repeat.png);
+    background-image: url(/PictureViewerWebServer/static/images/bg-repeat.png);
 }
 
 .no_link {
