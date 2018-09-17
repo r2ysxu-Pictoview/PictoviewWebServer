@@ -1,0 +1,37 @@
+<div class="albumTitle">
+	<h3>{{album.name}}</h3>
+</div>
+<img src="images/cover.do?albumid={{album.id}}" class="albumImg">
+<div class="albumBanner" ng-click="fetchCategories(album)">
+	<h4>{{album.subtitle}}</h4>
+	<div class="albumCell_controlsBox" ng-show="userControls">
+		<div class="albumControls">
+			<button class="albumControlButton" ng-click="albumAddNewCategory(albumData)" title="Add Category">C</button>
+			<button class="albumControlButton" title="New Album" ng-click="showCreateAlbumModal(albumData.id)">N</button>
+		</div>
+	</div>
+</div>
+<div class="albumBack">
+</div>
+
+<!-- CTags -->
+<div id="albumCellCategory-{{album.id}}" class="albumCellInfoContainer">
+	<table class="albumTagTable">
+		<tr ng-repeat="cate in categories">
+			<td width="25%">
+				<span>{{cate.category}}</span>
+			</td>
+			<td width="75%">
+				<div class="tagNameDiv" ng-repeat="tag in cate.tags">{{tag.tagName}}</div>
+				<button ng-show="userControls" class="album-add-tag-button" ng-click="albumAddNewTag(album.id, cate)">+</button>
+				<div ng-show="userControls" id="albumExtraTag-{{album.id}}-{{cate.category}}" style="display:none;">
+					<input type="text" ng-model="cate.newTags">
+					<button ng-click="albumSaveNewTag(album, cate, $index)">Tag</button>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<div class="albumCell_description">
+		<p>{{album.description}}</p>
+	</div>
+</div> 

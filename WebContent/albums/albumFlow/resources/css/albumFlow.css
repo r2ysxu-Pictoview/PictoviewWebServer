@@ -1,0 +1,185 @@
+/* Albums */
+
+.albumsTable {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+.albumsTable h3 {
+	color: #fff;
+	margin: 5px 5px 5px 5px;
+}
+
+.albumsTable h4 {
+    color: #848484;
+    margin: 0 0 0 1em;
+    font-size: 10pt;
+}
+
+.albumCell {
+	position: relative;
+	display: inline-block;
+	margin: 5px 5px;
+    box-shadow: 4px 5px 2px 0px rgba(0, 0, 0, 0.25);
+	-webkit-transition: all 0.4s ease;
+}
+
+.albumCell:hover {
+    box-shadow: 6px 4px 5px 5px rgba(101, 170, 255, 0.25);
+}
+
+.albumTitle {
+	padding-top: 5px;
+	padding-left: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-shadow: 0px -1px 5px 0px rgba(255,255,255,0.25);
+    background-color: #5369de;
+    border-left: 1px outset #fff;
+    border-right: 1px outset #fff;
+    border-bottom: 1px solid #fff;
+}
+.albumBanner {
+	margin: 0;
+	border-left: 1px outset #fff;
+    border-right: 1px outset #fff;
+    border-bottom: 1px outset #fff;
+    background-color: #fff;
+    position: relative;
+    height: 25px;
+    transition: 1s;
+}
+
+.albumBanner:hover {
+    background-color: #98a8fd;
+}
+
+.albumImg {
+	position: relative;
+	max-height: 300px;
+    border-left: 1px outset #fff;
+    border-right: 1px outset #fff;
+    border-bottom: 1px solid #fff;
+    box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.1);
+	-webkit-box-reflect: below -50px radial-gradient(circle at center, rgba(0, 0, 0, 0.05) 20%, rgba(0, 0, 0, 0) 50%);
+}
+
+.albumBack {
+	position: absolute;
+    width: 101%;
+    height: 98%;
+    top: 2%;
+    left: 0;
+    background-color: #fff;
+    z-index: -1;
+    border-top-right-radius: 5px;
+    box-shadow: inset -3px -3px 5px 5px rgba(0, 0, 0, 0.25);
+    -webkit-transform: perspective( 180px ) rotateY(-1deg);
+    transition: 1s;
+}
+
+/* Categories */
+
+.albumCellInfoContainer {
+	transition: 1s;
+	position: absolute;
+	bottom: 25px;
+    width: 100%;
+    height: 60%;
+    background-color: rgba(70, 72, 73, 0.6);
+    opacity: 1;
+    overflow: hidden;
+}
+
+.albumTagTable {
+	width: 90%;
+	table-layout: fixed;
+	margin: 15px 10px;
+}
+
+.albumTagTable tr td {
+	border: 1px solid black;
+	color: white;
+}
+
+.tagNameDiv {
+	float: left;
+	margin: 5px;
+	padding-left: 2px;
+	padding-right: 2px;
+	border: dashed 1px;
+	border-radius: 5px;
+	border: dashed 1px;
+}
+
+.album-add-tag-button {
+	float: right;
+	margin-left: 0.5em;
+}
+
+.addCategoryButton {
+	margin-left: 15px;
+}
+
+.albumCell_description {
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: 200px;
+	overflow: auto;
+	-webkit-mask-image: -webkit-linear-gradient(top, rgba(0, 0, 0,1) 80%, rgba(79, 110, 197,0));
+}
+
+.albumControls {
+	position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.fadeout {
+	opacity: 0;
+}
+
+.flow_selected {
+	top: 50px;
+	-webkit-transform: perspective(200px);
+	z-index: 1;
+}
+
+.flow_selected > img {
+	max-height: 350px;
+}
+
+.flow_left {
+	-webkit-transform: perspective(200px) rotateY(5deg);
+	left: 20px;
+}
+
+.flow_right {
+	-webkit-transform: perspective(200px) rotateY(-5deg);
+	right: 20px;
+}
+
+.flow_left2 {
+	-webkit-transform: perspective(200px) rotateY(10deg);
+	left: 40px;
+}
+
+.flow_right2 {
+	-webkit-transform: perspective(200px) rotateY(-10deg);
+	right: 40px;
+}
+
+.flow_left3 {
+	-webkit-transform: perspective(200px) rotateY(25deg);
+	left: 20px;
+}
+
+.flow_right3 {
+	-webkit-transform: perspective(200px) rotateY(-25deg);
+	right: 20px;
+}
