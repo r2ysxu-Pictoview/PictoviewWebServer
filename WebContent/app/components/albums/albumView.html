@@ -2,13 +2,13 @@
 <header>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Albums</title>
-	<link rel="stylesheet" type="text/css" href="resources/css/albumView.css" />
-	<link rel="stylesheet" type="text/css" href="albumFlow/resources/css/albumFlow.css" />
-	<link rel="stylesheet" type="text/css" href="modals/css/modals.css" />
-	<script type="text/javascript" src="../lib/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="../lib/angular.min.js"></script>
-	<script type="text/javascript" src="albumFlow/scripts/albumFlow.js"></script>
-	<script type="text/javascript" src="scripts/controller/albumController.js"></script>
+	<link rel="stylesheet" type="text/css" href="/app/components/albums/resources/css/albumView.css" />
+	<link rel="stylesheet" type="text/css" href="/app/components/albums/albumFlow/resources/css/albumFlow.css" />
+	<link rel="stylesheet" type="text/css" href="/app/components/albums/modals/css/modals.css" />
+	<script type="text/javascript" src="/lib/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/lib/angular.min.js"></script>
+	<script type="text/javascript" src="/app/components/albums/albumFlow/scripts/albumFlow.js"></script>
+	<script type="text/javascript" src="/app/components/albums/scripts/controller/albumController.js"></script>
 	<script>
 		PageConfig = {
 			userControls : ${userControls},
@@ -41,7 +41,7 @@
 							ng-class=" { flow_selected : $index == selectedIndex, 
 								flow_right: $index > selectedIndex && $index <= selectedIndex + 1, flow_left: $index < selectedIndex && $index >= selectedIndex - 1,
 								flow_right2: $index > selectedIndex + 1, flow_left2: $index < selectedIndex - 1 }"
-							ng-repeat="album in albums" ng-include="'albumFlow/templates/albumFlowRowTemplate.html'"
+							ng-repeat="album in albums" ng-include="'/app/components/albums/albumFlow/templates/albumFlowRowTemplate.html'"
 							ng-click="selectAlbum($index)"></div>
 					</div>
 				</div>
@@ -81,8 +81,8 @@
 				<div class="homeButton" >Home</div>
 				<div class="searchBox">
 					<input type="text" id="albumSearchInput" ng-model="search.name" ng-value="name" placeholder="Search" class="searchBarInput" />
-					<input type="image" id="searchSubmit" value="Search" src="/PictureViewerWebServer/static/images/search-icon-hi.png" ng-click="submitSearch()" />
-					<input type="image" id="addNewSearchCategory" src="/PictureViewerWebServer/static/images/menuBarIcon.png" value="Add Category Criteria" ng-click="showCriteria()" />
+					<input type="image" id="searchSubmit" value="Search" src="/static/images/search-icon-hi.png" ng-click="submitSearch()" />
+					<input type="image" id="addNewSearchCategory" src="/static/images/menuBarIcon.png" value="Add Category Criteria" ng-click="showCriteria()" />
 					<div id="searchAdditionalCriteria" style="display:none">
 					<table id="searchTagTable" class="searchTagTable">
 						<thead>
@@ -113,7 +113,7 @@
 	</div>
 
 	<!-- Modals -->
-	<div ng-include="'modals/createAlbumModal/template/createAlbumModal.html'">
+	<div ng-include="'/app/components/albums/modals/createAlbumModal/template/createAlbumModal.html'">
 
 </body>
 </html>
