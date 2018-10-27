@@ -1,2 +1,2 @@
 
-<%@include file="/app/components/albums/albumView.html"%>
+<%@include file="/app/components/views/albums/albumView.html"%>

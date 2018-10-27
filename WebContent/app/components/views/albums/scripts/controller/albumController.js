@@ -179,7 +179,19 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
     }
 
     $scope.selectAlbum = function(index) {
-        selectAlbum = albumFlow.selectAlbum;
+		const previous = $scope.selectedIndex;
+
+		let target = $('.flow_selected');
+		let source = $('#albumList');
+		if (target.length && index >= 0 && index < $scope.albums.length) {
+			if (previous > index) {
+				console.log(target.position().left);
+				source.scrollLeft(Math.max(0, source.scrollLeft() - (source.width() - target.position().left) + (source.width() / 2)) );
+			} else if (previous < index) {
+				source.scrollLeft(source.scrollLeft() + target.position().left - target.width());
+			}
+			$scope.selectedIndex = index;
+		}
     }
 
     // Get album
