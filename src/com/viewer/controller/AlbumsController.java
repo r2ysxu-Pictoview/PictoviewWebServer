@@ -191,7 +191,7 @@ public class AlbumsController {
 			MediaDTO coverPhoto = processPhotoFiles(albumid, principal.getUserid(), file);
 			albumBean.setAlbumCoverPhoto(principal.getUserid(), albumid, coverPhoto.getId());
 		}
-		return "redirect:/albums/albums.do";
+		return "success";
 	}
 
 	/**

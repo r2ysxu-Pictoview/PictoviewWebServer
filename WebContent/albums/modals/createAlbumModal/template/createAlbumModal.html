@@ -3,23 +3,23 @@
 	<div class="modalFrame">
 		<div class="modalDiv largeText">
 			<h3>Create New Album</h3>
-			<form id="createForm" method="POST" enctype="multipart/form-data" action="/PictureViewerWebServer/albums/create.do?${_csrf.parameterName}=${_csrf.token}">
-				<input type="hidden" id="newAlbumParentId" name="parentId" value="0" />
-	    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<form id="createForm">
+	    		<input type="hidden" ng-model="newAlbum._csrf" />
+				<input type="hidden" id="newAlbumParentId" ng-model="newAlbum.parentId" value="0" />
 
 				<label for="albumName">Name</label>
-				<input type="text" id="albumName" name="albumName" />
+				<input type="text" id="albumName" ng-model="newAlbum.albumName" />
 				<br />
 				<label for="albumSub">Subtitle</label>
-				<input type="text" id="albumSub" name="albumSub" />
+				<input type="text" id="albumSub" ng-model="newAlbum.albumSub" />
 				<br />
 				<label for="newAlbumDescription">Description</label>
-				<textarea rows="4" cols="50" id="newAlbumDescription" name="description" ></textarea>
+				<textarea rows="4" cols="50" id="newAlbumDescription" ng-model="newAlbum.description" ></textarea>
 				<br />
 				<label for="uploadPhoto">Choose File</label>
-				<input type="file" name="file">
+				<input accept="image/*" type="file" name="file" file-model="newAlbum.file">
 				<br />
-				<button type="submit" id="createButton">New Album</button>
+				<button type="submit" ng-click="createAlbum(newAlbum)" id="createButton">New Album</button>
 			</form>
 		</div>
 	</div>
