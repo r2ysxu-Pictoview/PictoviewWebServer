@@ -1,12 +1,15 @@
 /* Albums */
 
 .albumsTable {
-	overflow-x: scroll;
-	overflow-y: hidden;
 	white-space: nowrap;
 	width: 100%;
 	height: 100%;
 	position: relative;
+	margin: 15px;
+}
+
+.albumsTable p {
+	white-space: normal;
 }
 
 .albumsTable h3 {
@@ -18,6 +21,12 @@
     color: #848484;
     margin: 0 0 0 1em;
     font-size: 10pt;
+}
+
+.albumBlock {
+	display: inline-block;
+	float: left;
+	margin: 15px;
 }
 
 .albumCell {
@@ -50,7 +59,7 @@
     border-bottom: 1px outset #fff;
     background-color: #fff;
     position: relative;
-    height: 25px;
+    height: 15px;
     transition: 1s;
 }
 
@@ -58,14 +67,20 @@
     background-color: #98a8fd;
 }
 
+.albumImageWrapper {
+	border-left: 1px outset #fff;
+    border-right: 1px outset #fff;
+    box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.1);
+    height: 300px;
+    overflow: hidden;
+    background: rgba(0,0,0, 0.25);
+}
+
 .albumImg {
 	position: relative;
 	max-height: 300px;
-    border-left: 1px outset #fff;
-    border-right: 1px outset #fff;
-    border-bottom: 1px solid #fff;
-    box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.1);
-	-webkit-box-reflect: below -50px radial-gradient(circle at center, rgba(0, 0, 0, 0.05) 20%, rgba(0, 0, 0, 0) 50%);
+	box-shadow: 0px 5px 5px 2px rgba(0, 0, 0, 0.25);
+	border-bottom: 1px solid #9c9c9c;
 }
 
 .albumBack {
@@ -87,12 +102,13 @@
 .albumCellInfoContainer {
 	transition: 1s;
 	position: absolute;
-	bottom: 25px;
-    width: 100%;
+	bottom: 15px;
+    width: calc(100% - 2px);
     height: 60%;
     background-color: rgba(70, 72, 73, 0.6);
     opacity: 1;
     overflow: hidden;
+    margin-left: 1px;
 }
 
 .albumTagTable {
@@ -129,7 +145,7 @@
 	margin-left: 15px;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	height: 200px;
+	height: 150px;
 	overflow: auto;
 	-webkit-mask-image: -webkit-linear-gradient(top, rgba(0, 0, 0,1) 80%, rgba(79, 110, 197,0));
 }

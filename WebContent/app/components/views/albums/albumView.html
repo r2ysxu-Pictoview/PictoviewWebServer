@@ -3,12 +3,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Albums</title>
 	<link rel="stylesheet" type="text/css" href="/app/components/views/albums/resources/css/albumView.css" />
-	<link rel="stylesheet" type="text/css" href="/app/components/templates/albumFlow/resources/css/albumFlow.css" />
 	<link rel="stylesheet" type="text/css" href="/app/components/templates/modals/css/modals.css" />
+	<link rel="stylesheet" type="text/css" href="/app/components/templates/albumList/resources/css/albumList.css" />
 	<script type="text/javascript" src="/lib/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="/lib/angular.min.js"></script>
-	<script type="text/javascript" src="/app/components/templates/albumFlow/scripts/albumFlow.js"></script>
+	<script type="text/javascript" src="/app/components/templates/albumList/scripts/albumList.js"></script>
 	<script type="text/javascript" src="/app/components/views/albums/scripts/controller/albumController.js"></script>
+	<script type="text/javascript" src="/app/components/directives/common_directives.js"></script>
 	<script>
 		PageConfig = {
 			userControls : ${userControls},
@@ -36,12 +37,9 @@
 			<!-- Content -->
 			<div id="contentMenu" class="content">
 				<div id="albumListMenu">
-					<div id="albumList" class="albumsTable" al-flow>
-						<div id="albumId-{{album.id}}" class="albumCell"
-							ng-class=" { flow_selected : $index == selectedIndex, 
-								flow_right: $index > selectedIndex && $index <= selectedIndex + 1, flow_left: $index < selectedIndex && $index >= selectedIndex - 1,
-								flow_right2: $index > selectedIndex + 1, flow_left2: $index < selectedIndex - 1 }"
-							ng-repeat="album in albums" ng-include="'/app/components/templates/albumFlow/templates/albumFlowRowTemplate.html'"
+					<div id="albumList" class="albumsTable">
+						<div id="albumId-{{album.id}}" class="albumBlock"
+							ng-repeat="album in albums" ng-include="'/app/components/templates/albumList/templates/albumListRowTemplate.html'"
 							ng-click="selectAlbum($index)"></div>
 					</div>
 				</div>

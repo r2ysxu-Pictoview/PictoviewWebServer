@@ -68,7 +68,7 @@ body {
 
 .fullview_container {
 	float: right;
-	width: calc(99% - 150px);
+	width: 99%;
 	position: relative;
 	margin-top: 1em;
 }

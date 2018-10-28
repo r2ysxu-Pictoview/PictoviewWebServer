@@ -1,11 +1,10 @@
 var albumApp = angular.module('albumViewApp', []);
 
 // Album Controller
-var albums = [];
 var categories = [{'category' : 'tags', 'tags' : ''}];
 var albumPath = [{'id' : 0, 'name' : 'All'}];
 
-let albumFlow = new AlbumFlow($('#albumList'));
+let albumList = new AlbumList($('#albumList'));
 
 albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $http) {
     let albumId = 0;
@@ -178,71 +177,16 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
               }, function errorCallback(response) {});
     }
 
-    $scope.selectAlbum = function(index) {
-		const previous = $scope.selectedIndex;
-
-		let target = $('.flow_selected');
-		let source = $('#albumList');
-		if (target.length && index >= 0 && index < $scope.albums.length) {
-			if (previous > index) {
-				console.log(target.position().left);
-				source.scrollLeft(Math.max(0, source.scrollLeft() - (source.width() - target.position().left) + (source.width() / 2)) );
-			} else if (previous < index) {
-				source.scrollLeft(source.scrollLeft() + target.position().left - target.width());
-			}
-			$scope.selectedIndex = index;
-		}
-    }
-
     // Get album
     $http.get(PageConfig.fetchUrl, { params :{
         "albumId" : albumId
         }}).then(function successCallback(response) {
-            albums[0] = response.data;
-            $scope.albums = albums[0] || [];
-            albumFlow.loadData($scope.albums);
+        	albumList.loadData(response.data);
+            $scope.albums = albumList.albums;
       }, function errorCallback(response) {
           console.log(response);
     });
 
     $scope.albumPath = albumPath;
     $scope.selectedIndex = 0;
-}]);
-
-albumApp.directive('fileModel', ['$parse', function ($parse) {
-    return {
-       restrict: 'A',
-       link: function(scope, element, attrs) {
-          var model = $parse(attrs.fileModel);
-          var modelSetter = model.assign;
-
-          element.bind('change', function(){
-             scope.$apply(function(){
-                modelSetter(scope, element[0].files[0]);
-             });
-          });
-       }
-    };
- }]);
-
-albumApp.directive('alFlow', ['$document', function($document) {
-    return {
-        link: function(scope, element, attr) {
-            element.bind('mousewheel', function(event) {
-                var event = window.event || event; // old IE support
-
-                let target = $('.flow_selected');
-                let source = $('#albumList');
-                if (event.wheelDelta > 0) {
-                    scope.selectAlbum(scope.selectedIndex - 1);
-                } else if ( event.wheelDelta < 0) {
-                    scope.selectAlbum(scope.selectedIndex + 1);
-                }
-                scope.$apply();
-
-                //element.scrollLeft(element.scrollLeft() - (event.wheelDelta / 2) );
-                event.preventDefault();
-            });
-        }
-    }
 }]);
