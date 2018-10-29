@@ -19,7 +19,7 @@ body {
 
 .sidebar {
 	position: fixed;
-	left: 0;
+	left: -150px;
 	top: 3.2em;
 	width: 150px;
 	height: 100%;

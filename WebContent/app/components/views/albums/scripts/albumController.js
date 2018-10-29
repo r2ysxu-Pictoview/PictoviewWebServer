@@ -64,13 +64,13 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
 
     // Expand subAlbums
     $scope.expandSubalbums = function(albumData) {
-
-        if (!albums[albumData.id]) {
-            $http.get('albums/get.do', { params :{
+        if (albumList.hasLoadedData(albumData.id)) {
+            $http.get('albums/get.do', { params : {
                 "albumId" : albumData.id
             }}).then(function successCallback(response) {
-                albums[albumData.id] = response.data;
+            	albumList.loadData(albumData.id, response.data);
                 $scope.albumPath.push({'id' : albumData.id, 'name' : albumData.name});
+                $scope.albums = albumList.albums[albumData.id];
             }, function errorCallback(response) {});
         } else {
             if ($scope.albumPath.length > 0 && $scope.albumPath[$scope.albumPath.length - 1].id != albumData.id) {
@@ -80,7 +80,7 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
     }
 
     $scope.expandSubalbumsPath = function(id, index) {
-        $scope.albumChunks = chunkify(albums[id]) || [];
+        $scope.albums = albumList.albums[id];
         $scope.albumPath.length = index + 1;
     }
 
@@ -181,8 +181,8 @@ albumApp.controller('AlbumViewController', ['$scope','$http', function($scope, $
     $http.get(PageConfig.fetchUrl, { params :{
         "albumId" : albumId
         }}).then(function successCallback(response) {
-        	albumList.loadData(response.data);
-            $scope.albums = albumList.albums;
+        	albumList.loadData(0, response.data);
+            $scope.albums = albumList.albums[0];
       }, function errorCallback(response) {
           console.log(response);
     });

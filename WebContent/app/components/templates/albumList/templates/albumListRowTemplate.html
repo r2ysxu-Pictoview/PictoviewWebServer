@@ -2,15 +2,17 @@
 	<div class="albumTitle">
 		<h3>{{album.name}}</h3>
 	</div>
-	<div class="albumImageWrapper">
-		<img src="images/cover.do?albumid={{album.id}}" class="albumImg">
-	</div>
+	<a href="photos.do?albumId={{album.id}}">
+		<div class="albumImageWrapper">
+			<img src="images/cover.do?albumid={{album.id}}" class="albumImg">
+		</div>
+	</a>
 	<div class="albumBanner" ng-click="fetchCategories(album)">
 		<h4>{{album.subtitle}}</h4>
 		<div class="albumCell_controlsBox" ng-show="userControls">
 			<div class="albumControls">
-				<button class="albumControlButton" ng-click="albumAddNewCategory(albumData)" title="Add Category">C</button>
-				<button class="albumControlButton" title="New Album" ng-click="showCreateAlbumModal(albumData.id)">N</button>
+				<!-- <button class="albumControlButton" ng-click="albumAddNewCategory(albumData)" title="Add Category">C</button>
+				<button class="albumControlButton" title="New Album" ng-click="showCreateAlbumModal(albumData.id)">N</button> -->
 			</div>
 		</div>
 	</div>
@@ -19,6 +21,7 @@
 	
 	<!-- CTags -->
 	<div id="albumCellCategory-{{album.id}}" class="albumCellInfoContainer">
+		<button id="albumCellSubAlbumButton-{{album.id}}" ng-click="expandSubalbums(album)" >SubAlbums</button>
 		<table class="albumTagTable">
 			<tr ng-repeat="cate in categories">
 				<td width="25%">

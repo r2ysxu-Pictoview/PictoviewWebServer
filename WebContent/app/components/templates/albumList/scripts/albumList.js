@@ -3,8 +3,11 @@ function AlbumList(listEl) {
 	this.albums = []
 	this.selectedIndex = 0
 
-	this.loadData = function(data) {
-		this.albums = data || []
-		console.log(data)
+	this.loadData = function(parentId, data) {
+		this.albums[parentId] = data || []
+	}
+	
+	this.hasLoadedData = function(id) {
+		return !this.albums[id]
 	}
 }
